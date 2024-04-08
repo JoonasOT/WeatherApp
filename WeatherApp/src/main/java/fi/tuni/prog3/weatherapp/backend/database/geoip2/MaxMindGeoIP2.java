@@ -1,18 +1,17 @@
-package fi.tuni.prog3.weatherapp.backend.database;
+package fi.tuni.prog3.weatherapp.backend.database.geoip2;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
-import com.maxmind.geoip2.record.City;
-import com.maxmind.geoip2.record.Country;
+import fi.tuni.prog3.weatherapp.backend.database.Database;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Optional;
 
-public class MaxMindGeoIP2 implements Database<MaxMindGeoIP2.GeoLocation> {
-    public record GeoLocation(Country country, City city) {}
+public class MaxMindGeoIP2 implements Database<GeoLocation> {
+    
     File database;
 
     public MaxMindGeoIP2(String location) {
