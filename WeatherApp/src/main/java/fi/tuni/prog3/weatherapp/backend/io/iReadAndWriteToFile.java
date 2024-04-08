@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp;
+package fi.tuni.prog3.weatherapp.backend.io;
 
 /**
  * Interface with methods to read from a file and write to a file.
