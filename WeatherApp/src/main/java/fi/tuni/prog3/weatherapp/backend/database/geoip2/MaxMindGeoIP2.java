@@ -11,9 +11,7 @@ import java.net.InetAddress;
 import java.util.Optional;
 
 public class MaxMindGeoIP2 implements Database<GeoLocation> {
-    
     File database;
-
     public MaxMindGeoIP2(String location) {
         database = new File(location);
     }
