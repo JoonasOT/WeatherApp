@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static fi.tuni.prog3.weatherapp.backend.database.cities.Params.FileStructure.CITY_COUNT;
+
 public class ParallelLoader implements CitiesLoader {
     private static ParallelLoader INSTANCE;
     private State state = State.IDLE;
@@ -46,7 +48,9 @@ public class ParallelLoader implements CitiesLoader {
     }
     @Override
     public void load(String fileLocation) throws RuntimeException {
-        var readResult = ReadWrite.read("./db/Cities/CityCount");
+        String[] locations = fileLocation.split(":");
+        assert locations.length == 2;
+        var readResult = ReadWrite.read(locations[0] + CITY_COUNT);
         if (readResult.isEmpty()) throw new RuntimeException("Wasn't able to load the city count!");
         int cityCount = Integer.parseInt(readResult.get());
         if (cityCount <= 0) throw new RuntimeException("City count was not valid!");
@@ -55,7 +59,7 @@ public class ParallelLoader implements CitiesLoader {
         cities = new City[cityCount];
         futures = new LinkedList<>();
 
-        try (var bf = new BufferedReader(new FileReader(fileLocation))){
+        try (var bf = new BufferedReader(new FileReader(locations[1]))){
             String line;
             int lineNumber = 0;
             while ( (line = bf.readLine()) != null ) {

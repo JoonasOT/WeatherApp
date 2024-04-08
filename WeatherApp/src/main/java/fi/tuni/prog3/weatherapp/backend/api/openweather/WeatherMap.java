@@ -1,6 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
-import fi.tuni.prog3.API.iCallable;
+import fi.tuni.prog3.weatherapp.WeatherApp;
+import fi.tuni.prog3.weatherapp.backend.api.iCallable;
 
 import java.util.Map;
 
@@ -17,7 +18,17 @@ public class WeatherMap {
         public static final String OSM_MAP = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     }
     public static class Callables {
-        public record WeatherMapCallable(WeatherLayer layer, int z, double lat, double log) implements iCallable {
+        public static class WeatherMapCallable implements iCallable {
+            private final WeatherLayer layer;
+            private final int z;
+            private final double lat;
+            private final double log;
+            public WeatherMapCallable(WeatherLayer layer, int z, double lat, double log) {
+                this.layer = layer;
+                this.z = z;
+                this.lat = lat;
+                this.log = log;
+            }
             @Override public String url() { return URLs.WEATHER_MAP; }
             @Override
             public Map<String, String> args() {
@@ -28,7 +39,22 @@ public class WeatherMap {
                         "{y}", Integer.toString(latitudeToY(lat, z)));
             }
         }
-        public record OpenStreetMapCallable(String userAgent, int z, double lat, double log) implements iCallable {
+        public static class OpenStreetMapCallable implements iCallable {
+            private final String userAgent;
+            private final int z;
+            private final double lat;
+            private final double log;
+            public OpenStreetMapCallable(String userAgent, int z, double lat, double log) {
+                this.userAgent = userAgent;
+                this.z = z;
+                this.lat = lat;
+                this.log = log;
+            }
+
+            public String getUserAgent() {
+                return userAgent;
+            }
+
             @Override public String url() { return URLs.OSM_MAP; }
             @Override
             public Map<String, String> args() {
@@ -37,9 +63,7 @@ public class WeatherMap {
                         "{x}", Integer.toString(longitudeToX(log, z)),
                         "{y}", Integer.toString(latitudeToY(lat, z)));
             }
-
         }
-
     }
 
     private static int longitudeToX(double log, int z) {

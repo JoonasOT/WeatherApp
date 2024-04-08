@@ -18,8 +18,7 @@ public class MaxMindGeoIP2 implements Database<GeoLocation> {
 
     @Override
     public Optional<GeoLocation> get(String ip) {
-        try {
-            DatabaseReader reader = new DatabaseReader.Builder(database).build();
+        try (DatabaseReader reader = new DatabaseReader.Builder(database).build()) {
             CityResponse res = reader.city(InetAddress.getByName(ip));
             return Optional.of(new GeoLocation(res.getCountry(), res.getCity()));
         }

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -39,9 +40,9 @@ public class Key {
         }
 
         Gson gson = new Gson();
-        Key fromJson = gson.fromJson(decryptedString, new TypeToken<Key>(){}.getType());
-        id = fromJson.id;
-        key = fromJson.key;
+        Map<String, String> fromJson = gson.fromJson(decryptedString, new TypeToken<Map<String, String>>(){}.getType());
+        id = fromJson.get("id");
+        key = fromJson.get("key");
     }
     public Key() {
         id = "Unknown";

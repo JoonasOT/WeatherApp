@@ -39,7 +39,7 @@ public class API {
             URL url = URI.create(API.addKey(url_, key)).toURL();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", callable.userAgent());
+            con.setRequestProperty("User-Agent", callable.getUserAgent());
 
 
             Response response = new Response(con);

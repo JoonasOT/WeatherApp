@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp;
 
+import fi.tuni.prog3.weatherapp.backend.Backend;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -42,6 +43,8 @@ public class WeatherApp extends Application {
     }
 
     public static void main(String[] args) {
+        Backend backend = Backend.getInstance();
+
         launch();
     }
 

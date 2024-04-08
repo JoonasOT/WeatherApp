@@ -1,10 +1,10 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
 import com.google.gson.Gson;
-import fi.tuni.prog3.API.OpenWeather.JSON_OBJs.*;
-import fi.tuni.prog3.API.OpenWeather.callables.CityNameCallable;
-import fi.tuni.prog3.API.OpenWeather.callables.LatLonCallable;
-import fi.tuni.prog3.API.OpenWeather.callables.ZipCodeCallable;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.*;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.CityNameCallable;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.LatLonCallable;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.ZipCodeCallable;
 
 import java.util.List;
 import java.util.Map;

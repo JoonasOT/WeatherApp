@@ -12,6 +12,8 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.loaders.CitiesLoader;
 import fi.tuni.prog3.weatherapp.backend.database.cities.loaders.FallbackLoader;
 import fi.tuni.prog3.weatherapp.backend.database.cities.loaders.ParallelLoader;
 
+import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -19,7 +21,7 @@ import java.util.stream.IntStream;
 
 import static fi.tuni.prog3.weatherapp.backend.database.cities.Params.FileStructure.*;
 
-public class Cities implements Database<List<Cities.City>> {
+public class Cities implements Database<List<City>> {
     public static int MAX_CITIES_RETURNED = 5;
     public record City(String name, String countryCode) {}
     private final String location;
@@ -68,7 +70,7 @@ public class Cities implements Database<List<Cities.City>> {
     }
     private boolean load() {
         try (CitiesLoader loader = ParallelLoader.GetInstance()) {
-            loader.load(cityListOptimisedLocation);
+            loader.load(String.join(":", new String[]{ DatabaseLocation, cityListOptimisedLocation}));
             loader.waitForReady();
             cities = loader.getCities();
             return true;
