@@ -5,7 +5,6 @@ import fi.tuni.prog3.weatherapp.backend.api.iCallable;
 import fi.tuni.prog3.weatherapp.backend.api.ip.IP_Getter;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.Database;
-import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
 import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
@@ -42,9 +41,12 @@ public final class Backend {
                                      .orElseGet(() -> new City("N/A", "N/A"));
         }
         else location = new City("N/A", "N/A");
-
+        System.out.println(location);
         OpenWeather = new OpenWeather.factory().construct();
         cityDatabase = new CityBuilder().setLocation(location.countryCode()).setDatabaseLocation(CITIES_DATABASE_LOC).build();
+
+        var cityQuery = cityDatabase.get(location.name());
+        cityQuery.ifPresent(System.out::println);
     }
     public static Backend getInstance() {
         return INSTANCE == null ? (INSTANCE = new Backend()) : INSTANCE;

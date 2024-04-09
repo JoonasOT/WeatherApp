@@ -40,9 +40,9 @@ public class Key {
         }
 
         Gson gson = new Gson();
-        Map<String, String> fromJson = gson.fromJson(decryptedString, new TypeToken<Map<String, String>>(){}.getType());
-        id = fromJson.get("id");
-        key = fromJson.get("key");
+        Key fromJson = gson.fromJson(decryptedString, Key.class);
+        id = fromJson.id;
+        key = fromJson.key;
     }
     public Key() {
         id = "Unknown";

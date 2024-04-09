@@ -5,12 +5,13 @@ import java.util.Optional;
 import java.util.zip.GZIPInputStream;
 
 public class ReadWrite {
+    public static final boolean PRINT_STACK_TRACE = false;
     public static boolean write(String where, String what) {
         try(var bw = new BufferedWriter(new FileWriter(where))) {
             bw.write(what);
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace(System.err);
+            if (PRINT_STACK_TRACE) e.printStackTrace(System.err);
             return false;
         }
         return true;
@@ -20,7 +21,7 @@ public class ReadWrite {
             fs.write(what);
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace(System.err);
+            if (PRINT_STACK_TRACE) e.printStackTrace(System.err);
             return false;
         }
         return true;
@@ -34,7 +35,7 @@ public class ReadWrite {
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace(System.err);
+            if (PRINT_STACK_TRACE) e.printStackTrace(System.err);
             return Optional.empty();
         }
         return Optional.of(content.substring(0, content.length() - 1));
@@ -51,7 +52,7 @@ public class ReadWrite {
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace(System.err);
+            if (PRINT_STACK_TRACE) e.printStackTrace(System.err);
             return Optional.empty();
         }
         return Optional.of(content.toString());

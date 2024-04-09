@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities;
 
+import com.google.gson.annotations.Expose;
 import fi.tuni.prog3.weatherapp.backend.api.API;
 import fi.tuni.prog3.weatherapp.backend.api.API_Factory;
 import fi.tuni.prog3.weatherapp.backend.api.iCallable;
@@ -23,6 +24,7 @@ import static fi.tuni.prog3.weatherapp.backend.database.cities.Params.FileStruct
 
 public class Cities implements Database<List<City>> {
     public static int MAX_CITIES_RETURNED = 5;
+
     public record City(String name, String countryCode) {}
     private final String location;
     private final String DatabaseLocation;
@@ -95,7 +97,7 @@ public class Cities implements Database<List<City>> {
             loader.load(location);
             cities = loader.getCities();
             return true;
-        } catch (Exception ignored) {
+        } catch (Exception e) {
             var getFromOW = getCityListFromOpenWeatherBulk();
             if (!getFromOW) return false;
 
@@ -103,7 +105,7 @@ public class Cities implements Database<List<City>> {
                 loader.load(location);
                 cities = loader.getCities();
                 return true;
-            } catch (Exception e) {
+            } catch (Exception ee) {
                 return false;
             }
         }

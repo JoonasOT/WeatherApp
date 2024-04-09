@@ -1,10 +1,12 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities.loaders;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public final class BaseLoader implements CitiesLoader {
@@ -39,7 +41,8 @@ public final class BaseLoader implements CitiesLoader {
         cities = new City[lines.size()];
 
         for (int i : IntStream.range(0, cities.length).toArray()) {
-            cities[i] = gson.fromJson(lines.get(i), City.class);
+            Map<String, String> res = gson.fromJson(lines.get(i), new TypeToken<Map<String, String>>(){}.getType());
+            cities[i] = new City(res.get("name"), res.get("countryCode"));
         }
         state = State.READY;
     }

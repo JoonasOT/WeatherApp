@@ -1,6 +1,8 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities.loaders;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
 
@@ -8,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,7 +45,8 @@ public class ParallelLoader implements CitiesLoader {
     private record LoadTask(int i, String line) implements Callable<Void> {
         @Override
         public Void call() {
-            cities[i] = gson.fromJson(line, City.class);
+            Map<String, String> res = gson.fromJson(line, new TypeToken<Map<String, String>>(){}.getType());
+            cities[i] = new City(res.get("name"), res.get("countryCode"));
             return null;
         }
     }
