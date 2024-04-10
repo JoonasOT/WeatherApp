@@ -1,6 +1,8 @@
 package fi.tuni.prog3.weatherapp;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
+import fi.tuni.prog3.weatherapp.frontend.search.Search;
+import fi.tuni.prog3.weatherapp.frontend.search.SearchResult;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,21 +26,37 @@ public class WeatherApp extends Application {
     @Override
     public void start(Stage stage) {
 
-        //Creating a new BorderPane.
         BorderPane root = new BorderPane();
-        root.setPadding(new Insets(10, 10, 10, 10));
-
-        //Adding HBox to the center of the BorderPane.
-        root.setCenter(getCenterVBox());
-
-        //Adding button to the BorderPane and aligning it to the right.
-        var quitButton = getQuitButton();
-        BorderPane.setMargin(quitButton, new Insets(10, 10, 0, 10));
-        root.setBottom(quitButton);
-        BorderPane.setAlignment(quitButton, Pos.TOP_RIGHT);
-
-        Scene scene = new Scene(root, 500, 700);
+        Scene scene = new Scene(root, 720, 720);
         stage.setScene(scene);
+
+        VBox searchArea = new VBox();
+        root.setCenter(searchArea);
+        root.setPadding(new Insets(280, 10, 10, 10));
+        TextField search = new TextField("TEST");
+        searchArea.setMaxWidth(150);
+        searchArea.getChildren().add(search);
+
+        var results = Search.GenerateResults("sinäjoki");
+        for (SearchResult sr : results) {
+            searchArea.getChildren().add(sr);
+        }
+
+
+        if (false) {
+            //Creating a new BorderPane.
+            root.setPadding(new Insets(10, 10, 10, 10));
+
+            //Adding HBox to the center of the BorderPane.
+            root.setCenter(getCenterVBox());
+
+            //Adding button to the BorderPane and aligning it to the right.
+            var quitButton = getQuitButton();
+            BorderPane.setMargin(quitButton, new Insets(10, 10, 0, 10));
+            root.setBottom(quitButton);
+            BorderPane.setAlignment(quitButton, Pos.TOP_RIGHT);
+        }
+
         stage.setTitle("WeatherApp");
         stage.show();
     }

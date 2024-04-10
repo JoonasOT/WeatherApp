@@ -30,15 +30,14 @@ public final class Backend {
 
         City location = tmp.get();
 
-        System.out.println(location);
         OpenWeather = new OpenWeather.factory().construct();
-        cityDatabase = new CityBuilder().setLocation(location.countryCode()).setDatabaseLocation(CITIES_DATABASE_LOC).build();
-
-        var cityQuery = cityDatabase.get(location.name());
-        cityQuery.ifPresent(System.out::println);
-
+        cityDatabase = new CityBuilder().setLocation(location.countryCode())
+                                        .setDatabaseLocation(CITIES_DATABASE_LOC).build();
     }
     public static Backend getInstance() {
         return INSTANCE == null ? (INSTANCE = new Backend()) : INSTANCE;
+    }
+    public List<City> getSimilarCities(String query) {
+        return cityDatabase.get(query).orElse(null);
     }
 }
