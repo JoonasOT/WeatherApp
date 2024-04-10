@@ -38,6 +38,9 @@ public final class Backend {
         return INSTANCE == null ? (INSTANCE = new Backend()) : INSTANCE;
     }
     public List<City> getSimilarCities(String query) {
-        return cityDatabase.get(query).orElse(null);
+        var result = cityDatabase.get(query);
+        return result.map(cities -> cities.stream().filter(city -> !city.name().equals("-")).toList())
+                .orElse(null);
+
     }
 }
