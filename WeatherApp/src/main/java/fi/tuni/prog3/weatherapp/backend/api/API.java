@@ -4,6 +4,7 @@ import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.Callables.Ope
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -23,24 +24,19 @@ public class API {
 
             URL url = URI.create(API.addKey(url_, key)).toURL();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
             con.setRequestMethod("GET");
-
-            Response response = new Response(con);
-            con.disconnect();
-            return Optional.of(response);
-        } catch (IOException ignored) {
-            return Optional.empty();
-        }
-    }
-    public Optional<Response> call(OpenStreetMapCallable callable) {
-        try {
-            String url_ = addArgs(callable.url(), callable.args());
-
-            URL url = URI.create(API.addKey(url_, key)).toURL();
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", callable.getUserAgent());
-
+            for (Method method : callable.getClass().getDeclaredMethods()) {
+                if (method.isAnnotationPresent(SetRequestProperty.class)) {
+                    try {
+                        con.setRequestProperty(method.getAnnotation(SetRequestProperty.class).Property(),
+                            method.invoke(callable).toString());
+                    } catch (Exception e) {
+                        System.err.println("Was unable to invoke " + method.getName());
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
 
             Response response = new Response(con);
             con.disconnect();

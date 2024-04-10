@@ -1,6 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
 import fi.tuni.prog3.weatherapp.WeatherApp;
+import fi.tuni.prog3.weatherapp.backend.api.SetRequestProperty;
 import fi.tuni.prog3.weatherapp.backend.api.iCallable;
 
 import java.util.Map;
@@ -50,7 +51,7 @@ public class WeatherMap {
                 this.lat = lat;
                 this.log = log;
             }
-
+            @SetRequestProperty(Property = "User-Agent")
             public String getUserAgent() {
                 return userAgent;
             }

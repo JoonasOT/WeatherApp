@@ -36,6 +36,7 @@ public final class Backend {
 
         var cityQuery = cityDatabase.get(location.name());
         cityQuery.ifPresent(System.out::println);
+
     }
     public static Backend getInstance() {
         return INSTANCE == null ? (INSTANCE = new Backend()) : INSTANCE;
