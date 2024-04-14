@@ -25,7 +25,15 @@ public class API {
             URL url = URI.create(API.addKey(url_, key)).toURL();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-            con.setRequestMethod("GET");
+            boolean methodSet = false;
+            for (Method method : callable.getClass().getDeclaredMethods()) {
+                if (method.isAnnotationPresent(RequestMethod.class)) {
+                    con.setRequestMethod(method.getAnnotation(RequestMethod.class).method());
+                    methodSet = true;
+                }
+            }
+            if (!methodSet) con.setRequestMethod("GET");
+
             for (Method method : callable.getClass().getDeclaredMethods()) {
                 if (method.isAnnotationPresent(SetRequestProperty.class)) {
                     try {
