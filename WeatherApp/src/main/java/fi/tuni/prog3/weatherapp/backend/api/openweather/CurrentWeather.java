@@ -1,6 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
 import com.google.gson.Gson;
+import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.CityNameCallable;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.LatLonCallable;
@@ -24,16 +25,19 @@ public class CurrentWeather {
         public static final String WEATHER_ZIP_CODE = "https://api.openweathermap.org/data/2.5/weather?zip={zip code}&appid={API key}";
     }
     public static class Callables {
+        @RequestMethod(method = "GET")
         public static class CurrentWeatherLatLonCallable extends LatLonCallable {
             public CurrentWeatherLatLonCallable(double lat, double lon) {
                 super(URLs.WEATHER_LAT_LON, lat, lon);
             }
         };
+        @RequestMethod(method = "GET")
         public static class CurrentWeatherCityNameCallable extends CityNameCallable {
             public CurrentWeatherCityNameCallable(String cityName) {
                 super(URLs.WEATHER_CITY_NAME, cityName);
             }
         };
+        @RequestMethod(method = "GET")
         public static class CurrentWeatherZipCodeCallable extends ZipCodeCallable {
             public CurrentWeatherZipCodeCallable(int zipCode) {
                 super(URLs.WEATHER_ZIP_CODE, zipCode);

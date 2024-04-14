@@ -2,6 +2,7 @@ package fi.tuni.prog3.weatherapp.backend.api.ip;
 
 import fi.tuni.prog3.weatherapp.backend.api.API;
 import fi.tuni.prog3.weatherapp.backend.api.API_Factory;
+import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
 import fi.tuni.prog3.weatherapp.backend.api.iCallable;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
@@ -15,24 +16,8 @@ public class IP_Getter {
         private static final String IP_ECHO = "https://ipecho.net/plain";
     };
     public static class Callables {
-        public static class IP_BASE_CALLABLE implements iCallable {
-            private final String url;
-            private final Map<String, String> args;
-            public IP_BASE_CALLABLE(String url, Map<String, String> args) {
-                this.url = url;
-                this.args = args;
-            }
-            @Override
-            public String url() {
-                return url;
-            }
-
-            @Override
-            public Map<String, String> args() {
-                return args;
-            }
-        }
-        // public record IP_BASE_CALLABLE(String url, Map<String, String> args) implements iCallable {}
+        @RequestMethod(method = "GET")
+        private record IP_BASE_CALLABLE(String url, Map<String, String> args) implements iCallable {}
         public static iCallable IP_AWS() { return new IP_BASE_CALLABLE(URLs.IP_AWS, iCallable.NO_ARGS); }
         public static iCallable IP_HAZIP() {
             return new IP_BASE_CALLABLE(URLs.IP_HAZ, iCallable.NO_ARGS);
