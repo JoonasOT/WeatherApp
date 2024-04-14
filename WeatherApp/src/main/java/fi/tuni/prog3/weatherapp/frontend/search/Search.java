@@ -9,18 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search {
-    public static ArrayList<SearchResult> GenerateResults(String word) {
-        Backend backend = Backend.getInstance();
-        List<Cities.City> cities = backend.getSimilarCities(word);
-        if (cities == null) return new ArrayList<>();
-
-        ArrayList<SearchResult> results = new ArrayList<>(cities.size());
-        for (Cities.City city : cities) {
-            System.out.println(city);
-            results.add(new SearchResult(city.name(), city.countryCode()));
-        }
-        return results;
-    }
     public static VBox toVBox(ArrayList<SearchResult> searchResults) {
         VBox results = new VBox();
         results.getChildren().addAll(searchResults);
