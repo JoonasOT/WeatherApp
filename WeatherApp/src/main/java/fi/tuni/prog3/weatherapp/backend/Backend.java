@@ -6,6 +6,7 @@ import fi.tuni.prog3.weatherapp.backend.api.ip.IPService;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap;
 import fi.tuni.prog3.weatherapp.backend.database.Database;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
 import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class Backend {
+    private static String USER_AGENT = "OpenWeatherProject JoonasOT";
     private static String CITIES_DATABASE_LOC = "./Databases/Cities";
     private static String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
     private static Backend INSTANCE;
@@ -58,5 +60,11 @@ public final class Backend {
     }
     public Optional<Response> getWeatherForecast(String cityName) {
         return OpenWeather.call(new WeatherForecast.Callables.WeatherForecastCityNameCallable(cityName));
+    }
+    public Optional<Response> getWeatherMap(WeatherMap.WeatherLayer layer, int z, double lat, double lon) {
+        return OpenWeather.call(new WeatherMap.Callables.WeatherMapCallable(layer, z, lat, lon));
+    }
+    public Optional<Response> getMap(int z, double lat, double lon) {
+        return OpenWeather.call(new WeatherMap.Callables.OpenStreetMapCallable(USER_AGENT, z, lat, lon));
     }
 }
