@@ -36,7 +36,6 @@ public final class Backend {
 
         City location = tmp.get();
 
-        System.out.println(location);
         OpenWeather = new OpenWeather.factory().construct();
         cityDatabase = new CityBuilder().setLocation(location.countryCode()).setDatabaseLocation(CITIES_DATABASE_LOC).build();
     }
