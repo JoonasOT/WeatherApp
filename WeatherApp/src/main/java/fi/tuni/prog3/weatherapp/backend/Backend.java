@@ -73,7 +73,7 @@ public final class Backend {
     public List<City> getFavourites() {
         return favourites;
     }
-    public static List<City> getHistory() {
+    public List<City> getHistory() {
         return history;
     }
 }
