@@ -15,12 +15,13 @@ public class WeatherScene extends Scene {
     private static Stage STAGE;
     private static final ScrollPane content = new ScrollPane();
     private static final BorderPane root = new BorderPane(content);
+    private static Cities.City currentCity;
     public WeatherScene(Stage stage) {
         super(root, 720, 720);
         if (INSTANCE != null) {
             throw new RuntimeException("WeatherScene has already been constructed!");
         }
-        root.setTop(CustomToolBar.getInstance());
+        root.setTop(new CustomToolBar());
         content.setMaxHeight(720 - CustomToolBar.HEIGHT);
         content.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -36,7 +37,7 @@ public class WeatherScene extends Scene {
     }
     public WeatherScene generateFromCity(Cities.City city) {
         VBox views = new VBox(0);
-
+        currentCity = city;
         views.getChildren().addAll(
                 new CurrentWeatherView(city),
                 new WeatherForecastView(city)
@@ -47,5 +48,8 @@ public class WeatherScene extends Scene {
     }
     public static void SwitchToSearchScene() {
         STAGE.setScene(SearchScene.getInstance());
+    }
+    public static void AddCityToFavourites() {
+        throw new RuntimeException("TODO");
     }
 }
