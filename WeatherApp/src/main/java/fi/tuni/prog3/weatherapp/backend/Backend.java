@@ -13,6 +13,8 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.MaxMindGeoIP2;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -24,6 +26,8 @@ public final class Backend {
     private static Backend INSTANCE;
     private final API OpenWeather;
     private final Database<List<City>> cityDatabase;
+    private static List<City> favourites = new LinkedList<>();
+    private static List<City> history = new LinkedList<>();
     private Backend(){
         IPService ipService = IPService.getInstance();
         AtomicReference<City> tmp = new AtomicReference<>(new City("N/A", "N/A"));
@@ -65,5 +69,11 @@ public final class Backend {
     }
     public Optional<Response> getMap(int z, double lat, double lon) {
         return OpenWeather.call(new WeatherMap.Callables.OpenStreetMapCallable(USER_AGENT, z, lat, lon));
+    }
+    public List<City> getFavourites() {
+        return favourites;
+    }
+    public static List<City> getHistory() {
+        return history;
     }
 }
