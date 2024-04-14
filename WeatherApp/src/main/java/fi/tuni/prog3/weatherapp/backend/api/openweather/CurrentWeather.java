@@ -10,9 +10,9 @@ import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.ZipCodeCallabl
 import java.util.List;
 
 public class CurrentWeather {
-    private record StatsCurrent(double temp, int pressure, int humidity, double temp_min, double temp_max){};
-    private record Wind(double speed, int deg){};
-    private record SysInfo(int type, int id, double message, String country, long sunrise, long sunset){};
+    public record StatsCurrent(double temp, int pressure, int humidity, double temp_min, double temp_max){};
+    public record Wind(double speed, int deg){};
+    public record SysInfo(int type, int id, double message, String country, long sunrise, long sunset){};
     public record JSON_OBJ(Coord coord, List<Weather> weather, String base, StatsCurrent main, int visibility, Wind wind,
                            Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){};
     public static JSON_OBJ fromJson(String json) {

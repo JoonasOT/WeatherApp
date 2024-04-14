@@ -4,6 +4,7 @@ import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
+import fi.tuni.prog3.weatherapp.frontend.WeatherFont;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -41,12 +42,15 @@ public class CurrentWeatherView extends BorderPane {
         VBox vBox = new VBox(5);
         vBox.setMaxSize(CENTER_WIDTH, CENTER_WIDTH);
 
-        Label icon = new Label("Icon: " + jsonOBJ.weather().get(0).description());
-        icon.setFont(new Font(20));
+        Label icon = new Label(WeatherFont.CodeToChar(jsonOBJ.weather().get(0).id(), jsonOBJ.sys().sunset() >= System.currentTimeMillis()));
+        Font iconFont = Font.loadFont(WeatherFont.LOCATION, 200);
+        icon.setFont(iconFont);
+
         icon.setMinSize(CENTER_WIDTH, CENTER_WIDTH);
+        icon.setAlignment(Pos.CENTER);
         icon.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(0))));
 
-        Label description = new Label("Aka: " + jsonOBJ.weather().get(0).description());
+        Label description = new Label("Currently forecasting: " + jsonOBJ.weather().get(0).description());
         description.setMinWidth(CENTER_WIDTH);
         description.setTextAlignment(TextAlignment.CENTER);
         Label where = new Label(jsonOBJ.name());
