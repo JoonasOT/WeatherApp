@@ -2,12 +2,12 @@ package fi.tuni.prog3.weatherapp.frontend.scenes;
 
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
+import fi.tuni.prog3.weatherapp.frontend.weather.CurrentWeatherView;
+import fi.tuni.prog3.weatherapp.frontend.weather.WeatherForecastView;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class WeatherScene extends Scene {
@@ -21,6 +21,9 @@ public class WeatherScene extends Scene {
             throw new RuntimeException("WeatherScene has already been constructed!");
         }
         root.setTop(CustomToolBar.getInstance());
+        content.setMaxHeight(720 - CustomToolBar.HEIGHT);
+        content.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
         STAGE = stage;
 
         INSTANCE = this;
@@ -32,8 +35,13 @@ public class WeatherScene extends Scene {
         return INSTANCE;
     }
     public WeatherScene generateFromCity(Cities.City city) {
+        VBox views = new VBox(0);
 
-        content.setContent(new Label(city.toString()));
+        views.getChildren().addAll(
+                new CurrentWeatherView(city),
+                new WeatherForecastView(city)
+        );
+        content.setContent(views);
 
         return INSTANCE;
     }

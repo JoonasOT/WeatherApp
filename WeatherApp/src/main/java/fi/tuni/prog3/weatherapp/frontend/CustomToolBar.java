@@ -21,12 +21,14 @@ import java.util.List;
 
 public class CustomToolBar extends ToolBar {
     private static CustomToolBar INSTANCE;
-    private static int HEIGHT = 25;
+    public static int HEIGHT = 25;
     private CustomToolBar() {
         super();
         super.setPrefHeight(HEIGHT);
         super.setMaxHeight(HEIGHT);
         super.setMinHeight(HEIGHT);
+        super.setMaxWidth(720);
+
         super.setPadding(new Insets(0));
         super.getItems().addAll(BackToSearch(), Favourites(), History());
     }
