@@ -34,7 +34,6 @@ public class CurrentWeatherView extends BorderPane {
             super.setCenter(new Label("Call to OpenWeather went amiss!\nTry again with another city!"));
         } else {
             CurrentWeather.JSON_OBJ weather = CurrentWeather.fromJson(response.get().getData());
-            System.out.println(weather);
             super.setCenter(ConstructMiddle(weather));
         }
     }
