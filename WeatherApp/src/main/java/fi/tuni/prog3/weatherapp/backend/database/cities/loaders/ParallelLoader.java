@@ -1,7 +1,6 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities.loaders;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
@@ -18,6 +17,11 @@ import java.util.concurrent.Future;
 
 import static fi.tuni.prog3.weatherapp.backend.database.cities.Params.FileStructure.CITY_COUNT;
 
+/**
+ * A singleton that tries to load the optimised version of the cities list in parallel.
+ *
+ * @author Joonas Tuominen
+ */
 public class ParallelLoader implements CitiesLoader {
     private static ParallelLoader INSTANCE;
     private State state = State.IDLE;
@@ -25,31 +29,62 @@ public class ParallelLoader implements CitiesLoader {
     private static City[] cities;
     private static LinkedList<Future<Void>> futures = new LinkedList<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
+
+    /**
+     * Private constructor for singleton.
+     */
     private ParallelLoader(){}
+
+    /**
+     * Get the instance of ParallelLoader or construct it.
+     * @return The instance of base loader.
+     */
     public static ParallelLoader GetInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ParallelLoader();
-        }
-        return INSTANCE;
+        return INSTANCE == null ? (INSTANCE = new ParallelLoader()) : INSTANCE;
     }
+
+    /**
+     * Get the state of the loader.
+     * @return State of the CitiesLoader.
+     */
     @Override
     public State getState() {
         return state;
     }
 
+    /**
+     * Shutdown the used executor service.
+     */
     @Override
     public void close() {
         executor.shutdown();
     }
 
+    /**
+     * A record that is used to run loading in parallel
+     * @param i The number of the line aka the index of the city
+     * @param line The line of JSON containing the description of a city.
+     */
     private record LoadTask(int i, String line) implements Callable<Void> {
+        /**
+         * The function ran in parallel by the executor service that converts line to City and stores it in cities[].
+         * @return null
+         */
         @Override
         public Void call() {
+            // FIXME: This can be converted back from a map
             Map<String, String> res = gson.fromJson(line, new TypeToken<Map<String, String>>(){}.getType());
             cities[i] = new City(res.get("name"), res.get("countryCode"));
             return null;
         }
     }
+
+    /**
+     * A method that tries to load the optimised city list from given location in parallel.
+     * @param fileLocation The folder location of the database and the file location from which we want to load separated
+     *                     by a colon (:)
+     * @throws RuntimeException If we couldn't find the file or parallel processing ran into an error.
+     */
     @Override
     public void load(String fileLocation) throws RuntimeException {
         String[] locations = fileLocation.split(":");
@@ -79,11 +114,19 @@ public class ParallelLoader implements CitiesLoader {
         }
     }
 
+    /**
+     * Get the cities we loaded.
+     * @return The cities we have loaded.
+     */
     @Override
     public City[] getCities() {
         state = State.IDLE;
         return cities;
     }
+
+    /**
+     * Function that waits until load is ready.
+     */
     @Override
     public void waitForReady() {
         for (Future<Void> f : futures) {
