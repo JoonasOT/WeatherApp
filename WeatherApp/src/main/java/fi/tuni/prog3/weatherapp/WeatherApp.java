@@ -1,22 +1,11 @@
 package fi.tuni.prog3.weatherapp;
 
-import fi.tuni.prog3.weatherapp.backend.Backend;
+import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
 import fi.tuni.prog3.weatherapp.frontend.scenes.SearchScene;
-import fi.tuni.prog3.weatherapp.frontend.search.Search;
-import fi.tuni.prog3.weatherapp.frontend.search.SearchResult;
+import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 /**
@@ -26,13 +15,18 @@ public class WeatherApp extends Application {
 
     @Override
     public void start(Stage stage) {
+        stage.initStyle(StageStyle.UTILITY);
 
-        stage.setScene(SearchScene.create());
+        new SearchScene(stage);
+        new WeatherScene(stage);
 
-
-
+        stage.setScene(SearchScene.getInstance());
 
         stage.setTitle("WeatherApp");
         stage.show();
+    }
+    @Override
+    public void stop() {
+        System.out.println("Shutting down!");
     }
 }

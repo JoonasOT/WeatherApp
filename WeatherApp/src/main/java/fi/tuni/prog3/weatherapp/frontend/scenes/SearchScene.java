@@ -1,33 +1,38 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
-import fi.tuni.prog3.weatherapp.frontend.search.Search;
-import fi.tuni.prog3.weatherapp.frontend.search.SearchResult;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
+import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
+import fi.tuni.prog3.weatherapp.frontend.search.SuggestionTextField;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
-public class SearchScene {
-    public static Scene create() {
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 720, 720);
-        VBox searchAndResults = new VBox(5);
-        // searchAndResults.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(5), new Insets(0))));
-        TextField search = Search.GenerateSearchField("sinäjoki");
-        BorderPane results = new BorderPane();
-        searchAndResults.getChildren().addAll(search, results);
+public class SearchScene extends Scene {
+    private static SearchScene INSTANCE;
+    private static Stage STAGE;
+    private static final BorderPane root = new BorderPane();
+    public SearchScene(Stage stage){
+        super(root, 720, 720);
 
-        root.setCenter(searchAndResults);
-        searchAndResults.setMaxWidth(150);
-        root.setPadding(new Insets(360, 10, 10, 10));
-        results.setTop(Search.toVBox(Search.GenerateResults(search.getText())));
-        search.setOnKeyReleased(keyEvent -> {
-            results.getChildren().clear();
-            results.setTop(Search.toVBox(Search.GenerateResults(search.getText())));
-        });
+        if (INSTANCE != null) {
+            throw new RuntimeException("SearchScene has already been constructed!");
+        }
 
-        return scene;
+        STAGE = stage;
+
+        SuggestionTextField query = new SuggestionTextField();
+        query.setFocusTraversable(false);
+        query.setMaxWidth(200);
+        root.setCenter(query);
+
+        INSTANCE = this;
+    }
+    public static SearchScene getInstance() {
+        if (INSTANCE == null) {
+            throw new RuntimeException("SearchScene has not been constructed!");
+        }
+        return INSTANCE;
+    }
+    public static void ChangeToWeatherScene(Cities.City city) {
+        STAGE.setScene(WeatherScene.getInstance().generateFromCity(city));
     }
 }
