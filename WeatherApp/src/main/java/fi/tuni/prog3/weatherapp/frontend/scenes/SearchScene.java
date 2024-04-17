@@ -20,6 +20,7 @@ public class SearchScene extends Scene {
         STAGE = stage;
 
         SuggestionTextField query = new SuggestionTextField();
+        query.setFocusTraversable(false);
         query.setMaxWidth(200);
         root.setCenter(query);
 

@@ -25,4 +25,8 @@ public class WeatherApp extends Application {
         stage.setTitle("WeatherApp");
         stage.show();
     }
+    @Override
+    public void stop() {
+        System.out.println("Shutting down!");
+    }
 }
