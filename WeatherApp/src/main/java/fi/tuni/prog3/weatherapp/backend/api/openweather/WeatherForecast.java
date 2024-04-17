@@ -19,10 +19,10 @@ public class WeatherForecast {
                                 double pop, Map<String, Double> rain, PartOfDay sys, String dt_txt){};
     public record CityStats(long id, String name, Coord coord, String country, long population, int timezone,
                              long sunrise, long sunset){};
-    public record JSON_OBJ(String cod, int message, int cnt, List<WeatherState> list,  CityStats city){};
-    public static JSON_OBJ fromJson(String json) {
+    public record WeatherForecastObj(String cod, int message, int cnt, List<WeatherState> list, CityStats city){};
+    public static WeatherForecastObj fromJson(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, JSON_OBJ.class);
+        return gson.fromJson(json, WeatherForecastObj.class);
     }
     public static class URLs {
         public static final String WEATHER_LAT_LON = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}";

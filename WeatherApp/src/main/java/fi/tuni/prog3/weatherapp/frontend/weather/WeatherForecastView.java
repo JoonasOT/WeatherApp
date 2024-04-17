@@ -26,7 +26,7 @@ public class WeatherForecastView extends ScrollPane {
         } else if (!response.get().CallWasOK()) {
             super.setContent(new Label("Call to OpenWeather went amiss!\nTry again with another city!"));
         } else {
-            WeatherForecast.JSON_OBJ json = WeatherForecast.fromJson(response.get().getData());
+            WeatherForecast.WeatherForecastObj json = WeatherForecast.fromJson(response.get().getData());
             for (WeatherForecast.WeatherState w : json.list()) {
                 states.getChildren().add(new Label(w.toString()));
             }

@@ -2,11 +2,9 @@ package fi.tuni.prog3.weatherapp.backend;
 
 import fi.tuni.prog3.weatherapp.backend.api.API;
 import fi.tuni.prog3.weatherapp.backend.api.Response;
+import fi.tuni.prog3.weatherapp.backend.api.iCallable;
 import fi.tuni.prog3.weatherapp.backend.api.ip.IPService;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.*;
 import fi.tuni.prog3.weatherapp.backend.database.Database;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities.City;
 import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
@@ -51,6 +49,21 @@ public final class Backend {
         return result.map(cities -> cities.stream().filter(city -> !city.name().equals("-")).toList())
                 .orElse(null);
 
+    }
+    public Optional<Response> callOpenWeatherWith(iCallable callable) {
+        return OpenWeather.call(callable);
+    }
+    public class JSON_OBJ<T> {
+        public Optional<T> callOpenWeatherWith(iCallable callable) {
+            var tmp = OpenWeather.call(callable);
+            if (tmp.isPresent() && tmp.get().CallWasOK()) {
+
+            }
+        }
+    }
+    public Optional<>
+    public Optional<Response> getCityLocation(City city) {
+        return OpenWeather.call(new Geocoder.Callables.GeocoderCallable(city, 1));
     }
     public Optional<Response> getCurrentWeather(double lat, double lon) {
         return OpenWeather.call(new CurrentWeather.Callables.CurrentWeatherLatLonCallable(lat, lon));

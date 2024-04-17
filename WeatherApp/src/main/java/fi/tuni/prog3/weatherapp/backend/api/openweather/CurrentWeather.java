@@ -13,11 +13,11 @@ public class CurrentWeather {
     public record StatsCurrent(double temp, int pressure, int humidity, double temp_min, double temp_max){};
     public record Wind(double speed, int deg){};
     public record SysInfo(int type, int id, double message, String country, long sunrise, long sunset){};
-    public record JSON_OBJ(Coord coord, List<Weather> weather, String base, StatsCurrent main, int visibility, Wind wind,
-                           Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){};
-    public static JSON_OBJ fromJson(String json) {
+    public record CurrentWeatherObj(Coord coord, List<Weather> weather, String base, StatsCurrent main, int visibility, Wind wind,
+                                    Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){};
+    public static CurrentWeatherObj fromJson(String json) {
         Gson gson = new Gson();
-        return gson.fromJson(json, JSON_OBJ.class);
+        return gson.fromJson(json, CurrentWeatherObj.class);
     }
     public static class URLs {
         public static final String WEATHER_LAT_LON = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}";

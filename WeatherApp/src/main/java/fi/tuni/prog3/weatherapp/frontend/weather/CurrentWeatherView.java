@@ -34,11 +34,11 @@ public class CurrentWeatherView extends BorderPane {
         } else if (!response.get().CallWasOK()) {
             super.setCenter(new Label("Call to OpenWeather went amiss!\nTry again with another city!"));
         } else {
-            CurrentWeather.JSON_OBJ weather = CurrentWeather.fromJson(response.get().getData());
+            CurrentWeather.CurrentWeatherObj weather = CurrentWeather.fromJson(response.get().getData());
             super.setCenter(ConstructMiddle(weather));
         }
     }
-    private static VBox ConstructMiddle(CurrentWeather.JSON_OBJ jsonOBJ) {
+    private static VBox ConstructMiddle(CurrentWeather.CurrentWeatherObj jsonOBJ) {
         VBox vBox = new VBox(5);
         vBox.setMaxSize(CENTER_WIDTH, CENTER_WIDTH);
 
