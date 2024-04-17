@@ -1,9 +1,9 @@
 package fi.tuni.prog3.weatherapp.backend.api.ip;
 
-import fi.tuni.prog3.weatherapp.backend.api.API;
-import fi.tuni.prog3.weatherapp.backend.api.API_Factory;
-import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
-import fi.tuni.prog3.weatherapp.backend.api.iCallable;
+import fi.tuni.prog3.weatherapp.backend.api.general.API;
+import fi.tuni.prog3.weatherapp.backend.api.general.API_Factory;
+import fi.tuni.prog3.weatherapp.backend.api.general.RequestMethod;
+import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
 import java.util.Map;

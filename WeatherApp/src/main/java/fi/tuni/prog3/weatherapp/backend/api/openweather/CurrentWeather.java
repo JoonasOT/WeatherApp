@@ -1,7 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
 import com.google.gson.Gson;
-import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
+import fi.tuni.prog3.weatherapp.backend.api.general.RequestMethod;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.CityNameCallable;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.LatLonCallable;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CurrentWeather {
     public record StatsCurrent(double temp, int pressure, int humidity, double temp_min, double temp_max){};
-    public record Wind(double speed, int deg){};
+    public record Wind(double speed, int deg, double gust){};
     public record SysInfo(int type, int id, double message, String country, long sunrise, long sunset){};
     public record CurrentWeatherObj(Coord coord, List<Weather> weather, String base, StatsCurrent main, int visibility, Wind wind,
                                     Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){};

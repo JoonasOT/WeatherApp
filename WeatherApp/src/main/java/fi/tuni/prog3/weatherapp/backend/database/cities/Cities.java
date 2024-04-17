@@ -1,9 +1,8 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities;
 
-import com.google.gson.annotations.Expose;
-import fi.tuni.prog3.weatherapp.backend.api.API;
-import fi.tuni.prog3.weatherapp.backend.api.API_Factory;
-import fi.tuni.prog3.weatherapp.backend.api.iCallable;
+import fi.tuni.prog3.weatherapp.backend.api.general.API;
+import fi.tuni.prog3.weatherapp.backend.api.general.API_Factory;
+import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import fi.tuni.prog3.weatherapp.backend.database.Database;
 import fi.tuni.prog3.weatherapp.backend.security.Key;

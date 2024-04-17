@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp.backend.api;
+package fi.tuni.prog3.weatherapp.backend.api.general;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp.backend.api;
+package fi.tuni.prog3.weatherapp.backend.api.general;
 
 public enum HTTPS_CODE {
     INFO (100, 199),

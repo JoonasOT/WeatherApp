@@ -1,8 +1,8 @@
 package fi.tuni.prog3.weatherapp.backend;
 
-import fi.tuni.prog3.weatherapp.backend.api.API;
-import fi.tuni.prog3.weatherapp.backend.api.Response;
-import fi.tuni.prog3.weatherapp.backend.api.iCallable;
+import fi.tuni.prog3.weatherapp.backend.api.general.API;
+import fi.tuni.prog3.weatherapp.backend.api.general.Response;
+import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 import fi.tuni.prog3.weatherapp.backend.api.ip.IPService;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.*;
 import fi.tuni.prog3.weatherapp.backend.database.Database;
@@ -11,7 +11,8 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.MaxMindGeoIP2;
 
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,10 @@ public final class Backend {
         AtomicReference<City> tmp = new AtomicReference<>(new City("N/A", "N/A"));
         ipService.getIP().ifPresent(ip -> {
             Database<GeoLocation> geoipDatabase = new MaxMindGeoIP2(GEOIP_DATABASE_LOC);
+            if (ip.equals("127.0.0.1")) {
+                System.err.println("User doesn't seem to be connected to the internet!");
+                tmp.set(new City("N/A", "N/A"));
+            }
             var locationResult = geoipDatabase.get(ip);
             tmp.set(locationResult.map(geoLoc -> new City(geoLoc.city().getName(), geoLoc.country().getIsoCode()))
                     .orElseGet(() -> new City("N/A", "N/A")));
@@ -53,36 +58,29 @@ public final class Backend {
     public Optional<Response> callOpenWeatherWith(iCallable callable) {
         return OpenWeather.call(callable);
     }
-    public class JSON_OBJ<T> {
-        public Optional<T> callOpenWeatherWith(iCallable callable) {
-            var tmp = OpenWeather.call(callable);
-            if (tmp.isPresent() && tmp.get().CallWasOK()) {
-
+    public <R> Optional<R> callOpenWeatherWith(iCallable callable, Class fromJsonClass) {
+        var tmp = OpenWeather.call(callable);
+        if (tmp.isPresent() && tmp.get().CallWasOK()) {
+            for (var m : fromJsonClass.getDeclaredMethods()) {
+                if (m.getName().equals("fromJson")) {
+                    try {
+                        return Optional.of((R)m.invoke(null, tmp.get().getData()));
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace(System.err);
+                    }
+                }
             }
         }
+        return Optional.empty();
     }
-    public Optional<>
-    public Optional<Response> getCityLocation(City city) {
-        return OpenWeather.call(new Geocoder.Callables.GeocoderCallable(city, 1));
+    public void addFavourite(City city) { favourites.add(city); }
+    public void removeFromFavourites(City city) {
+        try {
+            favourites.remove(city);
+        } catch (Exception ignored) {}
     }
-    public Optional<Response> getCurrentWeather(double lat, double lon) {
-        return OpenWeather.call(new CurrentWeather.Callables.CurrentWeatherLatLonCallable(lat, lon));
-    }
-    public Optional<Response> getCurrentWeather(String cityName) {
-        return OpenWeather.call(new CurrentWeather.Callables.CurrentWeatherCityNameCallable(cityName));
-    }
-    public Optional<Response> getWeatherForecast(double lat, double lon) {
-        return OpenWeather.call(new WeatherForecast.Callables.WeatherForecastLatLonCallable(lat, lon));
-    }
-    public Optional<Response> getWeatherForecast(String cityName) {
-        return OpenWeather.call(new WeatherForecast.Callables.WeatherForecastCityNameCallable(cityName));
-    }
-    public Optional<Response> getWeatherMap(WeatherMap.WeatherLayer layer, int z, double lat, double lon) {
-        return OpenWeather.call(new WeatherMap.Callables.WeatherMapCallable(layer, z, lat, lon));
-    }
-    public Optional<Response> getMap(int z, double lat, double lon) {
-        return OpenWeather.call(new WeatherMap.Callables.OpenStreetMapCallable(USER_AGENT, z, lat, lon));
-    }
+    public void addToHistory(City city) { history.add(city); }
     public List<City> getFavourites() {
         return favourites;
     }

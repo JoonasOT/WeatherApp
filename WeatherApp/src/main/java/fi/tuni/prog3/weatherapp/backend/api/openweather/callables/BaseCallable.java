@@ -1,7 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather.callables;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
-import fi.tuni.prog3.weatherapp.backend.api.iCallable;
+import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 
 import java.util.HashMap;
 import java.util.Map;

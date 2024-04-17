@@ -1,7 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
 import com.google.gson.Gson;
-import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
+import fi.tuni.prog3.weatherapp.backend.api.general.RequestMethod;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.CityNameCallable;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.LatLonCallable;

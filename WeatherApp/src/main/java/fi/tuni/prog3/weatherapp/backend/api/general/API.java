@@ -1,6 +1,5 @@
-package fi.tuni.prog3.weatherapp.backend.api;
+package fi.tuni.prog3.weatherapp.backend.api.general;
 
-import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.Callables.OpenStreetMapCallable;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
 import java.io.IOException;
