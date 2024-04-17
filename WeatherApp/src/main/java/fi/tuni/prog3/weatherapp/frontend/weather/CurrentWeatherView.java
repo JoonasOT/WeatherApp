@@ -4,7 +4,6 @@ import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
-import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.frontend.WeatherFont;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.geometry.Insets;
@@ -31,8 +30,6 @@ public class CurrentWeatherView extends BorderPane {
         Backend backend = Backend.getInstance();
 
         Coord coord = WeatherScene.getCoords();
-
-        System.err.println(WeatherScene.getCity());
 
         Optional<Response> response = backend.callOpenWeatherWith(
                 coord != null ?
