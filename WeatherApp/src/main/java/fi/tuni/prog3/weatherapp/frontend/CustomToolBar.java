@@ -42,13 +42,21 @@ public class CustomToolBar extends ToolBar {
     }
     private static Button AddToFavourites() {
         Button button = new Button("star");
-        button.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));
+        // button.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));
         button.setPadding(new Insets(0));
         button.setPrefHeight(HEIGHT);
         button.setMaxHeight(HEIGHT);
         button.setMinHeight(HEIGHT);
 
-        button.setOnAction(x -> WeatherScene.AddCityToFavourites());
+        button.setOnAction(x -> {
+            WeatherScene.AddCityToFavourites();
+            if (WeatherScene.isThisFavourite()) {
+                button.setStyle("-fx-text-fill: yellow;");
+            }
+            else {
+                button.setStyle("-fx-text-fill: black;");
+            }
+        });
 
         return button;
     }

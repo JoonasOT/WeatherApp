@@ -1,7 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
-import fi.tuni.prog3.weatherapp.backend.api.API;
-import fi.tuni.prog3.weatherapp.backend.api.API_Factory;
+import fi.tuni.prog3.weatherapp.backend.api.general.API;
+import fi.tuni.prog3.weatherapp.backend.api.general.API_Factory;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
 import java.io.IOException;

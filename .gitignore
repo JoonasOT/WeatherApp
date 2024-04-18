@@ -1,6 +1,7 @@
 /WeatherApp/target/
 
 Secrets/
+*.log
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

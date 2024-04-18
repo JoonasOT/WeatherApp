@@ -1,8 +1,8 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
-import fi.tuni.prog3.weatherapp.backend.api.RequestMethod;
-import fi.tuni.prog3.weatherapp.backend.api.SetRequestProperty;
-import fi.tuni.prog3.weatherapp.backend.api.iCallable;
+import fi.tuni.prog3.weatherapp.backend.api.general.RequestMethod;
+import fi.tuni.prog3.weatherapp.backend.api.general.SetRequestProperty;
+import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 
 import java.util.Map;
 
