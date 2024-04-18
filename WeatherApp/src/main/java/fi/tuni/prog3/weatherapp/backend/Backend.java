@@ -11,11 +11,10 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.MaxMindGeoIP2;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public final class Backend {
@@ -30,16 +29,38 @@ public final class Backend {
     private Backend(){
         IPService ipService = IPService.getInstance();
         AtomicReference<City> tmp = new AtomicReference<>(new City("N/A", "N/A"));
-        ipService.getIP().ifPresent(ip -> {
-            Database<GeoLocation> geoipDatabase = new MaxMindGeoIP2(GEOIP_DATABASE_LOC);
-            if (ip.equals("127.0.0.1")) {
-                System.err.println("User doesn't seem to be connected to the internet!");
-                tmp.set(new City("N/A", "N/A"));
-            }
-            var locationResult = geoipDatabase.get(ip);
-            tmp.set(locationResult.map(geoLoc -> new City(geoLoc.city().getName(), geoLoc.country().getIsoCode()))
-                    .orElseGet(() -> new City("N/A", "N/A")));
-        });
+
+        AtomicBoolean ok = new AtomicBoolean(false);
+        do {
+            System.out.println("Trying to solve for the user's public IP address");
+            ipService.solveIP();
+
+            ipService.getIP().ifPresentOrElse(ip -> {
+                System.out.println("IP obtained with " + ipService.getServiceProviderName());
+
+                Database<GeoLocation> geoipDatabase = new MaxMindGeoIP2(GEOIP_DATABASE_LOC);
+                if (ip.isEmpty()) {
+                    System.err.println("We weren't able to contact IP service provider!");
+                    return;
+                }
+                var locationResult = geoipDatabase.get(ip);
+                if (locationResult.isPresent()) {
+                    var cityName = locationResult.get().city().getName();
+                    var countryCode = locationResult.get().country().getIsoCode();
+                    System.out.println("User's location set to: " + cityName + ", " + countryCode);
+                    tmp.set(new City(cityName, countryCode));
+                    ok.set(true);
+                } else {
+                    System.err.println("Weren't able to fetch user's location from DB!");
+                    tmp.set(new City("N/A", "N/A"));
+                }
+            },
+            () -> {
+                try { Thread.sleep(1500); } catch (Exception ignored) { /* ??? */}
+            });
+        } while (!ok.get()); // TODO: Maybe display this in the GUI?
+
+        System.out.println("Geolocation estimation complete!");
 
         City location = tmp.get();
 

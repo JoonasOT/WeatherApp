@@ -15,6 +15,8 @@ public final class IPService {
     private static IPService INSTANCE;
     private static final API ipGetter = new IP_Getter.factory().construct();
     private static Optional<String> IP = Optional.empty();
+    private static boolean connectionWasOK = false;
+    private static Method ipGetterMethod = null;
 
     /**
      * Hidden constructor that solves the user's public IP.
@@ -39,13 +41,36 @@ public final class IPService {
         for (Method method : IP_Getter.Callables.class.getDeclaredMethods()) {
             try {
                 var ipResult = ipGetter.call((iCallable) method.invoke(null));
+
                 if (ipResult.isEmpty()) continue;
+
+                connectionWasOK = ipResult.get().ConnectionIsOk();
+                if (!connectionWasOK || !ipResult.get().CallWasOK()) continue;
+
                 IP = Optional.of(ipResult.get().getData());
+                ipGetterMethod = method;
                 return;
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
+            connectionWasOK = false;
         }
+    }
+
+    /**
+     * A getter for checking whether the connection was OK. Tests if the user is connected to the internet.
+     * @return False if we couldn't reach the IP service.
+     */
+    public boolean connectionWasOK() {
+        return connectionWasOK;
+    }
+
+    /**
+     * Returns the name of the last called IP getter
+     * @return The name of the method we tried to get IP with.
+     */
+    public String getServiceProviderName() {
+        return ipGetterMethod != null ? ipGetterMethod.getName() : "No method call was successful :(";
     }
 
     /**
