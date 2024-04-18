@@ -1,0 +1,46 @@
+2024-04-18 20:45:39 ERROR Trying to solve for the user's public IP address
+2024-04-18 20:45:39 INFO  IP obtained with IP_AWS
+2024-04-18 20:45:39 INFO  User's location set to: Tampere, FI
+2024-04-18 20:45:39 INFO  Geolocation estimation complete!
+2024-04-18 20:45:39 INFO  Constructing the OpenWeather API
+2024-04-18 20:45:39 INFO  OpenWeather API constructed!
+2024-04-18 20:45:39 INFO  Constructing the cities database
+2024-04-18 20:45:40 INFO  Cities database constructed!
+2024-04-18 20:46:29 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:30 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:32 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:33 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:35 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:36 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:38 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:39 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:41 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:42 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:44 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:45 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:47 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:48 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:50 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:46:50 INFO  IP obtained with IP_HAZIP
+2024-04-18 20:46:50 INFO  User's location set to: Tampere, FI
+2024-04-18 20:46:50 INFO  Geolocation estimation complete!
+2024-04-18 20:46:50 INFO  Constructing the OpenWeather API
+2024-04-18 20:46:51 INFO  OpenWeather API constructed!
+2024-04-18 20:46:51 INFO  Constructing the cities database
+2024-04-18 20:46:51 INFO  Cities database constructed!
+2024-04-18 20:54:03 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:54:03 INFO  IP obtained with IP_HAZIP
+2024-04-18 20:54:03 INFO  User's location set to: Tampere, FI
+2024-04-18 20:54:03 INFO  Geolocation estimation complete!
+2024-04-18 20:54:03 INFO  Constructing the OpenWeather API
+2024-04-18 20:54:03 INFO  OpenWeather API constructed!
+2024-04-18 20:54:03 INFO  Constructing the cities database
+2024-04-18 20:54:04 INFO  Cities database constructed!
+2024-04-18 20:54:40 INFO  Trying to solve for the user's public IP address
+2024-04-18 20:54:40 INFO  IP obtained with IP_ECHO
+2024-04-18 20:54:40 INFO  User's location set to: Tampere, FI
+2024-04-18 20:54:40 INFO  Geolocation estimation complete!
+2024-04-18 20:54:40 INFO  Constructing the OpenWeather API
+2024-04-18 20:54:41 INFO  OpenWeather API constructed!
+2024-04-18 20:54:41 INFO  Constructing the cities database
+2024-04-18 20:54:41 INFO  Cities database constructed!
