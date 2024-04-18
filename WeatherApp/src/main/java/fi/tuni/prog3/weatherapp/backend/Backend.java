@@ -82,15 +82,18 @@ public final class Backend {
         return INSTANCE == null ? (INSTANCE = new Backend()) : INSTANCE;
     }
     public List<City> getSimilarCities(String query) {
+        logger.info("Got similar cities for: " + query);
         var result = cityDatabase.get(query);
         return result.map(cities -> cities.stream().filter(city -> !city.name().equals("-")).toList())
                 .orElse(null);
 
     }
     public Optional<Response> callOpenWeatherWith(iCallable callable) {
+        logger.info("Calling OW with: " + callable.getClass().getName());
         return OpenWeather.call(callable);
     }
     public <R> Optional<R> callOpenWeatherWith(iCallable callable, Class fromJsonClass) {
+        logger.info("Calling OW with: " + callable.getClass().getName() + " and " + fromJsonClass.getName());
         var tmp = OpenWeather.call(callable);
         if (tmp.isPresent() && tmp.get().CallWasOK()) {
             for (var m : fromJsonClass.getDeclaredMethods()) {
@@ -106,17 +109,28 @@ public final class Backend {
         }
         return Optional.empty();
     }
-    public void addFavourite(City city) { favourites.add(city); }
+    public void addFavourite(City city) {
+        logger.info("Added " + city + " to favourites");
+        favourites.add(city);
+    }
     public void removeFromFavourites(City city) {
         try {
             favourites.remove(city);
-        } catch (Exception ignored) {}
+            logger.info("Removed " + city + " from favourites");
+        } catch (Exception ignored) {
+            logger.error("Couldn't remove " + city + " from favourites");
+        }
     }
-    public void addToHistory(City city) { history.add(city); }
+    public void addToHistory(City city) {
+        logger.info("Added " + city + " to history");
+        history.add(city);
+    }
     public List<City> getFavourites() {
+        logger.info("Got favourites");
         return favourites;
     }
     public List<City> getHistory() {
+        logger.info("Got history");
         return history;
     }
 }

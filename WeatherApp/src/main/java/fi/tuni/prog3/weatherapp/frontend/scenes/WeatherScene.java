@@ -53,8 +53,14 @@ public class WeatherScene extends Scene {
         isFavourite = backend.getFavourites().stream().anyMatch(city1 -> city1.equals(city));
 
         coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1),Geocoder.class)
-                        .map(geocoderObj -> new Coord(((GeocoderObj)geocoderObj).cities()[0].lon(),
-                                                      ((GeocoderObj)geocoderObj).cities()[0].lat()))
+                        .map(geocoderObj -> {
+                            try {
+                                return new Coord(((GeocoderObj)geocoderObj).cities()[0].lon(),
+                                        ((GeocoderObj)geocoderObj).cities()[0].lat());
+                            } catch (ArrayIndexOutOfBoundsException ignored) {
+                                return null;
+                            }
+                        })
                         .orElse(null);
 
         views.getChildren().addAll(
