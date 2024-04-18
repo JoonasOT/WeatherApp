@@ -40,12 +40,8 @@ public class DailyWeatherPane extends BorderPane {
         icon.setFont(iconFont);
 
 
-        String unit = "°" + switch (WeatherScene.getUNIT()) {
-            case METRIC, STANDARD -> "C";
-            case IMPERIAL -> "F";
-        };
-        String min = String.format("%.1f%s", weatherComplete.temp().min(), unit);
-        String max = String.format("%.1f%s", weatherComplete.temp().max(), unit);
+        String min = ReadingsToStrings.getTemperature(weatherComplete.temp().min(), WeatherScene.getUNIT());
+        String max = ReadingsToStrings.getTemperature(weatherComplete.temp().max(), WeatherScene.getUNIT());
 
         Label temps = new Label(min + " ... " + max);
         temps.setAlignment(Pos.BOTTOM_CENTER);

@@ -20,10 +20,11 @@ public class CurrentWeather {
      * @param temp The current temperature
      * @param pressure The current pressure
      * @param humidity The current humidity
+     * @param feels_like What the current temperature feels like
      * @param temp_min The day's minimum temperature
      * @param temp_max The day's maximum temperature
      */
-    public record StatsCurrent(double temp, int pressure, int humidity, double temp_min, double temp_max){}
+    public record StatsCurrent(double temp, int pressure, int humidity, double feels_like, double temp_min, double temp_max){}
 
     /**
      * Record the stores the following:

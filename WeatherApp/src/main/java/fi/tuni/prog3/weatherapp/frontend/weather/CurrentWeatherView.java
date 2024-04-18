@@ -33,9 +33,10 @@ public class CurrentWeatherView extends BorderPane {
         Coord coord = WeatherScene.getCoords();
 
         Optional<Response> response = backend.callOpenWeatherWith(
-                coord != null ?
+                (coord != null ?
                             new CurrentWeather.Callables.CurrentWeatherLatLonCallable(coord.lat(), coord.lon()) :
-                            new CurrentWeather.Callables.CurrentWeatherCityNameCallable(WeatherScene.getCity())
+                            new CurrentWeather.Callables.CurrentWeatherCityNameCallable(WeatherScene.getCity()))
+                        .addUnitsArg(WeatherScene.getUNIT())
         );
 
         if (response.isEmpty()) {
@@ -64,19 +65,18 @@ public class CurrentWeatherView extends BorderPane {
         icon.setAlignment(Pos.CENTER);
         icon.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(0))));
 
-        Label description = new Label("Currently forecasting: " + jsonOBJ.weather().get(0).description());
+        Label description = new Label("Currently forecasting: " + jsonOBJ.weather().get(0).description() +
+                " and " + ReadingsToStrings.getTemperature(jsonOBJ.main().temp(), WeatherScene.getUNIT()) + " (" +
+                ReadingsToStrings.getTemperature(jsonOBJ.main().feels_like(), WeatherScene.getUNIT()) + ")");
         description.setMinWidth(CENTER_WIDTH);
         description.setTextAlignment(TextAlignment.CENTER);
 
-        Label where = new Label(jsonOBJ.name());
+        Label where = new Label("Measured at: " + jsonOBJ.name() +
+                                    " @ " + MillisToTime.fromOpenWeatherTime(jsonOBJ.dt()).time.toString());
         where.setMinWidth(CENTER_WIDTH);
         where.setTextAlignment(TextAlignment.CENTER);
 
-        Label when = new Label(new MillisToTime(jsonOBJ.dt()).time.toString());
-        when.setMinWidth(CENTER_WIDTH);
-        when.setTextAlignment(TextAlignment.CENTER);
-
-        vBox.getChildren().addAll(icon, description, where, when);
+        vBox.getChildren().addAll(icon, description, where);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }
