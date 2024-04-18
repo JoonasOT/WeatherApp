@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp.frontend;
+package fi.tuni.prog3.weatherapp.frontend.weather;
 
 public enum WeatherFont {
     THUNDER_LIGHT_RAIN(200, 76),    THUNDER_RAIN(201, 78),

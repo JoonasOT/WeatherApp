@@ -1,23 +1,20 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
-import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
-import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
-import fi.tuni.prog3.weatherapp.frontend.weather.CurrentWeatherView;
-import fi.tuni.prog3.weatherapp.frontend.weather.DailyForecast;
-import fi.tuni.prog3.weatherapp.frontend.weather.WeatherForecastView;
+import fi.tuni.prog3.weatherapp.frontend.weather.CustomToolBar;
+import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
+import fi.tuni.prog3.weatherapp.frontend.weather.daily.DailyForecast;
+import fi.tuni.prog3.weatherapp.frontend.weather.forecast.WeatherForecastView;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class WeatherScene extends Scene {
     private static OpenWeather.UNIT UNIT;

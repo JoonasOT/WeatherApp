@@ -8,7 +8,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchScene extends Scene {

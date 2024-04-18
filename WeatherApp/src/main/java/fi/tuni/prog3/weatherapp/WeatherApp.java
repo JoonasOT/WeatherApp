@@ -2,8 +2,6 @@ package fi.tuni.prog3.weatherapp;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
-import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
-import fi.tuni.prog3.weatherapp.frontend.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.SearchScene;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Application;

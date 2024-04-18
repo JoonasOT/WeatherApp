@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp.frontend;
+package fi.tuni.prog3.weatherapp.frontend.weather;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
