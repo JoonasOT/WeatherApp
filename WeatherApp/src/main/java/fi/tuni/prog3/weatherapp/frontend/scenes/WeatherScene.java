@@ -5,9 +5,11 @@ import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
 import fi.tuni.prog3.weatherapp.frontend.weather.CurrentWeatherView;
+import fi.tuni.prog3.weatherapp.frontend.weather.DailyForecast;
 import fi.tuni.prog3.weatherapp.frontend.weather.WeatherForecastView;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -18,6 +20,7 @@ import javafx.stage.Stage;
 import java.util.Optional;
 
 public class WeatherScene extends Scene {
+    private static OpenWeather.UNIT UNIT;
     private static WeatherScene INSTANCE;
     private static Stage STAGE;
     private static final ScrollPane content = new ScrollPane();
@@ -45,7 +48,9 @@ public class WeatherScene extends Scene {
         root.setTop(new CustomToolBar());
         return INSTANCE;
     }
-    public WeatherScene generateFromCity(Cities.City city) {
+    public static OpenWeather.UNIT getUNIT(){ return UNIT; };
+    public WeatherScene generateFromCity(Cities.City city, OpenWeather.UNIT unit) {
+        UNIT = unit;
         VBox views = new VBox(0);
         currentCity = city;
 
@@ -65,6 +70,7 @@ public class WeatherScene extends Scene {
 
         views.getChildren().addAll(
                 new CurrentWeatherView(),
+                new DailyForecast(),
                 new WeatherForecastView()
         );
         content.setContent(views);

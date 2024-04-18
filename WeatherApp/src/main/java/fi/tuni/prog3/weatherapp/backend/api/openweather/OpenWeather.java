@@ -28,7 +28,7 @@ public class OpenWeather {
         public factory() {
             // Get the key
             try {
-                key = new Key("ApiKeys/OpenWeather");
+                key = new Key("ApiKeys/OpenWeatherNew");
             }
             catch (IOException e) {
                 System.err.println("Key threw an error!");

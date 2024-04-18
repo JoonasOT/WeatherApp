@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
+import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.frontend.search.SuggestionTextField;
 import javafx.scene.Scene;
@@ -33,6 +34,6 @@ public class SearchScene extends Scene {
         return INSTANCE;
     }
     public static void ChangeToWeatherScene(Cities.City city) {
-        STAGE.setScene(WeatherScene.getInstance().generateFromCity(city));
+        STAGE.setScene(WeatherScene.getInstance().generateFromCity(city, OpenWeather.UNIT.METRIC));
     }
 }

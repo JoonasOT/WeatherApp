@@ -4,6 +4,7 @@ import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.frontend.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.WeatherFont;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.geometry.Insets;
@@ -50,7 +51,12 @@ public class CurrentWeatherView extends BorderPane {
         VBox vBox = new VBox(5);
         vBox.setMaxSize(CENTER_WIDTH, CENTER_WIDTH);
 
-        Label icon = new Label(WeatherFont.CodeToChar(jsonOBJ.weather().get(0).id(), jsonOBJ.sys().sunset() >= System.currentTimeMillis()));
+        MillisToTime sunrise = new MillisToTime(jsonOBJ.sys().sunrise());
+        MillisToTime sunset = new MillisToTime(jsonOBJ.sys().sunset());
+        MillisToTime now = new MillisToTime(System.currentTimeMillis());
+
+        boolean isDay = now.isLargerThan(sunrise).isSmallerThan(sunset).eval();
+        Label icon = new Label(WeatherFont.CodeToChar(jsonOBJ.weather().get(0).id(), isDay));
         Font iconFont = Font.loadFont(WeatherFont.LOCATION, 200);
         icon.setFont(iconFont);
 
@@ -61,10 +67,16 @@ public class CurrentWeatherView extends BorderPane {
         Label description = new Label("Currently forecasting: " + jsonOBJ.weather().get(0).description());
         description.setMinWidth(CENTER_WIDTH);
         description.setTextAlignment(TextAlignment.CENTER);
+
         Label where = new Label(jsonOBJ.name());
         where.setMinWidth(CENTER_WIDTH);
         where.setTextAlignment(TextAlignment.CENTER);
-        vBox.getChildren().addAll(icon, description, where);
+
+        Label when = new Label(new MillisToTime(jsonOBJ.dt()).time.toString());
+        when.setMinWidth(CENTER_WIDTH);
+        when.setTextAlignment(TextAlignment.CENTER);
+
+        vBox.getChildren().addAll(icon, description, where, when);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }

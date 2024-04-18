@@ -33,7 +33,6 @@ public final class Backend {
     private Backend(){
         IPService ipService = IPService.getInstance();
         AtomicReference<City> tmp = new AtomicReference<>(new City("N/A", "N/A"));
-
         AtomicBoolean ok = new AtomicBoolean(false);
         do {
             logger.info("Trying to solve for the user's public IP address");

@@ -28,7 +28,7 @@ public class CustomToolBar extends ToolBar {
         super.setMaxWidth(720);
 
         super.setPadding(new Insets(0));
-        super.getItems().addAll(BackToSearch(), Favourites(), History(), AddToFavourites());
+        super.getItems().addAll(BackToSearch(), /*Favourites(), History(), */ AddToFavourites());
     }
     private static Button BackToSearch() {
         Button button = new Button("Search");
@@ -42,7 +42,6 @@ public class CustomToolBar extends ToolBar {
     }
     private static Button AddToFavourites() {
         Button button = new Button("star");
-        // button.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));
         button.setPadding(new Insets(0));
         button.setPrefHeight(HEIGHT);
         button.setMaxHeight(HEIGHT);
