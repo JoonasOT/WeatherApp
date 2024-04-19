@@ -2,6 +2,7 @@
 
 Secrets/
 *.log
+Data/user/*
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

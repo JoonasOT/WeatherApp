@@ -1,8 +1,10 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
 import fi.tuni.prog3.weatherapp.WeatherApp;
+import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
+import fi.tuni.prog3.weatherapp.frontend.search.SearchResult;
 import fi.tuni.prog3.weatherapp.frontend.search.SuggestionTextField;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -18,9 +20,14 @@ public class SearchScene extends Scene {
     private static final BorderPane root = new BorderPane();
     public SearchScene(Stage stage){
         super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
-
         if (INSTANCE != null) {
             throw new RuntimeException("SearchScene has already been constructed!");
+        }
+        String initialLoadFromHistory;
+        {
+            var tmp = Backend.getInstance().getHistory();
+            initialLoadFromHistory = new SearchResult(tmp.get(tmp.size()-1).name(), tmp.get(tmp.size()-1).countryCode())
+                                                    .toStringIgnoreNull();
         }
 
         STAGE = stage;
@@ -30,6 +37,7 @@ public class SearchScene extends Scene {
         stack.setMaxHeight(40);
 
         SuggestionTextField query = new SuggestionTextField();
+        query.setText(initialLoadFromHistory);
         query.setFocusTraversable(false);
 
         ComboBox<String> unitSelection = new ComboBox<>();

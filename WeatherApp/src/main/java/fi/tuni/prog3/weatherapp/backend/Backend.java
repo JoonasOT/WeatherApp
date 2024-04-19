@@ -1,6 +1,7 @@
 package fi.tuni.prog3.weatherapp.backend;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import fi.tuni.prog3.weatherapp.backend.api.general.API;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
@@ -12,6 +13,7 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.MaxMindGeoIP2;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,8 +31,8 @@ public final class Backend {
     private static String USER_AGENT = "OpenWeatherProject JoonasOT";
     private static String CITIES_DATABASE_LOC = "./Databases/Cities";
     private static String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
-    private static String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites";
-    private static String HISTORY_SAVE_LOCATION = "./Data/user/history";
+    private static String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites.json";
+    private static String HISTORY_SAVE_LOCATION = "./Data/user/history.json";
     private static Backend INSTANCE;
     private final API OpenWeather;
     private final Database<List<City>> cityDatabase;
@@ -136,10 +138,17 @@ public final class Backend {
     public void loadHistoryAndFavourites() {
         logger.info("Loading history and favourites");
         Gson gson = new Gson();
+        Type type = new TypeToken<List<City>>(){}.getType();
+
         var res = ReadWrite.read(FAVOURITES_SAVE_LOCATION);
-        favourites = res.isPresent()? gson.fromJson(res.get(), favourites.getClass()) : new ArrayList<>();
+        if (res.isPresent()) {
+            favourites = gson.fromJson(res.get(), type);
+        } else favourites = new ArrayList<>();
+
         res = ReadWrite.read(HISTORY_SAVE_LOCATION);
-        history = res.isPresent()? gson.fromJson(res.get(), history.getClass()) : new ArrayList<>();
+        if (res.isPresent()) {
+            history = gson.fromJson(res.get(), type);
+        } else history = new ArrayList<>();
     }
 
     public void addFavourite(City city) {

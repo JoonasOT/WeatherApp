@@ -106,6 +106,7 @@ public class WeatherScene extends Scene {
         return currentCity.name() + (currentCity.countryCode() != null ? "," + currentCity.countryCode() : "");
     }
     public static void SwitchToSearchScene() {
+        mapView.kill();
         STAGE.setScene(SearchScene.getInstance());
     }
     public static boolean isThisFavourite() {
