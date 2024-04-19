@@ -39,7 +39,6 @@ public class WeatherScene extends Scene {
             throw new RuntimeException("WeatherScene has already been constructed!");
         }
         root.setPadding(new Insets(0));
-        content.setPadding(new Insets(0, 90, 0, 90));
 
         toolBar = new CustomToolBar();
         root.getChildren().add(toolBar);
@@ -63,7 +62,7 @@ public class WeatherScene extends Scene {
     public WeatherScene generateFromCity(Cities.City city, OpenWeather.UNIT unit) {
         toolBar = new CustomToolBar();
         UNIT = unit;
-        VBox views = new VBox(0);
+        VBox views = new VBox(10);
         currentCity = city;
 
         Backend backend = Backend.getInstance();
@@ -98,10 +97,11 @@ public class WeatherScene extends Scene {
                     new DailyForecast(),
                     new WeatherForecastView());
         }
+        views.setPadding(new Insets(0, 90, 0, 90));
         content.setContent(views);
         return INSTANCE;
     }
-    public static Coord getCoords() { return coords; } // TODO: Have a toggle here maybe or smt!
+    public static Coord getCoords() { return coords; }
     public static String getCity() {
         return currentCity.name() + (currentCity.countryCode() != null ? "," + currentCity.countryCode() : "");
     }

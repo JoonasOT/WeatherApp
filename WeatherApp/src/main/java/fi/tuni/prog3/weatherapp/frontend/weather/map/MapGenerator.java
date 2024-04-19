@@ -30,7 +30,7 @@ public class MapGenerator implements Runnable {
     public void run() {
         Backend backend = Backend.getInstance();
         var coords = WeatherScene.getCoords();
-        List<byte[]> buffers = backend.getNxNtiles(new WeatherMap.Callables.MapTile(true, null, "GitHub-JoonasOT-OpenWeatherTesting"), coords.lat(), coords.lon(), Z, N);
+        List<byte[]> buffers = backend.getNxNtiles(new WeatherMap.Callables.MapTile(true, null, "TUNI-Programming3-WeatherApp-JoonasOT"), coords.lat(), coords.lon(), Z, N);
 
         List<Image> OpenStreetMapImages = buffers.stream().map(bytes -> new Image(new ByteArrayInputStream(bytes))).toList();
 

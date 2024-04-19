@@ -15,8 +15,10 @@ import javafx.stage.StageStyle;
 public class WeatherApp extends Application {
     public static int WINDOW_WIDTH = 900;
     public static int WINDOW_HEIGHT = 720;
+    public static String OPENWEATHER_API_KEY_LOCATION;
     public static void main(String[] args) {
-        Key.encryptKey("secrets/ApiKeys/OpenWeatherNew.json", "secrets/ApiKeys/OpenWeatherNew");
+        if (args.length == 1) OPENWEATHER_API_KEY_LOCATION = args[0];
+        else OPENWEATHER_API_KEY_LOCATION = "./secrets/ApiKeys/OpenWeather";
         launch( args );
     }
     @Override

@@ -100,6 +100,9 @@ public final class Backend {
         logger.info("Calling OW with: " + callable.getClass().getName());
         return OpenWeather.call(callable);
     }
+    private Optional<Response> callOpenWeatherWithNoLog(iCallable callable) {
+        return OpenWeather.call(callable);
+    }
     public <R> Optional<R> callOpenWeatherWith(iCallable callable, Class fromJsonClass) {
         logger.info("Calling OW with: " + callable.getClass().getName() + " and " + fromJsonClass.getName());
         var tmp = OpenWeather.call(callable);
@@ -119,13 +122,14 @@ public final class Backend {
     }
 
     public List<byte[]> getNxNtiles(WeatherMap.Callables.MapTile tile, double lat, double lon, final int Z, final int N) {
+        logger.info("Getting tiles for: " + tile);
         List<byte[]> result = new LinkedList<>();
         final int X = WeatherMap.longitudeToX(lon, Z);
         final int Y = WeatherMap.latitudeToY(lat, Z);
 
         for (int y : IntStream.range(Y - N/2, Y + N/2 + 1).toArray()) {
             for (int x : IntStream.range(X - N/2, X + N/2 + 1).toArray()) {
-                Optional<Response> response = callOpenWeatherWith(
+                Optional<Response> response = callOpenWeatherWithNoLog(
                         tile.isMap()?   new WeatherMap.Callables.OpenStreetMapTileCallable(tile.userAgent(), x, y, Z):
                                         new WeatherMap.Callables.WeatherMapTileCallable(tile.layer(), x, y, Z)
                 );

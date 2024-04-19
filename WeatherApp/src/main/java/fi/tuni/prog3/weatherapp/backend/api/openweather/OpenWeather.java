@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.backend.api.openweather;
 
+import fi.tuni.prog3.weatherapp.WeatherApp;
 import fi.tuni.prog3.weatherapp.backend.api.general.API;
 import fi.tuni.prog3.weatherapp.backend.api.general.API_Factory;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
@@ -32,7 +33,7 @@ public class OpenWeather {
         public factory() {
             // Get the key
             try {
-                key = new Key("ApiKeys/OpenWeatherNew");
+                key = new Key(WeatherApp.OPENWEATHER_API_KEY_LOCATION);
             }
             catch (IOException e) {
                 System.err.println("Key threw an error!");

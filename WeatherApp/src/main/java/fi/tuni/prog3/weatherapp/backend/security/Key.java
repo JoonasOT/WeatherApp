@@ -30,9 +30,7 @@ public class Key {
     public Key(String file) throws IOException, SecurityException {
         String decryptedString;
         try {
-            var in = new FileInputStream(SECRET_LOCATION + file);
-            var t = Files.readAttributes(Path.of(SECRET_LOCATION + file), BasicFileAttributes.class)
-                    .lastModifiedTime();
+            var in = new FileInputStream(file);
             decryptedString = new String(Encryption.decryptAES256(in.readAllBytes(), generatePassword(passwd)), UTF_8);
             in.close();
         } catch (RuntimeException e) {
