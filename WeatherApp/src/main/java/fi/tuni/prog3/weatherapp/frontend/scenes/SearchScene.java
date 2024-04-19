@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
+import fi.tuni.prog3.weatherapp.WeatherApp;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 import fi.tuni.prog3.weatherapp.frontend.search.SuggestionTextField;
@@ -16,7 +17,7 @@ public class SearchScene extends Scene {
     private static OpenWeather.UNIT units = OpenWeather.UNIT.METRIC;
     private static final BorderPane root = new BorderPane();
     public SearchScene(Stage stage){
-        super(root, 720, 720);
+        super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
 
         if (INSTANCE != null) {
             throw new RuntimeException("SearchScene has already been constructed!");

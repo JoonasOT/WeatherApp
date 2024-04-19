@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
+import fi.tuni.prog3.weatherapp.WeatherApp;
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder.*;
@@ -25,21 +26,20 @@ public class WeatherScene extends Scene {
     private static WeatherScene INSTANCE;
     private static Stage STAGE;
     private static final ScrollPane content = new ScrollPane();
-    private static final StackPane root = new StackPane();
+    private static final StackPane root = new StackPane(content);
     private static CustomToolBar toolBar;
     private static boolean isFavourite;
     private static Cities.City currentCity;
     private static Coord coords = null;
     private static WeatherMapView mapView;
+    private static boolean mapViewOff = false;
     public WeatherScene(Stage stage) {
-        super(root, 900, 720);
+        super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
         if (INSTANCE != null) {
             throw new RuntimeException("WeatherScene has already been constructed!");
         }
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(content);
-        borderPane.setPadding(new Insets(0, 90, 0, 90));
-        root.getChildren().add(borderPane);
+        root.setPadding(new Insets(0));
+        content.setPadding(new Insets(0, 90, 0, 90));
 
         toolBar = new CustomToolBar();
         root.getChildren().add(toolBar);
@@ -85,16 +85,20 @@ public class WeatherScene extends Scene {
         if (!currentWeatherView.isOK()) {
             views.getChildren().add(currentWeatherView);
         } else {
-            mapView = new WeatherMapView();
-            views.getChildren().addAll(
+            if (!mapViewOff) {
+                mapView = new WeatherMapView();
+                views.getChildren().addAll(
+                        currentWeatherView,
+                        new DailyForecast(),
+                        new WeatherForecastView(),
+                        mapView
+                );
+            } else views.getChildren().addAll(
                     currentWeatherView,
                     new DailyForecast(),
-                    new WeatherForecastView(),
-                    mapView
-            );
+                    new WeatherForecastView());
         }
         content.setContent(views);
-        content.setVvalue(0.0);
         return INSTANCE;
     }
     public static Coord getCoords() { return coords; } // TODO: Have a toggle here maybe or smt!

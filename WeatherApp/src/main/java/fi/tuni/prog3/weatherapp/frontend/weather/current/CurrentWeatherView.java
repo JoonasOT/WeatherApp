@@ -20,7 +20,7 @@ import java.util.Optional;
 
 public class CurrentWeatherView extends BorderPane {
     public static int CENTER_WIDTH = 360;
-    public static int SCROLL_BAR_WIDTH = 16;
+    public static int SCROLL_BAR_WIDTH = 0;
     public static int VIEW_WIDTH = 720 - SCROLL_BAR_WIDTH;
     private boolean isOK = false;
     public CurrentWeatherView() {

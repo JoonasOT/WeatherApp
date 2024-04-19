@@ -13,6 +13,8 @@ import javafx.stage.StageStyle;
  * JavaFX Weather Application.
  */
 public class WeatherApp extends Application {
+    public static int WINDOW_WIDTH = 900;
+    public static int WINDOW_HEIGHT = 720;
     public static void main(String[] args) {
         Key.encryptKey("secrets/ApiKeys/OpenWeatherNew.json", "secrets/ApiKeys/OpenWeatherNew");
         launch( args );
