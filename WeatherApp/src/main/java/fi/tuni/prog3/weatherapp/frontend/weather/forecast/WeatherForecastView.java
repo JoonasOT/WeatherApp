@@ -5,6 +5,7 @@ import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.frontend.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
 import javafx.scene.control.Label;
@@ -15,12 +16,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class WeatherForecastView extends ScrollPane {
-    private final HBox states = new HBox();
+public class WeatherForecastView extends HBox {
+    private final HBox states = new HBox(5);
+    private final ScrollPane scrollPane = new ScrollPane();
     public WeatherForecastView() {
         super();
-        super.setMaxWidth(CurrentWeatherView.VIEW_WIDTH);
-        super.setVbarPolicy(ScrollBarPolicy.NEVER);
+        super.getChildren().addAll(new ForecastIndex(), scrollPane);
+
+        scrollPane.setMaxWidth(CurrentWeatherView.VIEW_WIDTH - ForecastIndex.WIDTH - 1);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         Backend backend = Backend.getInstance();
 
@@ -47,17 +51,18 @@ public class WeatherForecastView extends ScrollPane {
 
         if (response.isEmpty()) {
             System.err.println("Weather forecast received an empty response!");
-            super.setMaxHeight(0);
+            scrollPane.setMaxHeight(0);
         } else if (!response.get().CallWasOK()) {
             System.err.println("Weather forecast call was not OK!");
-            super.setMaxHeight(0);
+            scrollPane.setMaxHeight(0);
         } else {
             String jsonString = response.get().getData();
             List<ForecastPanel> panels = isHourly? constructHourlyPanels(HourlyForecast.fromJson(jsonString)) :
                                                    constructDefaultPanels(WeatherForecast.fromJson(jsonString));
 
             states.getChildren().addAll(panels);
-            super.setContent(states);
+            scrollPane.setContent(states);
+            scrollPane.setMinHeight(195);
         }
     }
 
@@ -72,11 +77,12 @@ public class WeatherForecastView extends ScrollPane {
         LinkedList<ForecastPanel> panels = new LinkedList<>();
         for (WeatherForecast.WeatherState state : list) {
             panels.add(new ForecastPanel(new ForecastPanel.RequiredFields(
+                    MillisToTime.fromOpenWeatherTime(state.dt()),
                     state.weather().get(0),
                     state.main(),
                     state.wind(),
-                    city.sunrise(),
-                    city.sunrise()
+                    MillisToTime.fromOpenWeatherTime(city.sunrise()),
+                    MillisToTime.fromOpenWeatherTime(city.sunrise())
             )));
         }
         return panels;
