@@ -32,6 +32,18 @@ public class WeatherMap {
             }
         }
         @RequestMethod(method = "GET")
+        public record WeatherMapTileCallable(WeatherLayer layer, int x, int y, int z) implements iCallable {
+            @Override public String url() { return URLs.WEATHER_MAP; }
+            @Override
+            public Map<String, String> args() {
+                return Map.of(
+                        "{layer}", layer.toString(),
+                        "{z}", Integer.toString(z),
+                        "{x}", Integer.toString(x),
+                        "{y}", Integer.toString(y));
+            }
+        }
+        @RequestMethod(method = "GET")
         public record OpenStreetMapCallable(String userAgent, int z, double lat, double log)
                                                                                     implements iCallable {
             @SetRequestProperty(Property = "User-Agent")
@@ -48,12 +60,29 @@ public class WeatherMap {
                         "{y}", Integer.toString(latitudeToY(lat, z)));
             }
         }
+        @RequestMethod(method = "GET")
+        public record OpenStreetMapTileCallable(String userAgent, int x, int y, int z)
+                implements iCallable {
+            @SetRequestProperty(Property = "User-Agent")
+            public String getUserAgent() {
+                return userAgent;
+            }
+
+            @Override public String url() { return URLs.OSM_MAP; }
+            @Override
+            public Map<String, String> args() {
+                return Map.of(
+                        "{z}", Integer.toString(z),
+                        "{x}", Integer.toString(x),
+                        "{y}", Integer.toString(y));
+            }
+        }
     }
 
-    private static int longitudeToX(double log, int z) {
+    public static int longitudeToX(double log, int z) {
         return (int) (Math.pow(2, z) * ((log + 180.0) / 360));
     }
-    private static int latitudeToY(double lat, int z) {
+    public static int latitudeToY(double lat, int z) {
         return (int) (Math.pow(2, z) / 2 * (1 - Math.log(Math.tan(lat * Math.PI/180.0) + 1.0 / Math.cos(lat * Math.PI / 180.0)) / Math.PI));
     }
 }
