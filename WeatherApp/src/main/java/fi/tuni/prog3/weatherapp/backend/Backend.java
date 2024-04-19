@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.backend;
 
+import com.google.gson.Gson;
 import fi.tuni.prog3.weatherapp.backend.api.general.API;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
@@ -11,6 +12,7 @@ import fi.tuni.prog3.weatherapp.backend.database.cities.builder.CityBuilder;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.GeoLocation;
 import fi.tuni.prog3.weatherapp.backend.database.geoip2.MaxMindGeoIP2;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
+import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -26,6 +29,8 @@ public final class Backend {
     private static String USER_AGENT = "OpenWeatherProject JoonasOT";
     private static String CITIES_DATABASE_LOC = "./Databases/Cities";
     private static String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
+    private static String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites";
+    private static String HISTORY_SAVE_LOCATION = "./Data/user/history";
     private static Backend INSTANCE;
     private final API OpenWeather;
     private final Database<List<City>> cityDatabase;
@@ -69,6 +74,7 @@ public final class Backend {
         logger.info("Geolocation estimation complete!");
 
         City location = tmp.get();
+        loadHistoryAndFavourites();
 
         logger.info("Constructing the OpenWeather API");
         OpenWeather = new OpenWeather.factory().construct();
@@ -126,6 +132,15 @@ public final class Backend {
         return result;
     }
 
+    public void loadHistoryAndFavourites() {
+        logger.info("Loading history and favourites");
+        Gson gson = new Gson();
+        var res = ReadWrite.read(FAVOURITES_SAVE_LOCATION);
+        favourites = res.isPresent()? gson.fromJson(res.get(), favourites.getClass()) : new ArrayList<>();
+        res = ReadWrite.read(HISTORY_SAVE_LOCATION);
+        history = res.isPresent()? gson.fromJson(res.get(), history.getClass()) : new ArrayList<>();
+    }
+
     public void addFavourite(City city) {
         logger.info("Added " + city + " to favourites");
         favourites.add(city);
@@ -151,6 +166,9 @@ public final class Backend {
         return history;
     }
     public static void Shutdown() {
-        // TODO: THIS
+        logger.info("Shutting the backend down!");
+        Gson gson = new Gson();
+        ReadWrite.write(FAVOURITES_SAVE_LOCATION, gson.toJson(favourites));
+        ReadWrite.write(HISTORY_SAVE_LOCATION, gson.toJson(history));
     }
 }
