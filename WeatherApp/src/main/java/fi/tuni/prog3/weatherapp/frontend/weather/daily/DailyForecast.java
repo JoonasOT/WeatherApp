@@ -22,9 +22,7 @@ public class DailyForecast extends ScrollPane {
     public DailyForecast() {
         super();
         super.setMaxWidth(CurrentWeatherView.VIEW_WIDTH);
-        super.setMinHeight(256);
         super.setVbarPolicy(ScrollBarPolicy.NEVER);
-        super.setContent(wrapper);
 
         Label title = new Label("Daily weather forecast:");
         title.setFont(new Font(15));
@@ -45,14 +43,18 @@ public class DailyForecast extends ScrollPane {
         );
 
         if (response.isEmpty()) {
-            super.setContent(new Label("Was not able to reach OpenWeather"));
+            System.err.println("Daily forecasts response was empty!");
+            super.setMaxHeight(0);
         } else if (!response.get().CallWasOK()) {
-            super.setContent(new Label("Call to OpenWeather went amiss!\nTry again with another city!"));
+            System.err.println("Daily forecasts response had an error!");
+            super.setMaxHeight(0);
         } else {
             DailyWeather.DailyWeatherObj json = DailyWeather.fromJson(response.get().getData());
             for (DailyWeather.WeatherComplete w : json.list()) {
                 days.getChildren().add(new DailyWeatherPane(w));
             }
+            super.setMinHeight(256);
+            super.setContent(wrapper);
         }
     }
 }

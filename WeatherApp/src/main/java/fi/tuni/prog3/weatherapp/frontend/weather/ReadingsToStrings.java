@@ -11,4 +11,13 @@ public class ReadingsToStrings {
             case STANDARD -> "K";
         });
     }
+    public static String getWindSpeed(double wind, UNIT unit) {
+        return String.format("%.1f%s", wind, " " + switch (unit) {
+            case METRIC, STANDARD -> "m/s";
+            case IMPERIAL -> "mph";
+        });
+    }
+    public static String getWindDirection(int deg, UNIT unit) {
+        return Integer.toString(deg) + "°";
+    }
 }

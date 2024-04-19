@@ -22,6 +22,7 @@ public class CurrentWeatherView extends BorderPane {
     public static int CENTER_WIDTH = 360;
     public static int SCROLL_BAR_WIDTH = 16;
     public static int VIEW_WIDTH = 720 - SCROLL_BAR_WIDTH;
+    private boolean isOK = false;
     public CurrentWeatherView() {
         super();
 
@@ -47,6 +48,7 @@ public class CurrentWeatherView extends BorderPane {
         } else {
             CurrentWeather.CurrentWeatherObj weather = CurrentWeather.fromJson(response.get().getData());
             super.setCenter(ConstructMiddle(weather));
+            isOK = true;
         }
     }
     private static VBox ConstructMiddle(CurrentWeather.CurrentWeatherObj jsonOBJ) {
@@ -80,5 +82,8 @@ public class CurrentWeatherView extends BorderPane {
         vBox.getChildren().addAll(icon, description, where);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
+    }
+    public boolean isOK() {
+        return isOK;
     }
 }

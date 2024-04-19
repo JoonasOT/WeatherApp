@@ -54,7 +54,7 @@ public class WeatherScene extends Scene {
         Backend backend = Backend.getInstance();
         isFavourite = backend.getFavourites().stream().anyMatch(city1 -> city1.equals(city));
 
-        coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1),Geocoder.class)
+        coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1), Geocoder.class)
                         .map(geocoderObj -> {
                             try {
                                 return new Coord(((GeocoderObj)geocoderObj).cities()[0].lon(),
@@ -64,12 +64,16 @@ public class WeatherScene extends Scene {
                             }
                         })
                         .orElse(null);
-
-        views.getChildren().addAll(
-                new CurrentWeatherView(),
-                new DailyForecast(),
-                new WeatherForecastView()
-        );
+        CurrentWeatherView currentWeatherView = new CurrentWeatherView();
+        if (!currentWeatherView.isOK()) {
+            views.getChildren().add(currentWeatherView);
+        } else {
+            views.getChildren().addAll(
+                    currentWeatherView,
+                    new DailyForecast(),
+                    new WeatherForecastView()
+            );
+        }
         content.setContent(views);
 
         return INSTANCE;
