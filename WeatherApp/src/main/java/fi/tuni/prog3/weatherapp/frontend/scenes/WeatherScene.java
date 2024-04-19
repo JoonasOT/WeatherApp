@@ -10,6 +10,7 @@ import fi.tuni.prog3.weatherapp.frontend.weather.CustomToolBar;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
 import fi.tuni.prog3.weatherapp.frontend.weather.daily.DailyForecast;
 import fi.tuni.prog3.weatherapp.frontend.weather.forecast.WeatherForecastView;
+import fi.tuni.prog3.weatherapp.frontend.weather.map.WeatherMapView;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -73,14 +74,15 @@ public class WeatherScene extends Scene {
             views.getChildren().addAll(
                     currentWeatherView,
                     new DailyForecast(),
-                    new WeatherForecastView()
+                    new WeatherForecastView(),
+                    new WeatherMapView()
             );
         }
         content.setContent(views);
 
         return INSTANCE;
     }
-    public static Coord getCoords() { return null; } // TODO: Have a toggle here maybe or smt!
+    public static Coord getCoords() { return coords; } // TODO: Have a toggle here maybe or smt!
     public static String getCity() {
         return currentCity.name() + (currentCity.countryCode() != null ? "," + currentCity.countryCode() : "");
     }

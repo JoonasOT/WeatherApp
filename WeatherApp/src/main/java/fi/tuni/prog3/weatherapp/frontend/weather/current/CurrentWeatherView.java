@@ -32,13 +32,9 @@ public class CurrentWeatherView extends BorderPane {
 
         Backend backend = Backend.getInstance();
 
-        Coord coord = WeatherScene.getCoords();
-
         Optional<Response> response = backend.callOpenWeatherWith(
-                (coord != null ?
-                            new CurrentWeather.Callables.CurrentWeatherLatLonCallable(coord.lat(), coord.lon()) :
-                            new CurrentWeather.Callables.CurrentWeatherCityNameCallable(WeatherScene.getCity()))
-                        .addUnitsArg(WeatherScene.getUNIT())
+                            new CurrentWeather.Callables.CurrentWeatherCityNameCallable(WeatherScene.getCity())
+                                              .addUnitsArg(WeatherScene.getUNIT())
         );
 
         if (response.isEmpty()) {

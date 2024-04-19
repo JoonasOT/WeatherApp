@@ -34,12 +34,9 @@ public class DailyForecast extends ScrollPane {
 
         Backend backend = Backend.getInstance();
 
-        JSON_OBJs.Coord coord = WeatherScene.getCoords();
         Optional<Response> response = backend.callOpenWeatherWith(
-                (coord != null ?
-                        new DailyWeather.Callables.DailyWeatherLatLonCallable(coord.lat(), coord.lon()) :
-                        new DailyWeather.Callables.DailyWeatherCityNameCallable(WeatherScene.getCity()))
-                        .addUnitsArg(WeatherScene.getUNIT())
+                        new DailyWeather.Callables.DailyWeatherCityNameCallable(WeatherScene.getCity())
+                                        .addUnitsArg(WeatherScene.getUNIT())
         );
 
         if (response.isEmpty()) {

@@ -27,22 +27,17 @@ public class WeatherForecastView extends HBox {
 
         Backend backend = Backend.getInstance();
 
-        Coord coord = WeatherScene.getCoords();
         boolean isHourly = true;
 
         Optional<Response> response = backend.callOpenWeatherWith(
-                (coord != null ?
-                        new HourlyForecast.Callables.HourlyWeatherForecastLatLonCallable(coord.lat(), coord.lon()) :
-                        new HourlyForecast.Callables.HourlyWeatherForecastCityNameCallable(WeatherScene.getCity()))
-                        .addUnitsArg(WeatherScene.getUNIT())
+                        new HourlyForecast.Callables.HourlyWeatherForecastCityNameCallable(WeatherScene.getCity())
+                                          .addUnitsArg(WeatherScene.getUNIT())
         );
         if (response.isEmpty() || !response.get().CallWasOK()) {
             System.err.println("Was not able to call the hourly API! Defaulting to the free forecasts");
             response = backend.callOpenWeatherWith(
-                    (coord != null ?
-                            new WeatherForecast.Callables.WeatherForecastLatLonCallable(coord.lat(), coord.lon()) :
-                            new WeatherForecast.Callables.WeatherForecastCityNameCallable(WeatherScene.getCity()))
-                            .addUnitsArg(WeatherScene.getUNIT())
+                            new WeatherForecast.Callables.WeatherForecastCityNameCallable(WeatherScene.getCity())
+                                               .addUnitsArg(WeatherScene.getUNIT())
             );
             isHourly = false;
         }
