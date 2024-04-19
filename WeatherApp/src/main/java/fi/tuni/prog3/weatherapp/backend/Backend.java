@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -108,6 +109,22 @@ public final class Backend {
         }
         return Optional.empty();
     }
+
+    public List<byte[]> getNxNtiles(WeatherMap.Callables.MapTileCallable callable,
+                                    double lat, double lon, final int Z, final int N) {
+        List<byte[]> result = new LinkedList<>();
+        final int X = WeatherMap.longitudeToX(lon, Z);
+        final int Y = WeatherMap.latitudeToY(lat, Z);
+
+        for (int y : IntStream.range(Y - N/2, Y + N/2 + 1).toArray()) {
+            for (int x : IntStream.range(X - N/2, X + N/2 + 1).toArray()) {
+                Optional<Response> response = callOpenWeatherWith((iCallable) callable);
+                result.add(response.map(Response::getAllBytes).orElse(new byte[]{}));
+            }
+        }
+        return result;
+    }
+
     public void addFavourite(City city) {
         logger.info("Added " + city + " to favourites");
         favourites.add(city);
@@ -131,5 +148,8 @@ public final class Backend {
     public List<City> getHistory() {
         logger.info("Got history");
         return history;
+    }
+    public static void Shutdown() {
+        // TODO: THIS
     }
 }
