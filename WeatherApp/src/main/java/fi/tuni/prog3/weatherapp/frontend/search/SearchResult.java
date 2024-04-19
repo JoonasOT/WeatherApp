@@ -31,6 +31,9 @@ public final class SearchResult extends BorderPane {
     public String toString() {
         return city + ", " + countryCode;
     }
+    public String toStringIgnoreNull() {
+        return (city != null ? (countryCode != null ? toString() : city) : (countryCode != null ? countryCode : ""));
+    }
     public static ArrayList<SearchResult> CitiesToSearchResults(List<Cities.City> cities) {
         ArrayList<SearchResult> results = new ArrayList<>(cities.size());
         for (Cities.City city : cities) {

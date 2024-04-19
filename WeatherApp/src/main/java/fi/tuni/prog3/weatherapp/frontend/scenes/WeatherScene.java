@@ -47,6 +47,7 @@ public class WeatherScene extends Scene {
     }
     public static OpenWeather.UNIT getUNIT(){ return UNIT; };
     public WeatherScene generateFromCity(Cities.City city, OpenWeather.UNIT unit) {
+        root.setTop(new CustomToolBar());
         UNIT = unit;
         VBox views = new VBox(0);
         currentCity = city;

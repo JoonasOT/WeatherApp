@@ -15,6 +15,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.List;
 
@@ -41,19 +42,30 @@ public class CustomToolBar extends ToolBar {
         return button;
     }
     private static Button AddToFavourites() {
-        Button button = new Button("star");
+        Button button = new Button("\uF005");
         button.setPadding(new Insets(0));
-        button.setPrefHeight(HEIGHT);
-        button.setMaxHeight(HEIGHT);
-        button.setMinHeight(HEIGHT);
+        button.setPrefSize(HEIGHT, HEIGHT);
+        button.setMaxSize(HEIGHT, HEIGHT);
+        button.setMinSize(HEIGHT, HEIGHT);
+
+        Font normal = Font.loadFont("file:res/font/FontAwesome6Free-Regular-400.otf", 15);
+        Font favourite = Font.loadFont("file:res/font/FontAwesome6Free-Solid-900.otf", 15);
+
+        String styleNormal = "-fx-text-fill: black;";
+        String styleFavourite = "-fx-text-fill: yellow;";
+
+        button.setFont(WeatherScene.isThisFavourite()? favourite : normal);
+        button.setStyle(WeatherScene.isThisFavourite()? styleFavourite : styleNormal);
 
         button.setOnAction(x -> {
             WeatherScene.AddCityToFavourites();
             if (WeatherScene.isThisFavourite()) {
-                button.setStyle("-fx-text-fill: yellow;");
+                button.setStyle(styleFavourite);
+                button.setFont(favourite);
             }
             else {
-                button.setStyle("-fx-text-fill: black;");
+                button.setStyle(styleNormal);
+                button.setFont(normal);
             }
         });
 
