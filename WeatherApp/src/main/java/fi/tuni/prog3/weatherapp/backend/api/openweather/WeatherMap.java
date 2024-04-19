@@ -19,7 +19,6 @@ public class WeatherMap {
         public static final String OSM_MAP = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     }
     public static class Callables {
-        public sealed interface MapTileCallable permits WeatherMapTileCallable, OpenStreetMapTileCallable {}
         @RequestMethod(method = "GET")
         public record WeatherMapCallable(WeatherLayer layer, int z, double lat, double log) implements iCallable {
             @Override public String url() { return URLs.WEATHER_MAP; }
@@ -33,7 +32,7 @@ public class WeatherMap {
             }
         }
         @RequestMethod(method = "GET")
-        public record WeatherMapTileCallable(WeatherLayer layer, int x, int y, int z) implements iCallable, MapTileCallable {
+        public record WeatherMapTileCallable(WeatherLayer layer, int x, int y, int z) implements iCallable {
             @Override public String url() { return URLs.WEATHER_MAP; }
             @Override
             public Map<String, String> args() {
@@ -63,7 +62,7 @@ public class WeatherMap {
         }
         @RequestMethod(method = "GET")
         public record OpenStreetMapTileCallable(String userAgent, int x, int y, int z)
-                implements iCallable, MapTileCallable {
+                implements iCallable {
             @SetRequestProperty(Property = "User-Agent")
             public String getUserAgent() {
                 return userAgent;
