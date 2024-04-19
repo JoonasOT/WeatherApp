@@ -2,7 +2,8 @@
 
 Secrets/
 *.log
-Data/user/*
+favourites.json
+history.json
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
