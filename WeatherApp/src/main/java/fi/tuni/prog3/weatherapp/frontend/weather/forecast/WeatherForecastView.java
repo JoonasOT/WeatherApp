@@ -5,10 +5,9 @@ import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
-import fi.tuni.prog3.weatherapp.frontend.MillisToTime;
+import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 

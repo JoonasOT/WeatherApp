@@ -2,10 +2,10 @@ package fi.tuni.prog3.weatherapp.frontend.weather.forecast;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
-import fi.tuni.prog3.weatherapp.frontend.MillisToTime;
+import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.ReadingsToStrings;
-import fi.tuni.prog3.weatherapp.frontend.weather.WeatherFont;
+import fi.tuni.prog3.weatherapp.frontend.fonts.WeatherFont;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -15,8 +15,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.util.Map;
 
 public class ForecastPanel extends VBox {
     private static final int LABEL_WIDTH = 50;

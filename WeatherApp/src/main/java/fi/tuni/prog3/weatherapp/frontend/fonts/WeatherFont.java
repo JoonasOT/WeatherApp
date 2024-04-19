@@ -1,4 +1,4 @@
-package fi.tuni.prog3.weatherapp.frontend.weather;
+package fi.tuni.prog3.weatherapp.frontend.fonts;
 
 public enum WeatherFont {
     THUNDER_LIGHT_RAIN(200, 76),    THUNDER_RAIN(201, 78),
@@ -36,8 +36,8 @@ public enum WeatherFont {
 
     CLOUDS_FEW(801, 37),            CLOUDS_SCATTERED(802, 39),
     CLOUDS_BROKEN(803, 41),         CLOUDS_OVERCAST(804, 43);
-    
-    public static final String LOCATION = "file:./res/font/weather.ttf";
+
+    public static final String LOCATION = FontLocations.WEATHER.location;
     public final int code;
     public final int offset;
     WeatherFont(int code, int offset) {

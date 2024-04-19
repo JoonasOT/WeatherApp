@@ -53,6 +53,7 @@ public class WeatherScene extends Scene {
         currentCity = city;
 
         Backend backend = Backend.getInstance();
+        backend.addToHistory(city);
         isFavourite = backend.getFavourites().stream().anyMatch(city1 -> city1.equals(city));
 
         coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1), Geocoder.class)

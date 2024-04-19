@@ -1,13 +1,9 @@
-package fi.tuni.prog3.weatherapp.frontend;
+package fi.tuni.prog3.weatherapp.frontend.weather;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.TemporalField;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class MillisToTime implements Comparable<MillisToTime> {
     private final long millis;
