@@ -15,7 +15,7 @@ public class CustomToolBar extends ToolBar {
         super.setPrefHeight(HEIGHT);
         super.setMaxHeight(HEIGHT);
         super.setMinHeight(HEIGHT);
-        super.setMaxWidth(720);
+        super.setMaxWidth(900);
 
         super.setPadding(new Insets(0));
         super.getItems().addAll(BackToSearch(), AddToFavourites());

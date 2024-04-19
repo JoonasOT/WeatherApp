@@ -110,16 +110,17 @@ public final class Backend {
         return Optional.empty();
     }
 
-    public List<byte[]> getNxNtiles(iCallable callable,
-                                    double lat, double lon, final int Z, final int N) {
-        // FIXME: iCallable should be checked!
+    public List<byte[]> getNxNtiles(WeatherMap.Callables.MapTile tile, double lat, double lon, final int Z, final int N) {
         List<byte[]> result = new LinkedList<>();
         final int X = WeatherMap.longitudeToX(lon, Z);
         final int Y = WeatherMap.latitudeToY(lat, Z);
 
         for (int y : IntStream.range(Y - N/2, Y + N/2 + 1).toArray()) {
             for (int x : IntStream.range(X - N/2, X + N/2 + 1).toArray()) {
-                Optional<Response> response = callOpenWeatherWith(callable);
+                Optional<Response> response = callOpenWeatherWith(
+                        tile.isMap()?   new WeatherMap.Callables.OpenStreetMapTileCallable(tile.userAgent(), x, y, Z):
+                                        new WeatherMap.Callables.WeatherMapTileCallable(tile.layer(), x, y, Z)
+                );
                 result.add(response.map(Response::getAllBytes).orElse(new byte[]{}));
             }
         }

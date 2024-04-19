@@ -33,6 +33,7 @@ public class WeatherApp extends Application {
     }
     @Override
     public void stop() {
+        WeatherScene.Shutdown();
         System.out.println("Shutting down!");
     }
 }

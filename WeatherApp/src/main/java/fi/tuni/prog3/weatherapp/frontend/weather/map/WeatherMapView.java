@@ -5,30 +5,57 @@ import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.WeatherLayer;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.Callables.*;
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
+import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 
 import java.io.ByteArrayInputStream;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class WeatherMapView extends BorderPane {
-    private final Image[] OpenStreetMapImages;
-    private final Image[] OpenWeatherImages;
+public class WeatherMapView extends StackPane {
+    private final ScrollPane scrollPane = new ScrollPane();
+    private LinkedList<Tile> tiles = new LinkedList<>();
+    private static final int MAP_SIZE = 10;
+    private static final int MAP_Z_INDEX = 9;
+    private final Thread generator;
     public WeatherMapView() {
         super();
-        Backend backend = Backend.getInstance();
-        var coords = WeatherScene.getCoords();
 
-        var respose = backend.callOpenWeatherWith(new OpenStreetMapCallable("GitHub-JoonasOT-OpenWeatherTesting", 15, coords.lat(), coords.lon()));
-        OpenStreetMapImages = respose.map(response -> new Image[]{new Image(new ByteArrayInputStream(response.getAllBytes()))}).orElse(null);
+        super.getChildren().add(scrollPane);
 
-        respose = backend.callOpenWeatherWith(new WeatherMapCallable(WeatherLayer.PRECIPITATION, 15, coords.lat(), coords.lon()));
-        OpenWeatherImages = respose.map(response -> new Image[]{new Image(new ByteArrayInputStream(response.getAllBytes()))}).orElse(null);
-        respose.ifPresent(response -> ReadWrite.write("weather.png", response.getAllBytes()));
-        assert OpenStreetMapImages != null;
-        super.setBackground(new Background(new BackgroundImage(OpenStreetMapImages[0], BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-        super.setMinSize(255, 255);
-        super.setCenter(new Label());
+        ComboBox<String> layerSelection = new ComboBox<>();
+        layerSelection.getItems().addAll(Arrays.stream(WeatherLayer.values()).map(WeatherLayer::name).toList());
+        layerSelection.setOnAction(a -> display(WeatherLayer.fromString(layerSelection.getValue())));
+        layerSelection.setValue("Weather layer");
+
+        super.getChildren().add(layerSelection);
+        setAlignment(layerSelection, Pos.TOP_LEFT);
+
+        GridPane grid = new GridPane();
+        generator = new Thread(new MapGenerator(MAP_SIZE, MAP_Z_INDEX, grid, tiles));
+        generator.start();
+
+        scrollPane.setContent(grid);
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setMaxSize(CurrentWeatherView.VIEW_WIDTH, CurrentWeatherView.VIEW_WIDTH);
+    }
+
+    public void display(WeatherLayer layer) {
+        for (Tile tile : tiles) tile.viewLayer(layer);
+    }
+    public void kill() {
+        generator.stop();
     }
 }

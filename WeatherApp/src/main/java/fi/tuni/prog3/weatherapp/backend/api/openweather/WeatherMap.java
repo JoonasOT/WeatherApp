@@ -13,12 +13,17 @@ public class WeatherMap {
         public String toString() {
             return name().toLowerCase() + "_new";
         }
+        public static WeatherLayer fromString(String s) {
+            for (WeatherLayer layer : values()) if (layer.name().equals(s.toUpperCase())) return layer;
+            return null;
+        }
     }
     public static class URLs {
         public static final String WEATHER_MAP = "https://tile.openweathermap.org/map/{layer}/{z}/{x}/{y}.png?appid={API key}";
         public static final String OSM_MAP = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     }
     public static class Callables {
+        public record MapTile(boolean isMap, WeatherLayer layer, String userAgent){}
         @RequestMethod(method = "GET")
         public record WeatherMapCallable(WeatherLayer layer, int z, double lat, double log) implements iCallable {
             @Override public String url() { return URLs.WEATHER_MAP; }
