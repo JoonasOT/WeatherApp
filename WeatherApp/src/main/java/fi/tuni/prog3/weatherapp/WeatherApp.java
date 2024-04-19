@@ -1,6 +1,7 @@
 package fi.tuni.prog3.weatherapp;
 
-import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
+import fi.tuni.prog3.weatherapp.backend.Backend;
+import fi.tuni.prog3.weatherapp.backend.security.Key;
 import fi.tuni.prog3.weatherapp.frontend.scenes.SearchScene;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Application;
@@ -12,9 +13,14 @@ import javafx.stage.StageStyle;
  * JavaFX Weather Application.
  */
 public class WeatherApp extends Application {
-
+    public static void main(String[] args) {
+        Key.encryptKey("secrets/ApiKeys/OpenWeatherNew.json", "secrets/ApiKeys/OpenWeatherNew");
+        launch( args );
+    }
     @Override
     public void start(Stage stage) {
+        Backend.getInstance();
+
         stage.initStyle(StageStyle.UTILITY);
 
         new SearchScene(stage);

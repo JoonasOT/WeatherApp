@@ -1,23 +1,24 @@
 package fi.tuni.prog3.weatherapp.frontend.scenes;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
-import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.Geocoder.*;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
-import fi.tuni.prog3.weatherapp.frontend.CustomToolBar;
-import fi.tuni.prog3.weatherapp.frontend.weather.CurrentWeatherView;
-import fi.tuni.prog3.weatherapp.frontend.weather.WeatherForecastView;
+import fi.tuni.prog3.weatherapp.frontend.weather.CustomToolBar;
+import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
+import fi.tuni.prog3.weatherapp.frontend.weather.daily.DailyForecast;
+import fi.tuni.prog3.weatherapp.frontend.weather.forecast.WeatherForecastView;
+import fi.tuni.prog3.weatherapp.frontend.weather.map.WeatherMapView;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Optional;
-
 public class WeatherScene extends Scene {
+    private static OpenWeather.UNIT UNIT;
     private static WeatherScene INSTANCE;
     private static Stage STAGE;
     private static final ScrollPane content = new ScrollPane();
@@ -45,14 +46,18 @@ public class WeatherScene extends Scene {
         root.setTop(new CustomToolBar());
         return INSTANCE;
     }
-    public WeatherScene generateFromCity(Cities.City city) {
+    public static OpenWeather.UNIT getUNIT(){ return UNIT; };
+    public WeatherScene generateFromCity(Cities.City city, OpenWeather.UNIT unit) {
+        root.setTop(new CustomToolBar());
+        UNIT = unit;
         VBox views = new VBox(0);
         currentCity = city;
 
         Backend backend = Backend.getInstance();
+        backend.addToHistory(city);
         isFavourite = backend.getFavourites().stream().anyMatch(city1 -> city1.equals(city));
 
-        coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1),Geocoder.class)
+        coords = backend.callOpenWeatherWith(new Callables.GeocoderCallable(currentCity, 1), Geocoder.class)
                         .map(geocoderObj -> {
                             try {
                                 return new Coord(((GeocoderObj)geocoderObj).cities()[0].lon(),
@@ -62,16 +67,22 @@ public class WeatherScene extends Scene {
                             }
                         })
                         .orElse(null);
-
-        views.getChildren().addAll(
-                new CurrentWeatherView(),
-                new WeatherForecastView()
-        );
+        CurrentWeatherView currentWeatherView = new CurrentWeatherView();
+        if (!currentWeatherView.isOK()) {
+            views.getChildren().add(currentWeatherView);
+        } else {
+            views.getChildren().addAll(
+                    currentWeatherView,
+                    new DailyForecast(),
+                    new WeatherForecastView(),
+                    new WeatherMapView()
+            );
+        }
         content.setContent(views);
 
         return INSTANCE;
     }
-    public static Coord getCoords() { return null; } // TODO: Have a toggle here maybe or smt!
+    public static Coord getCoords() { return coords; } // TODO: Have a toggle here maybe or smt!
     public static String getCity() {
         return currentCity.name() + (currentCity.countryCode() != null ? "," + currentCity.countryCode() : "");
     }

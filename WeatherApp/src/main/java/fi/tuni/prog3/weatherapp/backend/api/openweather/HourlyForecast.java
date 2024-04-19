@@ -9,7 +9,7 @@ import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.ZipCodeCallabl
 import java.util.List;
 
 public class HourlyForecast {
-    public record HourlyForecastObj(DailyWeather.CityStats city, String cod, double message, int cnt, List<DailyWeather.WeatherComplete> list){}
+    public record HourlyForecastObj(WeatherForecast.CityStats city, String cod, double message, int cnt, List<WeatherForecast.WeatherState> list){}
     public static HourlyForecastObj fromJson(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, HourlyForecastObj.class);

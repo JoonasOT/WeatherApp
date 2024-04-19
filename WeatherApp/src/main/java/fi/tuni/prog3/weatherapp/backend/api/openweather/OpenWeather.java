@@ -9,6 +9,10 @@ import java.io.IOException;
 public class OpenWeather {
     public enum UNIT {
         STANDARD, METRIC, IMPERIAL;
+        public static UNIT fromString(String s) {
+            for (var v : values()) if (v.name().equals(s.toUpperCase())) return v;
+            return METRIC;
+        }
         @Override
         public String toString() {
             return name().toLowerCase();
@@ -28,7 +32,7 @@ public class OpenWeather {
         public factory() {
             // Get the key
             try {
-                key = new Key("ApiKeys/OpenWeather");
+                key = new Key("ApiKeys/OpenWeatherNew");
             }
             catch (IOException e) {
                 System.err.println("Key threw an error!");

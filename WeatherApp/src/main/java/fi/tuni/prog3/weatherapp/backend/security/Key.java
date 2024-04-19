@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Key {
+    private static String passwd = "lsmdaondoapnvgäka1+r tfpa ";
     public static String SECRET_LOCATION = "secrets/";
     private String id = "";
     private String key = "";
@@ -32,8 +33,7 @@ public class Key {
             var in = new FileInputStream(SECRET_LOCATION + file);
             var t = Files.readAttributes(Path.of(SECRET_LOCATION + file), BasicFileAttributes.class)
                     .lastModifiedTime();
-            decryptedString = new String(Encryption.decryptAES256(in.readAllBytes(), generatePassword(
-                                            t.toString().substring(0, 18))), UTF_8);
+            decryptedString = new String(Encryption.decryptAES256(in.readAllBytes(), generatePassword(passwd)), UTF_8);
             in.close();
         } catch (RuntimeException e) {
             throw new SecurityException(e);
@@ -62,10 +62,7 @@ public class Key {
 
             byte[] encrypted_content = Encryption.encryptAES256(content.toString()
                                                 .getBytes(StandardCharsets.UTF_8),
-                                                generatePassword(
-                                                        FileTime.fromMillis(System.currentTimeMillis()).toString()
-                                                        .substring(0, 18)
-                                                )
+                                                generatePassword(passwd)
             );
             out.write(encrypted_content);
         } catch(IOException e) { return false; }

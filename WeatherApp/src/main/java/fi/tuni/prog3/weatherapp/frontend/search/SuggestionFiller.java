@@ -62,7 +62,7 @@ public class SuggestionFiller implements Runnable {
         for (SearchResult res : results) {
             CustomMenuItem menuItem = new CustomMenuItem(res, true);
             menuItem.setOnAction(actionEvent -> {
-                textField.setText(res.toString());
+                textField.setText(res.toStringIgnoreNull());
                 textField.search();
                 menu.hide();
             });
