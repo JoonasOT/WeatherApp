@@ -3,8 +3,9 @@ package fi.tuni.prog3.weatherapp.frontend.weather.forecast;
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast.HourlyForecastObj;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast.WeatherForecastObj;
 import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
@@ -51,8 +52,8 @@ public class WeatherForecastView extends HBox {
             scrollPane.setMaxHeight(0);
         } else {
             String jsonString = response.get().getData();
-            List<ForecastPanel> panels = isHourly? constructHourlyPanels(HourlyForecast.fromJson(jsonString)) :
-                                                   constructDefaultPanels(WeatherForecast.fromJson(jsonString));
+            List<ForecastPanel> panels = isHourly? constructHourlyPanels(HourlyForecastObj.fromJson(jsonString)) :
+                                                   constructDefaultPanels(WeatherForecastObj.fromJson(jsonString));
 
             states.getChildren().addAll(panels);
             scrollPane.setContent(states);

@@ -16,11 +16,14 @@ public class DailyWeather {
     public record WeatherComplete(long dt, long sunrise, long sunset, Temperature temp, FeelsLike feels_like,
                                   int pressure, int humidity, List<Weather> weather, double speed, int deg, double gust,
                                   int clouds, double pop, double rain, double snow) {}
-    public record DailyWeatherObj(CityStats city, String cod, double message, int cnt, List<WeatherComplete> list){}
-    public static DailyWeatherObj fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, DailyWeatherObj.class);
+    public record DailyWeatherObj(CityStats city, String cod, double message, int cnt, List<WeatherComplete> list){
+        @FromJson
+        public static DailyWeatherObj fromJson(String json) {
+            Gson gson = new Gson();
+            return gson.fromJson(json, DailyWeatherObj.class);
+        }
     }
+
     public static class URLs {
         public static final String WEATHER_LAT_LON = "https://api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&appid={API key}";
         public static final String WEATHER_CITY_NAME = "https://api.openweathermap.org/data/2.5/forecast/daily?q={city name}&appid={API key}";

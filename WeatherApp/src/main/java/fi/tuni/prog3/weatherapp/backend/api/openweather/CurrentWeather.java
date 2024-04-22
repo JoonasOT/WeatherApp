@@ -61,17 +61,20 @@ public class CurrentWeather {
      * @param cod The status https code
      */
     public record CurrentWeatherObj(Coord coord, List<Weather> weather, String base, StatsCurrent main, int visibility, Wind wind,
-                                    Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){}
-
-    /**
-     * A static method for forming a CurrentWeatherObj from a json String
-     * @param json A string containing json data that forms a CurrentWeatherObj.
-     * @return The formed CurrentWeatherObj.
-     */
-    public static CurrentWeatherObj fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, CurrentWeatherObj.class);
+                                    Clouds clouds, long dt, SysInfo sys, long id, String name, int cod){
+        /**
+         * A static method for forming a CurrentWeatherObj from a json String
+         * @param json A string containing json data that forms a CurrentWeatherObj.
+         * @return The formed CurrentWeatherObj.
+         */
+        @FromJson
+        public static CurrentWeatherObj fromJson(String json) {
+            Gson gson = new Gson();
+            return gson.fromJson(json, CurrentWeatherObj.class);
+        }
     }
+
+
 
     /**
      * A structure holding all the URLs used by the current weather callables.

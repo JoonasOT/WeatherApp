@@ -18,26 +18,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
-import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public final class Backend {
-    private static Logger logger = LogManager.getLogger(Backend.class);
-    private static String USER_AGENT = "OpenWeatherProject JoonasOT";
-    private static String CITIES_DATABASE_LOC = "./Databases/Cities";
-    private static String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
-    private static String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites.json";
-    private static String HISTORY_SAVE_LOCATION = "./Data/user/history.json";
+    private static final Logger logger = LogManager.getLogger(Backend.class);
+    private static final String USER_AGENT = "OpenWeatherProject JoonasOT";
+    private static final String CITIES_DATABASE_LOC = "./Databases/Cities";
+    private static final String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
+    private static final String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites.json";
+    private static final String HISTORY_SAVE_LOCATION = "./Data/user/history.json";
     private static Backend INSTANCE;
     private final API OpenWeather;
     private final Database<List<City>> cityDatabase;
@@ -108,12 +103,13 @@ public final class Backend {
     private Optional<Response> callOpenWeatherWithNoLog(iCallable callable) {
         return OpenWeather.call(callable);
     }
-    public <R> Optional<R> callOpenWeatherWith(iCallable callable, Class fromJsonClass) {
-        logger.info("Calling OW with: " + callable.getClass().getName() + " and " + fromJsonClass.getName());
+    @SuppressWarnings("unchecked")
+    public <R, T> Optional<R> callOpenWeatherWith(iCallable callable, Class<T> fromJsonClass) {
+        logger.info("Calling OW with: " + callable.getClass().getName() + " and converting to " + fromJsonClass.getName());
         var tmp = OpenWeather.call(callable);
         if (tmp.isPresent() && tmp.get().CallWasOK()) {
             for (var m : fromJsonClass.getDeclaredMethods()) {
-                if (m.getName().equals("fromJson")) {
+                if (m.isAnnotationPresent(FromJson.class)) {
                     try {
                         return Optional.of((R)m.invoke(null, tmp.get().getData()));
                     } catch (Exception e) {
@@ -123,7 +119,8 @@ public final class Backend {
                 }
             }
         }
-        return Optional.empty();
+        throw new RuntimeException("Class " + fromJsonClass.getName() + " doesn't have a method with " +
+                                    FromJson.class.getName() + " annotation attached to it!");
     }
     public List<byte[]> getNxNtiles(WeatherMap.Callables.MapTile tile, double lat, double lon, final int Z, final int N) {
         logger.info("Getting tiles for: " + tile);

@@ -5,16 +5,18 @@ import fi.tuni.prog3.weatherapp.backend.api.general.RequestMethod;
 import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 
-import java.util.List;
 import java.util.Map;
 
 public class Geocoder {
     public record CityObj(String name, Map<String, String> local_names, double lat, double lon, String country, String state){}
-    public record GeocoderObj(CityObj[] cities){}
-    public static GeocoderObj fromJson(String json) {
-        Gson gson = new Gson();
-        return new GeocoderObj(gson.fromJson(json, CityObj[].class));
+    public record GeocoderObj(CityObj[] cities){
+        @FromJson
+        public static GeocoderObj fromJson(String json) {
+            Gson gson = new Gson();
+            return new GeocoderObj(gson.fromJson(json, CityObj[].class));
+        }
     }
+
     public static class URLs {
         public static final String GEOCODER = "http://api.openweathermap.org/geo/1.0/direct?q={city name}&limit={limit}&appid={API key}";
     }

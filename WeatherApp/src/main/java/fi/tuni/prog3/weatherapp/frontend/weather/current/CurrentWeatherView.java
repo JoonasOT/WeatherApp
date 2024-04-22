@@ -3,7 +3,7 @@ package fi.tuni.prog3.weatherapp.frontend.weather.current;
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.CurrentWeather.CurrentWeatherObj;
 import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.fonts.WeatherFont;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
@@ -43,7 +43,7 @@ public class CurrentWeatherView extends BorderPane {
         } else if (!response.get().CallWasOK()) {
             super.setCenter(new Label("Call to OpenWeather went amiss!\nTry again with another city!"));
         } else {
-            CurrentWeather.CurrentWeatherObj weather = CurrentWeather.fromJson(response.get().getData());
+            CurrentWeatherObj weather = CurrentWeatherObj.fromJson(response.get().getData());
             super.setCenter(ConstructMiddle(weather));
             isOK = true;
         }

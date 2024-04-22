@@ -3,7 +3,7 @@ package fi.tuni.prog3.weatherapp.frontend.weather.daily;
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.DailyWeather;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs;
+import fi.tuni.prog3.weatherapp.backend.api.openweather.DailyWeather.DailyWeatherObj;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
 import javafx.geometry.Insets;
@@ -47,7 +47,7 @@ public class DailyForecast extends ScrollPane {
             System.err.println("Daily forecasts response had an error!");
             super.setMaxHeight(0);
         } else {
-            DailyWeather.DailyWeatherObj json = DailyWeather.fromJson(response.get().getData());
+            DailyWeatherObj json = DailyWeatherObj.fromJson(response.get().getData());
             for (DailyWeather.WeatherComplete w : json.list()) {
                 var pane = new DailyWeatherPane(w);
                 if (isCurrentlyDay == null) {

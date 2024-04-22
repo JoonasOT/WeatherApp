@@ -9,11 +9,14 @@ import fi.tuni.prog3.weatherapp.backend.api.openweather.callables.ZipCodeCallabl
 import java.util.List;
 
 public class HourlyForecast {
-    public record HourlyForecastObj(WeatherForecast.CityStats city, String cod, double message, int cnt, List<WeatherForecast.WeatherState> list){}
-    public static HourlyForecastObj fromJson(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, HourlyForecastObj.class);
+    public record HourlyForecastObj(WeatherForecast.CityStats city, String cod, double message, int cnt, List<WeatherForecast.WeatherState> list){
+        @FromJson
+        public static HourlyForecastObj fromJson(String json) {
+            Gson gson = new Gson();
+            return gson.fromJson(json, HourlyForecastObj.class);
+        }
     }
+
     public static class URLs {
         public static final String WEATHER_LAT_LON = "https://api.openweathermap.org/data/2.5/forecast/hourly?lat={lat}&lon={lon}&appid={API key}";
         public static final String WEATHER_CITY_NAME = "https://api.openweathermap.org/data/2.5/forecast/hourly?q={city name}&appid={API key}";
