@@ -9,6 +9,16 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- Patch most of the vulnerabilities from 1.57 -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <!-- GUI -->
         <dependency>
@@ -48,7 +58,15 @@
             <artifactId>disruptor</artifactId>
             <version>4.0.0</version>
         </dependency>
+
+        <!-- TPM Access -->
+        <dependency>
+            <groupId>com.github.microsoft</groupId>
+            <artifactId>TSS.Java</artifactId>
+            <version>0.3.0</version>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

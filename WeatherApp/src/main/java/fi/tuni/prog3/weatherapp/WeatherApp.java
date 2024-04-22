@@ -2,6 +2,7 @@ package fi.tuni.prog3.weatherapp;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.security.Key;
+import fi.tuni.prog3.weatherapp.backend.security.TPM;
 import fi.tuni.prog3.weatherapp.frontend.scenes.SearchScene;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Application;
@@ -23,6 +24,9 @@ public class WeatherApp extends Application {
     }
     @Override
     public void start(Stage stage) {
+        TPM.getQuote();
+        if (true) return;
+
         Backend.getInstance();
 
         stage.initStyle(StageStyle.UTILITY);
