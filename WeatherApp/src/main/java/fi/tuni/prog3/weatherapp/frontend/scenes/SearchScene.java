@@ -26,8 +26,10 @@ public class SearchScene extends Scene {
         String initialLoadFromHistory;
         {
             var tmp = Backend.getInstance().getHistory();
-            initialLoadFromHistory = new SearchResult(tmp.get(tmp.size()-1).name(), tmp.get(tmp.size()-1).countryCode())
-                                                    .toStringIgnoreNull();
+            try {
+                initialLoadFromHistory = new SearchResult(tmp.get(tmp.size()-1).name(), tmp.get(tmp.size()-1).countryCode())
+                                                        .toStringIgnoreNull();
+            } catch (IndexOutOfBoundsException ignored) { initialLoadFromHistory = ""; }
         }
 
         STAGE = stage;

@@ -10,8 +10,10 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SuggestionFiller implements Runnable {
@@ -23,6 +25,8 @@ public class SuggestionFiller implements Runnable {
     public SuggestionFiller(ContextMenu popUp, Node menuLocation, SuggestionTextField textField, String target) {
         super();
         menu = popUp;
+        menu.setMaxHeight(10);
+        menu.setPrefHeight(10);
         where = menuLocation;
         this.textField = textField;
         this.target = target;
@@ -38,18 +42,31 @@ public class SuggestionFiller implements Runnable {
         List<SearchResult> results = target.isEmpty() ? SearchResult.GetFavouritesAndHistory() :
                 SearchResult.GenerateResults(target);
 
+
+
         if (results.isEmpty()) {
             Platform.runLater(() -> {
                 if (terminate.get()) return;
                 menu.hide();
             });
             return;
+        } else {
+            Set<String> set = new HashSet<>();
+            var tmp = new LinkedList<SearchResult>();
+            for (SearchResult sr : results) {
+                if (!set.contains(sr.toString()) || sr.toStringIgnoreNull().isEmpty()) {
+                    tmp.add(sr);
+                    set.add(sr.toString());
+                }
+            }
+            results = tmp;
         }
 
+        final List<SearchResult> finalResults = results;
         Platform.runLater(() -> {
             if (terminate.get()) return;
             menu.getItems().clear();
-            menu.getItems().addAll(generateMenuItems(results));
+            menu.getItems().addAll(generateMenuItems(finalResults));
             if (!menu.isShowing()){
                 if (terminate.get()) return;
                 menu.show(where, Side.BOTTOM, 0, 0);

@@ -1,5 +1,6 @@
 package fi.tuni.prog3.weatherapp.frontend.weather;
 
+import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.frontend.fonts.FontAwesome;
 import fi.tuni.prog3.weatherapp.frontend.fonts.FontLocations;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
@@ -18,7 +19,7 @@ public class CustomToolBar extends ToolBar {
         super.setMaxWidth(900);
 
         super.setPadding(new Insets(0));
-        super.getItems().addAll(BackToSearch(), AddToFavourites());
+        super.getItems().addAll(BackToSearch(), AddToFavourites(), RemoveHistory());
     }
     private static Button BackToSearch() {
         Button button = new Button(FontAwesome.SEARCH.unicode);
@@ -58,6 +59,17 @@ public class CustomToolBar extends ToolBar {
             }
         });
 
+        return button;
+    }
+
+    private static Button RemoveHistory() {
+        Button button = new Button("Reset history");
+
+        button.setPadding(new Insets(0));
+        button.setPrefHeight(HEIGHT);
+        button.setMaxHeight(HEIGHT);
+        button.setMinHeight(HEIGHT);
+        button.setOnAction(x -> Backend.getInstance().nukeHistory());
         return button;
     }
 }

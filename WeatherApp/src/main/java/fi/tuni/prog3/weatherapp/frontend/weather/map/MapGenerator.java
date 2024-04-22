@@ -83,7 +83,4 @@ public class MapGenerator implements Runnable {
         });
         synchronized (sync) { sync.notify(); }
     }
-
-
-
 }

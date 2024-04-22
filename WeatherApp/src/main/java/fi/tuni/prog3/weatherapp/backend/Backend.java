@@ -142,7 +142,6 @@ public final class Backend {
         return result;
     }
 
-
     public void loadHistoryAndFavourites() {
         logger.info("Loading history and favourites");
         Gson gson = new Gson();
@@ -182,6 +181,10 @@ public final class Backend {
     public List<City> getHistory() {
         logger.info("Got history");
         return history;
+    }
+    public void nukeHistory() {
+        logger.info("Removed history!");
+        history.clear();
     }
     public static void Shutdown() {
         logger.info("Shutting the backend down!");
