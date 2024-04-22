@@ -2,15 +2,16 @@ package fi.tuni.prog3.weatherapp.frontend.weather.map;
 
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 public class MapLoader {
-    private record SetContentTask(VBox box, AtomicReference<WeatherMapView> out) implements Runnable {
+    private static Label noMapYetLabel = new Label("Map is loading...");
+
+    private record SetContentTask(VBox box, WeatherMapView out) implements Runnable {
         @Override
         public void run() {
-            Object sync = out.get().getSync();
+            Object sync = out.getSync();
             synchronized (sync) {
                 try {
                     sync.wait();
@@ -19,16 +20,15 @@ public class MapLoader {
                 }
             }
             if (WeatherScene.hasShutdown()) return;
-            Platform.runLater(() -> box.getChildren().add(out.get()));
+            Platform.runLater(() -> {
+                box.getChildren().remove(noMapYetLabel);
+                box.getChildren().add(out);
+            });
         }
     }
-    public static WeatherMapView loadTo(VBox box) {
-        AtomicReference<WeatherMapView> out = new AtomicReference<>();
-        Platform.runLater(() -> {
-            if (WeatherScene.hasShutdown()) return;
-            out.set(new WeatherMapView());
-            new Thread(new SetContentTask(box, out)).start();
-        });
-        return out.get();
+    public static void loadTo(VBox box) {
+        box.getChildren().add(noMapYetLabel);
+        if (WeatherScene.hasShutdown()) return;
+        new Thread(new SetContentTask(box, new WeatherMapView())).start();
     }
 }

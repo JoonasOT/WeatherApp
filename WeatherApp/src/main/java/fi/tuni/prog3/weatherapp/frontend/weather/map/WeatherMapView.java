@@ -56,9 +56,6 @@ public class WeatherMapView extends StackPane {
     public void display(WeatherLayer layer) {
         for (Tile tile : tiles) tile.viewLayer(layer);
     }
-    public void kill() {
-        generator.stop();
-    }
     public Object getSync() {
         return sync;
     }

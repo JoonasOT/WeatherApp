@@ -21,6 +21,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class WeatherScene extends Scene {
     private static OpenWeather.UNIT UNIT;
     private static WeatherScene INSTANCE;
@@ -31,8 +33,6 @@ public class WeatherScene extends Scene {
     private static boolean isFavourite;
     private static Cities.City currentCity;
     private static Coord coords = null;
-    private static WeatherMapView mapView;
-    private static final boolean mapViewOff = false;
     private static boolean alive = true;
     public WeatherScene(Stage stage) {
         super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
@@ -93,7 +93,7 @@ public class WeatherScene extends Scene {
                     Daily,
                     new WeatherForecastView()
             );
-            if (!mapViewOff) mapView = MapLoader.loadTo(views);
+            MapLoader.loadTo(views);
         }
         views.setPadding(new Insets(0, 90, 0, 90));
         content.setContent(views);
@@ -104,7 +104,6 @@ public class WeatherScene extends Scene {
         return currentCity.name() + (currentCity.countryCode() != null ? "," + currentCity.countryCode() : "");
     }
     public static void SwitchToSearchScene() {
-        mapView.kill();
         STAGE.setScene(SearchScene.getInstance());
     }
     public static boolean isThisFavourite() {
@@ -118,7 +117,6 @@ public class WeatherScene extends Scene {
     }
     public static void Shutdown() {
         alive = false;
-        if (mapView != null) mapView.kill();
     }
     public static boolean hasShutdown() { return !alive; }
 }

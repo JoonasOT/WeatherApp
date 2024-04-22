@@ -6,12 +6,12 @@ import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
 import java.io.ByteArrayInputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -38,13 +38,31 @@ public class MapGenerator implements Runnable {
 
 
         Map<WeatherMap.WeatherLayer, List<Image>> layers = new HashMap<>();
+
+        List<Future<Pair<WeatherMap.WeatherLayer, List<byte[]>>>> downloads = new LinkedList<>();
+        List<Future<Pair<WeatherMap.WeatherLayer, List<Image>>>> images = new LinkedList<>();
+        ExecutorService executor = Executors.newCachedThreadPool();
+
         for (WeatherMap.WeatherLayer layer : WeatherMap.WeatherLayer.values()) {
-            var tmp = backend.getNxNtiles(new WeatherMap.Callables.MapTile(false, layer, null), coords.lat(), coords.lon(), Z, N);
-            layers.put(layer, tmp.stream().map(bytes -> new Image(new ByteArrayInputStream(bytes))).collect(Collectors.toList()));
+            if (WeatherScene.hasShutdown()) return;
+            downloads.add(executor.submit(() -> new Pair<>(layer, backend.getNxNtiles(new WeatherMap.Callables.MapTile(false, layer, null), coords.lat(), coords.lon(), Z, N))));
         }
+        for (var download : downloads) {
+            if (WeatherScene.hasShutdown()) return;
+            images.add(executor.submit(() -> new Pair<>(download.get().getKey(), download.get().getValue().stream().map(bytes -> new Image(new ByteArrayInputStream(bytes))).collect(Collectors.toList()))));
+        }
+        for (var image : images) {
+            try {
+                layers.put(image.get().getKey(), image.get().getValue());
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        executor.shutdown();
 
         for (int y : IntStream.range(0, N).toArray()) {
             for (int x : IntStream.range(0, N).toArray()) {
+                if (WeatherScene.hasShutdown()) return;
                 Map<WeatherMap.WeatherLayer, Image> tmp = new HashMap<>();
                 for (WeatherMap.WeatherLayer layer : layers.keySet()) {
                     tmp.put(layer, layers.get(layer).get(y*N+x));
@@ -56,10 +74,14 @@ public class MapGenerator implements Runnable {
         Platform.runLater(() -> {
             int i = 0;
             for (Tile tile : tiles) {
+                if (WeatherScene.hasShutdown()) return;
                 grid.add(tile, i % N, i / N);
                 i++;
             }
         });
         synchronized (sync) { sync.notify(); }
     }
+
+
+
 }

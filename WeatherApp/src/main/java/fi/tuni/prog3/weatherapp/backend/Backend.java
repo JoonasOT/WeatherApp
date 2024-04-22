@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
@@ -120,7 +124,6 @@ public final class Backend {
         }
         return Optional.empty();
     }
-
     public List<byte[]> getNxNtiles(WeatherMap.Callables.MapTile tile, double lat, double lon, final int Z, final int N) {
         logger.info("Getting tiles for: " + tile);
         List<byte[]> result = new LinkedList<>();
@@ -131,13 +134,14 @@ public final class Backend {
             for (int x : IntStream.range(X - N/2, X + N/2 + 1).toArray()) {
                 Optional<Response> response = callOpenWeatherWithNoLog(
                         tile.isMap()?   new WeatherMap.Callables.OpenStreetMapTileCallable(tile.userAgent(), x, y, Z):
-                                        new WeatherMap.Callables.WeatherMapTileCallable(tile.layer(), x, y, Z)
+                                new WeatherMap.Callables.WeatherMapTileCallable(tile.layer(), x, y, Z)
                 );
                 result.add(response.map(Response::getAllBytes).orElse(new byte[]{}));
             }
         }
         return result;
     }
+
 
     public void loadHistoryAndFavourites() {
         logger.info("Loading history and favourites");
