@@ -27,6 +27,7 @@ public class WeatherMapView extends StackPane {
     private static final int MAP_SIZE = 10;
     private static final int MAP_Z_INDEX = 9;
     private final Thread generator;
+    private final Object sync = new Object();
     public WeatherMapView() {
         super();
 
@@ -41,7 +42,7 @@ public class WeatherMapView extends StackPane {
         setAlignment(layerSelection, Pos.TOP_LEFT);
 
         GridPane grid = new GridPane();
-        generator = new Thread(new MapGenerator(MAP_SIZE, MAP_Z_INDEX, grid, tiles));
+        generator = new Thread(new MapGenerator(MAP_SIZE, MAP_Z_INDEX, grid, tiles, sync));
         generator.start();
 
         scrollPane.setContent(grid);
@@ -57,5 +58,8 @@ public class WeatherMapView extends StackPane {
     }
     public void kill() {
         generator.stop();
+    }
+    public Object getSync() {
+        return sync;
     }
 }

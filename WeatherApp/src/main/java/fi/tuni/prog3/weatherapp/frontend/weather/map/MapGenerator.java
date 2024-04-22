@@ -16,15 +16,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MapGenerator implements Runnable {
-    final int N;
-    final int Z;
-    final GridPane grid;
-    final LinkedList<Tile> tiles;
-    MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles) {
+    private final int N;
+    private final int Z;
+    private final GridPane grid;
+    private final LinkedList<Tile> tiles;
+    private final Object sync;
+    MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles, final Object syncObj) {
         N = n + (n + 1) % 2;
         Z = z;
         this.grid = grid;
         this.tiles = tiles;
+        sync = syncObj;
     }
     @Override
     public void run() {
@@ -58,5 +60,6 @@ public class MapGenerator implements Runnable {
                 i++;
             }
         });
+        synchronized (sync) { sync.notify(); }
     }
 }

@@ -11,12 +11,12 @@ import fi.tuni.prog3.weatherapp.frontend.weather.CustomToolBar;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
 import fi.tuni.prog3.weatherapp.frontend.weather.daily.DailyForecast;
 import fi.tuni.prog3.weatherapp.frontend.weather.forecast.WeatherForecastView;
+import fi.tuni.prog3.weatherapp.frontend.weather.map.MapLoader;
 import fi.tuni.prog3.weatherapp.frontend.weather.map.WeatherMapView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,7 +32,8 @@ public class WeatherScene extends Scene {
     private static Cities.City currentCity;
     private static Coord coords = null;
     private static WeatherMapView mapView;
-    private static boolean mapViewOff = false;
+    private static final boolean mapViewOff = false;
+    private static boolean alive = true;
     public WeatherScene(Stage stage) {
         super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
         if (INSTANCE != null) {
@@ -92,7 +93,7 @@ public class WeatherScene extends Scene {
                     Daily,
                     new WeatherForecastView()
             );
-            if (!mapViewOff) views.getChildren().add( (mapView = new WeatherMapView()) );
+            if (!mapViewOff) mapView = MapLoader.loadTo(views);
         }
         views.setPadding(new Insets(0, 90, 0, 90));
         content.setContent(views);
@@ -116,6 +117,8 @@ public class WeatherScene extends Scene {
         isFavourite = !isFavourite;
     }
     public static void Shutdown() {
+        alive = false;
         if (mapView != null) mapView.kill();
     }
+    public static boolean hasShutdown() { return !alive; }
 }
