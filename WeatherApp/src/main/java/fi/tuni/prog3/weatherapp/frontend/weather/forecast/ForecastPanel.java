@@ -21,7 +21,7 @@ public class ForecastPanel extends VBox {
     private static final BackgroundFill backgroundFill =
             new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(5), new Insets(0));
     public record RequiredFields(MillisToTime time, JSON_OBJs.Weather weather, WeatherForecast.Stats temps, WeatherForecast.Wind wind,
-                                 MillisToTime sunrise, MillisToTime sunset){}
+                                 String pod){}
     public ForecastPanel(RequiredFields fields) {
         super();
         super.setPadding(new Insets(2, 10, 5, 10));
@@ -34,10 +34,7 @@ public class ForecastPanel extends VBox {
         time.setAlignment(Pos.CENTER);
         time.setMinWidth(LABEL_WIDTH);
 
-        boolean isDay = new MillisToTime(System.currentTimeMillis())
-                                .isLargerThan(fields.sunrise)
-                                .isSmallerThan(fields.sunset)
-                                .eval();
+        boolean isDay = fields.pod.equals("d");
 
         Label icon = new Label(WeatherFont.CodeToChar(fields.weather().id(), isDay));
         Font iconFont = Font.loadFont(WeatherFont.LOCATION, 50);

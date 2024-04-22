@@ -19,6 +19,7 @@ import java.util.Optional;
 public class DailyForecast extends ScrollPane {
     private VBox wrapper = new VBox(0);
     private HBox days = new HBox(0);
+    private Boolean isCurrentlyDay = null;
     public DailyForecast() {
         super();
         super.setMaxWidth(CurrentWeatherView.VIEW_WIDTH);
@@ -48,10 +49,17 @@ public class DailyForecast extends ScrollPane {
         } else {
             DailyWeather.DailyWeatherObj json = DailyWeather.fromJson(response.get().getData());
             for (DailyWeather.WeatherComplete w : json.list()) {
-                days.getChildren().add(new DailyWeatherPane(w));
+                var pane = new DailyWeatherPane(w);
+                if (isCurrentlyDay == null) {
+                    isCurrentlyDay = pane.isDay();
+                }
+                days.getChildren().add(pane);
             }
             super.setMinHeight(256);
             super.setContent(wrapper);
         }
+    }
+    public boolean isCurrentlyDay() {
+        return isCurrentlyDay;
     }
 }

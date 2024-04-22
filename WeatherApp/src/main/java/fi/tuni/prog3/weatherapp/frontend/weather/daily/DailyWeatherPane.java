@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public class DailyWeatherPane extends BorderPane {
-
+    private final boolean isDay;
     public DailyWeatherPane(DailyWeather.WeatherComplete weatherComplete) {
         super();
         super.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), new Insets(2))));
@@ -34,7 +34,7 @@ public class DailyWeatherPane extends BorderPane {
         MillisToTime sunset = MillisToTime.fromOpenWeatherTime(weatherComplete.sunset());
         MillisToTime now = new MillisToTime(System.currentTimeMillis());
 
-        boolean isDay = now.isLargerThan(sunrise).isSmallerThan(sunset).eval();
+        isDay = now.isLargerThan(sunrise).isSmallerThan(sunset).eval();
 
         Label icon = new Label(WeatherFont.CodeToChar(weatherComplete.weather().get(0).id(), isDay));
         Font iconFont = Font.loadFont(WeatherFont.LOCATION, 150);
@@ -51,5 +51,9 @@ public class DailyWeatherPane extends BorderPane {
 
         center.getChildren().addAll(date, icon, temps);
         super.setCenter(center);
+    }
+
+    public boolean isDay() {
+        return isDay;
     }
 }

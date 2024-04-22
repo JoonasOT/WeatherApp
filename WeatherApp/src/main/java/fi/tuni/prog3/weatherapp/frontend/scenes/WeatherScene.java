@@ -84,18 +84,15 @@ public class WeatherScene extends Scene {
         if (!currentWeatherView.isOK()) {
             views.getChildren().add(currentWeatherView);
         } else {
-            if (!mapViewOff) {
-                mapView = new WeatherMapView();
-                views.getChildren().addAll(
-                        currentWeatherView,
-                        new DailyForecast(),
-                        new WeatherForecastView(),
-                        mapView
-                );
-            } else views.getChildren().addAll(
+            var Daily = new DailyForecast();
+            currentWeatherView.setPartOfDay(Daily.isCurrentlyDay());
+
+            views.getChildren().addAll(
                     currentWeatherView,
-                    new DailyForecast(),
-                    new WeatherForecastView());
+                    Daily,
+                    new WeatherForecastView()
+            );
+            if (!mapViewOff) views.getChildren().add( (mapView = new WeatherMapView()) );
         }
         views.setPadding(new Insets(0, 90, 0, 90));
         content.setContent(views);

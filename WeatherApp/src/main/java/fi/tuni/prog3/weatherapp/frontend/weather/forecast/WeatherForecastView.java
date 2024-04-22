@@ -61,13 +61,13 @@ public class WeatherForecastView extends HBox {
     }
 
     private List<ForecastPanel> constructHourlyPanels(HourlyForecast.HourlyForecastObj obj) {
-        return getForecastPanels(obj.list(), obj.city());
+        return getForecastPanels(obj.list());
     }
     private List<ForecastPanel> constructDefaultPanels(WeatherForecast.WeatherForecastObj obj) {
-        return getForecastPanels(obj.list(), obj.city());
+        return getForecastPanels(obj.list());
     }
 
-    private List<ForecastPanel> getForecastPanels(List<WeatherForecast.WeatherState> list, WeatherForecast.CityStats city) {
+    private List<ForecastPanel> getForecastPanels(List<WeatherForecast.WeatherState> list) {
         LinkedList<ForecastPanel> panels = new LinkedList<>();
         for (WeatherForecast.WeatherState state : list) {
             panels.add(new ForecastPanel(new ForecastPanel.RequiredFields(
@@ -75,8 +75,7 @@ public class WeatherForecastView extends HBox {
                     state.weather().get(0),
                     state.main(),
                     state.wind(),
-                    MillisToTime.fromOpenWeatherTime(city.sunrise()),
-                    MillisToTime.fromOpenWeatherTime(city.sunrise())
+                    state.sys().pod()
             )));
         }
         return panels;

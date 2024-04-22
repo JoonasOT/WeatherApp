@@ -23,6 +23,7 @@ public class CurrentWeatherView extends BorderPane {
     public static int SCROLL_BAR_WIDTH = 0;
     public static int VIEW_WIDTH = 720 - SCROLL_BAR_WIDTH;
     private boolean isOK = false;
+    private Label icon;
     public CurrentWeatherView() {
         super();
 
@@ -47,16 +48,11 @@ public class CurrentWeatherView extends BorderPane {
             isOK = true;
         }
     }
-    private static VBox ConstructMiddle(CurrentWeather.CurrentWeatherObj jsonOBJ) {
+    private VBox ConstructMiddle(CurrentWeather.CurrentWeatherObj jsonOBJ) {
         VBox vBox = new VBox(5);
         vBox.setMaxSize(CENTER_WIDTH, CENTER_WIDTH);
 
-        MillisToTime sunrise = new MillisToTime(jsonOBJ.sys().sunrise());
-        MillisToTime sunset = new MillisToTime(jsonOBJ.sys().sunset());
-        MillisToTime now = new MillisToTime(System.currentTimeMillis());
-
-        boolean isDay = now.isLargerThan(sunrise).isSmallerThan(sunset).eval();
-        Label icon = new Label(WeatherFont.CodeToChar(jsonOBJ.weather().get(0).id(), isDay));
+        icon = new Label(WeatherFont.CodeToChar(jsonOBJ.weather().get(0).id(), true));
         Font iconFont = Font.loadFont(WeatherFont.LOCATION, 200);
         icon.setFont(iconFont);
 
@@ -78,6 +74,9 @@ public class CurrentWeatherView extends BorderPane {
         vBox.getChildren().addAll(icon, description, where);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
+    }
+    public void setPartOfDay(boolean isDay) {
+        icon.setText(Character.toString(icon.getText().charAt(0) + (isDay ? 0 : 1)));
     }
     public boolean isOK() {
         return isOK;
