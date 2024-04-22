@@ -11,8 +11,6 @@ import javafx.util.Pair;
 import java.io.ByteArrayInputStream;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MapGenerator implements Runnable {
@@ -20,14 +18,13 @@ public class MapGenerator implements Runnable {
     private final int Z;
     private final GridPane grid;
     private final LinkedList<Tile> tiles;
-    private final Object sync;
+    private final Object sync = WeatherScene.getSyncObj();
     private final String OpenStreetMapUserAgent = "TUNI-Programming3-WeatherApp-JoonasOT";
-    MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles, final Object syncObj) {
+    MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles) {
         N = n + (n + 1) % 2;
         Z = z;
         this.grid = grid;
         this.tiles = tiles;
-        sync = syncObj;
     }
     @Override
     public void run() {
@@ -47,7 +44,7 @@ public class MapGenerator implements Runnable {
 
         for (WeatherMap.WeatherLayer layer : WeatherMap.WeatherLayer.values()) {
             if (WeatherScene.hasShutdown()) {
-                executor.shutdownNow();
+                executor.shutdown();
                 return;
             };
             images.add(new Pair<>(layer, executor.submit(new MapLayerGenerator(layer, coords, Z, N))));

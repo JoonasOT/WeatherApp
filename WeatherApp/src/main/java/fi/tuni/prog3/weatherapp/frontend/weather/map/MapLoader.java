@@ -7,12 +7,13 @@ import javafx.scene.layout.VBox;
 
 public class MapLoader {
     private static Label noMapYetLabel = new Label("Map is loading...");
+    private static Object sync = WeatherScene.getSyncObj();
 
     private record SetContentTask(VBox box, WeatherMapView out) implements Runnable {
         @Override
         public void run() {
-            Object sync = out.getSync();
             synchronized (sync) {
+                System.out.println("Freed!");
                 try {
                     sync.wait();
                 } catch (InterruptedException e) {

@@ -33,7 +33,8 @@ public class WeatherScene extends Scene {
     private static boolean isFavourite;
     private static Cities.City currentCity;
     private static Coord coords = null;
-    private static boolean alive = true;
+    private static boolean alive = false;
+    private static final Object threadSync = new Object();
     public WeatherScene(Stage stage) {
         super(root, WeatherApp.WINDOW_WIDTH, WeatherApp.WINDOW_HEIGHT);
         if (INSTANCE != null) {
@@ -61,6 +62,7 @@ public class WeatherScene extends Scene {
     }
     public static OpenWeather.UNIT getUNIT(){ return UNIT; };
     public WeatherScene generateFromCity(Cities.City city, OpenWeather.UNIT unit) {
+        alive = true;
         toolBar = new CustomToolBar();
         UNIT = unit;
         VBox views = new VBox(10);
@@ -117,6 +119,12 @@ public class WeatherScene extends Scene {
     }
     public static void Shutdown() {
         alive = false;
+        synchronized (threadSync) {
+            threadSync.notifyAll();
+        }
+    }
+    public static Object getSyncObj() {
+        return threadSync;
     }
     public static boolean hasShutdown() { return !alive; }
 }

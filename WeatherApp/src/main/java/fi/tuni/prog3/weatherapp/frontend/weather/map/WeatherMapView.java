@@ -1,25 +1,13 @@
 package fi.tuni.prog3.weatherapp.frontend.weather.map;
 
-import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.WeatherLayer;
-import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap.Callables.*;
-import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
-import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class WeatherMapView extends StackPane {
     private final ScrollPane scrollPane = new ScrollPane();
@@ -27,7 +15,6 @@ public class WeatherMapView extends StackPane {
     private static final int MAP_SIZE = 10;
     private static final int MAP_Z_INDEX = 9;
     private final Thread generator;
-    private final Object sync = new Object();
     public WeatherMapView() {
         super();
 
@@ -42,7 +29,7 @@ public class WeatherMapView extends StackPane {
         setAlignment(layerSelection, Pos.TOP_LEFT);
 
         GridPane grid = new GridPane();
-        generator = new Thread(new MapGenerator(MAP_SIZE, MAP_Z_INDEX, grid, tiles, sync));
+        generator = new Thread(new MapGenerator(MAP_SIZE, MAP_Z_INDEX, grid, tiles));
         generator.start();
 
         scrollPane.setContent(grid);
@@ -55,8 +42,5 @@ public class WeatherMapView extends StackPane {
 
     public void display(WeatherLayer layer) {
         for (Tile tile : tiles) tile.viewLayer(layer);
-    }
-    public Object getSync() {
-        return sync;
     }
 }

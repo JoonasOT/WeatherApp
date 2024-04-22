@@ -27,6 +27,7 @@ public class MapLayerGenerator implements Callable<List<Image>> {
 
     @Override
     public List<Image> call() {
+        if (WeatherScene.hasShutdown()) return new ArrayList<>();
         List<byte[]> bytes = Backend.getInstance().getNxNtiles(
                 new WeatherMap.Callables.MapTile(false, layer, null), coords.lat(), coords.lon(), Z, N);
         if (WeatherScene.hasShutdown()) return new ArrayList<>();

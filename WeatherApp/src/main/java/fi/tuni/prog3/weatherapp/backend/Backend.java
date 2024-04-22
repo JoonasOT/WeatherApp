@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.IntStream;
 
 import fi.tuni.prog3.weatherapp.backend.io.ReadWrite;
+import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
