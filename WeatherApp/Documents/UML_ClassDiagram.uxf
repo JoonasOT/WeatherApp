@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>6</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>36</x>
-      <y>174</y>
-      <w>198</w>
-      <h>96</h>
+      <x>2282</x>
+      <y>777</y>
+      <w>231</w>
+      <h>112</h>
     </coordinates>
-    <panel_attributes>fi.tuni.prog3.weatherapp::WeatherApp
+    <panel_attributes>WeatherApp
 --
 +WINDOW_WIDTH = 900: int
 +WINDOW_HEIGHT = 720: int
@@ -25,12 +25,12 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
-      <y>384</y>
-      <w>408</w>
-      <h>300</h>
+      <x>2163</x>
+      <y>973</y>
+      <w>476</w>
+      <h>350</h>
     </coordinates>
-    <panel_attributes>fi.tuni.prog3.weatherapp.backend::Backend
+    <panel_attributes>Backend
 --
 -logger = LogManager.getLogger(Backend.class): Logger
 -USER_AGENT = "OpenWeatherProject JoonasOT": String
@@ -40,7 +40,7 @@
 -HISTORY_SAVE_LOCATION = "./Data/user/history.json": String
 -INSTANCE: Backend
 -OpenWeather: API
--cityDatabase: Database&lt;List&lt;City&gt;&gt;
+-cityDatabase: Database&lt;List&lt;City&gt; &gt;
 -favourites = new LinkedList(): List&lt;City&gt;
 -history = new LinkedList(): List&lt;City&gt;
 --
@@ -66,12 +66,12 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1062</x>
-      <y>48</y>
-      <w>234</w>
-      <h>102</h>
+      <x>560</x>
+      <y>1036</y>
+      <w>273</w>
+      <h>119</h>
     </coordinates>
-    <panel_attributes>fi.tuni.prog3.weatherapp.backend.security::Encryption
+    <panel_attributes>Encryption
 --
 -PBKDF2_ITERATION_COUNT = 300_000: int
 -PBKDF2_SALT_LENGTH = 16: int
@@ -88,12 +88,12 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1074</x>
-      <y>156</y>
-      <w>204</w>
-      <h>132</h>
+      <x>868</x>
+      <y>1022</y>
+      <w>238</w>
+      <h>161</h>
     </coordinates>
-    <panel_attributes>fi.tuni.prog3.weatherapp.backend.security::Key
+    <panel_attributes>Key
 --
 -passwd = "lsmdaondoapnvgÃ¤ka1+r tfpa ": String
 +SECRET_LOCATION = "secrets/": String
@@ -113,12 +113,12 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>666</x>
-      <y>102</y>
-      <w>192</w>
-      <h>84</h>
+      <x>3199</x>
+      <y>1295</y>
+      <w>224</w>
+      <h>98</h>
     </coordinates>
-    <panel_attributes>fi.tuni.prog3.weatherapp.backend.io::ReadWrite
+    <panel_attributes>ReadWrite
 --
 +PRINT_STACK_TRACE = false: boolean
 --
@@ -133,18 +133,2322 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1392</x>
-      <y>336</y>
-      <w>216</w>
-      <h>54</h>
+      <x>2723</x>
+      <y>1456</y>
+      <w>252</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-fi.tuni.prog3.weatherapp.backend.database::Database
+Database
 --
 --
 +get(String what): Optional&lt;T&gt;
 --
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2506</x>
+      <y>1624</y>
+      <w>315</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>MaxMindGeoIP2
+--
+~database: File
+--
++MaxMindGeoIP2(String location): ctor
++get(String ip): Optional&lt;GeoLocation&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2541</x>
+      <y>1771</y>
+      <w>231</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>GeoLocation
+--
++country:   com.maxmind.geoip2.record.Country
++city :  com.maxmind.geoip2.record.City
+--
++GeoLocation(Country country, City city)  ctr
++country(): Country
++city(): City</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2653</x>
+      <y>1470</y>
+      <w>84</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0;10.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2653</x>
+      <y>1694</y>
+      <w>21</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2989</x>
+      <y>1624</y>
+      <w>315</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>Cities
+--
++MAX_CITIES_RETURNED = 5: int
++City: Record(name: String, countryCode: String):
+-location: String
+-DatabaseLocation: String
+-cityListLocation: String
+-cityListOptimisedLocation: String
+-cities: City[]
+-wasAbleTOLOad: Bool
+--
++Cities(CityBuilder builder): ctor
++get(String query): Optional&lt;List&lt;City&gt;&gt;
+-load(): Bool
+-loadFromFallback(): Bool
+-getCityListFromOpenWeatherBulk(): Bool
+-calculateEditDistance(String word): int[]
+-addCountryBias(int[] original): double[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2968</x>
+      <y>1470</y>
+      <w>196</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;260.0;10.0;260.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3241</x>
+      <y>2282</y>
+      <w>441</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>CityJSON
+--
++id: int
++name: String
++state: String
++country: String
++coord: HashMap&lt;String, Double&gt;
+--
++CityJSON(int id, String name, String state, String country, HashMap&lt;String, Double&gt; coord): ctor
++state(): String
++country(): String
++coord(): HashMap&lt;String, Double&gt;
++name(): String
++id(): int
++equals(Object o): boolean
++hashCode(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3780</x>
+      <y>1736</y>
+      <w>434</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>Params
+--
++FileStucture.DatabaseLocation = = "./db/Cities": String
++FileStructure.CITIES_OPTIMISED = "/cities_optimised_load": String
++FIleStructure.CITY_COUNT = "/CityCount": String
++FileStructure.CITY_FALLBACK = "/city.list.json.gz": String
++FileStructure.CITY_FALLBACK_URL = "https://bulk.openweathermap.org/sample/city.list.json.gz": String
+--
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3402</x>
+      <y>1631</y>
+      <w>441</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>EditDistance
+--
++compateCharIgnoreCase(char a, char b): int
++calculateEditDistance(String want, String attempt): int
++calculateDistances(String[] words, String attempt): int[]
++calculateDistancesParallel(String[] words, String attempt): int[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3297</x>
+      <y>1666</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2989</x>
+      <y>2009</y>
+      <w>315</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>CityBuilder
+--
+-location: String
+-databaseLocation: String
+-cityListLocation: String
+-optimizedCityListLocation: String
+--
++setOptimisedCityListLocationTo(String what): SetOptionalFields
++setFallbackCityListLocationTo(String what): SetOptionalFields
++setDatabaseLocation(String what): SetOptionalFields
++setLocation(String what): SetDatabaseFileLocation
++build(): Cities
++getLocation(): String
++getDatabaseLocation(): String
++getCityListLocation(): String
++getOptimizedCityListLocation(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2555</x>
+      <y>2009</y>
+      <w>343</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+SetOptionalFields
+--
+--
+~setOptimisedCityListLocationTo(String what): SetOptionalFields
+~setFallbackCityListLocationTo(String what): SetOptionalFields
+~build(): Cities
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2520</x>
+      <y>2107</y>
+      <w>378</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+SetDatabaseFileLocation
+--
+--
+~setDatabaseLocation(String what): SetOptionalFields
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2576</x>
+      <y>2177</y>
+      <w>322</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+SetLocation
+--
+--
+~setLocation(String what): SetDatabaseFileLocation
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2891</x>
+      <y>2037</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2891</x>
+      <y>2121</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2891</x>
+      <y>2177</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3297</x>
+      <y>1750</y>
+      <w>497</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>690.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3136</x>
+      <y>1834</y>
+      <w>21</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3780</x>
+      <y>2233</y>
+      <w>336</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>FallbackLoader
+--
+-INSTANCE: FallbackLoader
+-cities: City[]
+-state = State.IDLE: State
+-executor = Executors.newCachedThreadPool(): ExecutorService
+-cityCountFuture: Future&lt;Boolean&gt;
+-cityOptimisedFuture: Future&lt;Boolean&gt;
+--
+-FallbackLoader(): ctor
++GetInstance(): FallbackLoader
++waitForReady(): void
++getState(): State
++load(String fileLocation): void
++getCities(): City[]
++close(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3780</x>
+      <y>2051</y>
+      <w>322</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>BaseLoader
+--
+-INSTANCE: BaseLoader
+-state = State.IDLE: State
+-gson = new Gson(): Gson
+-cities: City[]
+--
+-BaseLoader(): ctor
++GetInstance(): BaseLoader
++waitForReady(): void
++getState(): State
++load(String fileLocation): void
++getCities(): City[]
++close(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3374</x>
+      <y>1855</y>
+      <w>322</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+CitiesLoader
+--
++State{ IDLE, LOADING, READY }: enum
+--
++waitForReady(): void
++getState(): State
++load(String fileLocation): void
++getCities(): City[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3780</x>
+      <y>1869</y>
+      <w>371</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>BaseLoader
+--
+-INSTANCE: ParallelLoader
+-state = State.IDLE: State
+-gson = new Gson(): Gson
+-cities: City[]
+-LinkedList&lt;Future&lt;Void&gt; &gt; futures: LinkedList&lt;Future&lt;Void&gt; &gt;
+-ExecutorService executor = Executors.newCachedThreadPool(): ExecutorService
+--
+-BaseLoader(): ctor
++GetInstance(): BaseLoader
++waitForReady(): void
++getState(): State
++load(String fileLocation): void
++getCities(): City[]
++close(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3689</x>
+      <y>1862</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3689</x>
+      <y>1946</y>
+      <w>105</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3605</x>
+      <y>1946</y>
+      <w>189</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;250.0;430.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3297</x>
+      <y>1799</y>
+      <w>91</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4109</x>
+      <y>1750</y>
+      <w>196</w>
+      <h>504</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;..</panel_attributes>
+    <additional_attributes>150.0;10.0;260.0;10.0;260.0;700.0;10.0;700.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2632</x>
+      <y>1015</y>
+      <w>686</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;960.0;10.0;960.0;400.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3416</x>
+      <y>1309</y>
+      <w>1015</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;1430.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4410</x>
+      <y>1309</y>
+      <w>21</w>
+      <h>609</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;850.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4144</x>
+      <y>1897</y>
+      <w>287</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;390.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4109</x>
+      <y>2058</y>
+      <w>322</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;290.0;440.0;290.0;440.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4095</x>
+      <y>2058</y>
+      <w>336</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;460.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4410</x>
+      <y>1897</y>
+      <w>21</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2632</x>
+      <y>1078</y>
+      <w>224</w>
+      <h>392</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;300.0;10.0;300.0;540.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3675</x>
+      <y>2289</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>826</x>
+      <y>1057</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2394</x>
+      <y>882</y>
+      <w>21</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1883</x>
+      <y>1449</y>
+      <w>259</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>Response
+--
+-statusCode: int
+-ok = true: boolean
+-data: String
+-bytes: byte[]
+--
++Response(HttpURLConnection connection): ctor
+-getData(HttpURLConnection connection): byte[]
++getAllBytes(): byte[]
++ConnectionIsOk(): boolean
++CallWasOK(): boolean
++getStatus(): int
++getData(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1575</x>
+      <y>1400</y>
+      <w>245</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>API
+--
+-key: Key
+--
++API(API_Factory factory): ctor
++call(iCallable callable): Optional&lt;Response&gt;
+-addKey(String url, Key key): String
+-addArgs(String url, Map&lt;String, String&gt; args): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1617</x>
+      <y>1715</y>
+      <w>252</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+iCallable
+--
++NO_ARGS = new HashMap(): Map&lt;String, String&gt;
+--
++url(): String
++args(): Map&lt;String, String&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1211</x>
+      <y>1407</y>
+      <w>273</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+API_Factory
+--
+--
++getKey(): Key
++construct(): API
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2177</x>
+      <y>1456</y>
+      <w>245</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+HTTPS_CODE
+--
+INFO
+SUCCESS
+REDIRECTION
+CLIENT_ERROR
+SERVER_ERROR
+--
+-HTTPS_CODE(min: int, max: int): ctor
++getCode(val: int): HTTPS_CODE
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1729</x>
+      <y>1491</y>
+      <w>21</w>
+      <h>238</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;320.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2135</x>
+      <y>1477</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1813</x>
+      <y>1463</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1099</x>
+      <y>1099</y>
+      <w>539</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;750.0;10.0;750.0;430.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1225</x>
+      <y>1190</y>
+      <w>252</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;annotation&gt;&gt;
+RequestMethod
+--
++method = "GET": String
+--
++method(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1225</x>
+      <y>1260</y>
+      <w>252</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;annotation&gt;&gt;
+SetRequestProperty
+--
++Property: String
+--
++Property(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>553</x>
+      <y>1309</y>
+      <w>364</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+IP_GETTER
+--
+-URLs: Structure
+-Callables: Structure
+
+-Callables.IP_BASE_CALLABLE: Record(ulr: String, args: Map&lt;String, String&gt;)
+
++factory: Class implemeting API_Factory
+--
++Callables.IP_AWS: iCallable
++Callables.IP_HAZIP: iCallable
++Callables.IP_MY_EXTERNAL: iCallable
++Callables.IP_ECHO: iCallable
+
++factory.factory(): factory ctor
++factory.construct(): API
++factory.getKey(): Key</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1477</x>
+      <y>1442</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>287</x>
+      <y>1309</y>
+      <w>231</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>IPService
+--
+-INSTANCE: IPService
+-ipGetter = new IP_Getter.factory().construct(): API
+-IP = Optional.empty(): Optional&lt;String&gt;
+-connectionWasOK = false: boolean
+-ipGetterMethod = null: Method
+--
+-IPService(): ctor
++getInstance(): IPService
++solveIP(): void
++connectionWasOK(): boolean
++getServiceProviderName(): String
++getIP(): Optional&lt;String&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>511</x>
+      <y>1344</y>
+      <w>56</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1316</y>
+      <w>315</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>430.0;170.0;370.0;170.0;370.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1071</x>
+      <y>1176</y>
+      <w>21</w>
+      <h>455</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;630.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1407</y>
+      <w>182</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1085</x>
+      <y>1211</y>
+      <w>154</w>
+      <h>560</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;10.0;10.0;780.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1470</x>
+      <y>1274</y>
+      <w>168</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1470</x>
+      <y>1204</y>
+      <w>168</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1204</x>
+      <y>1715</y>
+      <w>343</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>BaseCallable
+--
+#url: String
+#args: HashMap&lt;String, String&gt;
+--
++BaseCallable(String url, Map&lt;String, String&gt; args): ctor
++url(): String
++args(): Map&lt;String, String&gt;
++addUnitsArg(OpenWeather.UNIT unit): BaseCallable
++addLangArg(OpenWeather.LANG language): BaseCallable
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>987</x>
+      <y>1862</y>
+      <w>357</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>CityNameCallable
+--
+--
++CityNameCallable(String url, String cityName): ctor
++addCountryCode(String code): CityNameCallable
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>987</x>
+      <y>1967</y>
+      <w>357</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>ZipCodeCallable
+--
+--
++ZipCodeCallable(String url, int zipCode): ctor
++addCountryCode(String code): ZipCodeCallable
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>994</x>
+      <y>2058</y>
+      <w>350</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>LatLonCallable
+--
+--
++LatLonCallable(String url, double lat, double lon): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>616</x>
+      <y>1547</y>
+      <w>301</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+OpenWeather
+--
++UNIT: enum
++LANG: enum
+
++factory: Class implementing API_Factory
+--
++factory.factory(): factory ctor
++factory.construct(): API
++factory.getKey(): Key
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1610</y>
+      <w>182</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1428</y>
+      <w>273</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;190.0;370.0;190.0;370.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>1750</y>
+      <w>546</w>
+      <h>273</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+CurrentWeather
+--
++StatsCurrent: Record(double temp, int pressure, int humidity, double feels_like, double temp_min, double temp_max)
+
++Wind: Record(double speed, int deg, double gust)
+
++SysInfo: Record(int type, int id, double message, String country, long sunrise, long sunset)
+
++CurrentWeatherObj: Record(Coord coord, List&lt;Weather&gt; weather, String base, StatsCurrent main, int visibility, 
+                                                 Wind wind, Clouds clouds, long dt, SysInfo sys, long id, String name, int cod)
+
+-URLs: Structure
+
++Callables: Structure
++Callables.CurrentWeatherLatLonCallable: Class extending LatLonCallable
++Callables.CurrentWeatherCityNameCallable: Class extending CityNameCallable
++Callables.CurrentWeatherZipCodeCallable: Class extending ZipCodeCallable
+--
++CurrentWeatherObj.fromJson(String json):  CurrentWeatherObj
+
++Callables.CurrentWeatherLatLonCallable(double lat, double lon):  Callables.CurrentWeatherLatLonCallable ctor
++Callables.CurrentWeatherCityNameCallable(String cityName): Callables.CurrentWeatherCityNameCallable ctor
++Callables.CurrentWeatherZipCodeCallable(int zipCode): Callables.CurrentWeatherZipCodeCallable ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1540</x>
+      <y>1729</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1337</x>
+      <y>1834</y>
+      <w>154</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>200.0;10.0;200.0;340.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1337</x>
+      <y>1869</y>
+      <w>154</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1337</x>
+      <y>1974</y>
+      <w>154</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>1750</y>
+      <w>301</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>410.0;10.0;10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>1764</y>
+      <w>301</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>410.0;10.0;10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>1848</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>819</x>
+      <y>1799</y>
+      <w>28</w>
+      <h>1568</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>20.0;2220.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>805</x>
+      <y>1799</y>
+      <w>21</w>
+      <h>1547</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;2190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>1911</y>
+      <w>259</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>1883</y>
+      <w>133</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>1883</y>
+      <w>21</w>
+      <h>1008</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;1420.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>882</x>
+      <y>1974</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>896</x>
+      <y>2058</y>
+      <w>112</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>882</x>
+      <y>1918</y>
+      <w>21</w>
+      <h>987</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;1390.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>896</x>
+      <y>1932</y>
+      <w>21</w>
+      <h>987</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;1390.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>1925</y>
+      <w>273</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>1897</y>
+      <w>245</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1372</y>
+      <w>805</w>
+      <h>357</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>1130.0;490.0;1130.0;210.0;210.0;210.0;210.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>1561</y>
+      <w>119</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;annotation&gt;&gt;
+FromJson
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>1575</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>1575</y>
+      <w>21</w>
+      <h>1582</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;2240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>245</x>
+      <y>2380</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>112</x>
+      <y>1617</y>
+      <w>315</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+JSON_OBJs
+--
++Coord: Record(lon: double, lat: double)
++Weather: Record(id: int, main: String, description: String, icon: String)
++Clouds: Record(all: int)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>1631</y>
+      <w>126</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>160.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>1631</y>
+      <w>21</w>
+      <h>1099</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;1550.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>1974</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>2051</y>
+      <w>546</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+DailyWeather
+--
++CityStats: Record(long id, String name, Coord coord, String country, long population, int timezone)
+
++Temperature: Record(double day, double min, double max, double night, double eve, double morn)
+
++FeelsLike: Record(double day, double night, double eve, double morn)
+
++WeatherComplete: Record(long dt, long sunrise, long sunset, Temperature temp, FeelsLike feels_like,
+                                              int pressure, int humidity, List&lt;Weather&gt; weather, double speed, int deg,
+                                              double gust,int clouds, double pop, double rain, double snow)
+                                              
++DailyWeatherObj: Record(CityStats city, String cod, double message, int cnt, List&lt;WeatherComplete&gt; list)
+
+-URLs: Structure
+
++Callables: Structure
++Callables.DailyWeatherLatLonCallable: Class extending LatLonCallable
++Callables.DailyWeatherCityNameCallable: Class extending CityNameCallable
++Callables.DailyWeatherZipCodeCallable: Class extending ZipCodeCallable
+--
++DailyWeatherObj.fromJson(String json):  DailyWeatherObj
+
++Callables.DailyWeatherLatLonCallable(double lat, double lon):  Callables.DailyWeatherLatLonCallable ctor
++Callables.DailyWeatherCityNameCallable(String cityName): Callables.DailyWeatherCityNameCallable ctor
++Callables.DailyWeatherZipCodeCallable(int zipCode): Callables.DailyWeatherZipCodeCallable ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2233</y>
+      <w>245</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2247</y>
+      <w>259</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2261</y>
+      <w>273</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2177</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>2310</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>2282</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>2387</y>
+      <w>546</w>
+      <h>364</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+WeatherForecast
+--
++Stats: Record(double temp, double feels_like, double temp_min, double temp_max, int pressure, int sea_level,
+                         int grnd_level, int humidity, double temp_kf)
+
++Wind: Record(double speed, int deg, double gust)
+
++ParthOfDay: Record(String pod)
+
++WeatherState: Record(long dt, Stats main, List&lt;Weather&gt; weather, Clouds clouds, Wind wind, int visibility,
+                                      double pop, Map&lt;String, Double&gt; rain, PartOfDay sys, String dt_txt)
+
++CityStats: Record(long id, String name, Coord coord, String country, long population, int timezone,
+                               long sunrise, long sunset)
+
++WeatherForecastObj: Record(String cod, int message, int cnt, List&lt;WeatherState&gt; list, CityStats city)
+                                              
++DailyWeatherObj: Record(CityStats city, String cod, double message, int cnt, List&lt;WeatherComplete&gt; list)
+
+-URLs: Structure
+
++Callables: Structure
++Callables.WeatherForecastLatLonCallable: Class extending LatLonCallable
++Callables.WeatherForecastNameCallable: Class extending CityNameCallable
++Callables.WeatherForecastZipCodeCallable: Class extending ZipCodeCallable
+--
++WeatherForecastObj.fromJson(String json):  WeatherForecastObj
+
++Callables.WeatherForecastLatLonCallable(double lat, double lon):  Callables.WeatherForecastLatLonCallable ctor
++Callables.WeatherForecastNameCallable(String cityName): Callables.WeatherForecastNameCallable ctor
++Callables.WeatherForecastZipCodeCallable(int zipCode): Callables.WeatherForecastZipCodeCallable ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2625</y>
+      <w>245</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2639</y>
+      <w>259</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2653</y>
+      <w>273</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2569</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>0</x>
+      <y>2709</y>
+      <w>119</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>2674</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>84</x>
+      <y>2779</y>
+      <w>567</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+HourlyForecast
+--
++HourlyForecastObj: Record(WeatherForecast.CityStats city, String cod, double message, int cnt,
+                                               List&lt;WeatherForecast.WeatherComplete&gt; list)
+
+-URLs: Structure
+
++Callables: Structure
++Callables.HourlyWeatherForecastLatLonCallable: Class extending LatLonCallable
++Callables.HourlyWeatherForecastNameCallable: Class extending CityNameCallable
++Callables.HourlyWeatherForecastZipCodeCallable: Class extending ZipCodeCallable
+--
++WeatherForecastObj.fromJson(String json):  WeatherForecastObj
+
++Callables.HourlyWeatherForecastLatLonCallable(double lat, double lon):  Callables.HourlyWeatherForecastLatLonCallable ctor
++Callables.HourlyWeatherForecastNameCallable(String cityName): Callables.HourlyWeatherForecastNameCallable ctor
++Callables.HourlyWeatherForecastZipCodeCallable(int zipCode): Callables.HourlyWeatherForecastZipCodeCallable ctor
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>2905</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2863</y>
+      <w>245</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;330.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2877</y>
+      <w>259</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2891</y>
+      <w>273</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;370.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2814</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>3017</y>
+      <w>546</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+Geocoder
+--
++CityObj: Record(String name, Map&lt;String, String&gt; local_names, double lat, double lon, String country, String state)
+
++GeocoderObj: Record(CityObj[])
+
+-URLs: Structure
+
++Callables: Structure
++Callables.GeocoderCallable: Record(Cities.City city, int limit) implements iCallable
+--
++GeocoderObj.fromJson(String json):  GeocoderObj
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>28</x>
+      <y>3136</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>3094</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>161</x>
+      <y>959</y>
+      <w>2016</w>
+      <h>616</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;860.0;20.0;10.0;2190.0;10.0;2190.0;310.0;2860.0;310.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>3199</y>
+      <w>546</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;structure&gt;&gt;
+WeatherMap
+--
++WeatherLayer: enum
+
+-URLs: Structure
+
++Callables: Structure
++Callables.MapTile: Record(boolean isMap, WeatherLayer layer, String userAgent)
++Callables.WeatherMapCallable:  Record(WeatherLayer layer, int z, double lat, double log) implements iCallable
++Callables.WeatherMapTileCallable: Record(WeatherLayer layer, int x, int y, int z) implements iCallable
++Callables.OpenStreetMapCallable: Record(String userAgent, int z, double lat, double log) implements iCallable
++Callables.OpenStreetTileMapCallable: Record(String userAgent, int x, int y, int z) implements iCallable
+--
++longtideToX(double log, int z): int
++latitudeToY(double lat, int z): int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>1421</y>
+      <w>196</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1099</x>
+      <y>1281</y>
+      <w>140</w>
+      <h>504</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0;10.0;700.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>3339</y>
+      <w>203</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>3318</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>2065</y>
+      <w>847</w>
+      <h>1246</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>1190.0;10.0;1190.0;110.0;400.0;110.0;400.0;1760.0;10.0;1760.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1757</x>
+      <y>1064</y>
+      <w>420</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;480.0;10.0;10.0;580.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2002</x>
+      <y>1155</y>
+      <w>175</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;420.0;10.0;10.0;230.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2632</x>
+      <y>1267</y>
+      <w>553</w>
+      <h>371</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Cities.City Record</panel_attributes>
+    <additional_attributes>770.0;510.0;770.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2394</x>
+      <y>693</y>
+      <w>21</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1981</x>
+      <y>343</y>
+      <w>350</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>WeatherScene
+--
+-UNIT: OpenWeather.UNIT
+-INSTANCE: WeatherScene
+-STAGE: Stage
+-content = new ScrollPane(): ScrollPane
+-root = new StackPane(content): StackPane
+-toolBar: CustomToolBar
+-isFavourite: boolean
+-currentCity: Cities.City
+-coords = null: Coord
+-alive = false: boolean
+-threadSync = new Object(): Object
+--
++WeatherScene(Stage stage): ctor
++getInstance(): WeatherScene
++getUNIT(): OpenWeather.UNIT
++generateFromCity(Cities.City city, OpenWeather.UNIT unit): WeatherScene
++getCoords(): Coord
++getCity(): String
++SwitchToSearchScene(): void
++isThisFavourite(): boolean
++AddCityToFavourites(): void
++Shutdown(): void
++getSyncObj(): Object
++hasShutdown(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2534</x>
+      <y>525</y>
+      <w>266</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>SearchScene
+--
+-INSTANCE: SearchScene
+-STAGE: Stage
+-units = OpenWeather.UNIT.METRIC: OpenWeather.UNIT
+-root = new BorderPane(): BorderPane
+--
++SearchScene(Stage stage): ctor
++getInstance(): SearchScene
++ChangeToWeatherScene(Cities.City city): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2142</x>
+      <y>630</y>
+      <w>539</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=-
+Scenes</panel_attributes>
+    <additional_attributes>750.0;10.0;750.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2905</x>
+      <y>329</y>
+      <w>497</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>SuggestionFiller
+--
+-target: String
+-menu: ContextMenu
+-where: Node
+-textField: SuggestionTextField
+-terminate = new AtomicBoolean(false): AtomicBoolean
+--
++SuggestionFiller(ContextMenu popUp, Node menuLocation, SuggestionTextField textField, String target): ctor
++terminate(): void
++isTerminating(): boolean
++run(): void
+-generateMenuItems(List&lt;SearchResult&gt; results): List&lt;CustomMenuItem&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2905</x>
+      <y>532</y>
+      <w>490</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>SuggestionTextField
+--
+-popUp = new ContextMenu(): ContextMenu
+-task = new SuggestionFiller(popUp, SuggestionTextField.this, SuggestionTextField.this, ""): SuggestionFiller
+--
++SuggestionTextField(): ctor
++search(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2842</x>
+      <y>1645</y>
+      <w>161</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Cities.City Record uses
+fg=GRAY</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2485</x>
+      <y>1652</y>
+      <w>378</w>
+      <h>322</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>520.0;10.0;520.0;440.0;10.0;440.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>1953</y>
+      <w>1862</w>
+      <h>1330</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>2640.0;10.0;1230.0;10.0;1230.0;300.0;440.0;300.0;440.0;1880.0;10.0;1880.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2485</x>
+      <y>1365</y>
+      <w>224</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;10.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2485</x>
+      <y>1316</y>
+      <w>21</w>
+      <h>658</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;920.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2688</x>
+      <y>728</y>
+      <w>21</w>
+      <h>658</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;920.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2688</x>
+      <y>721</y>
+      <w>182</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=-
+Cities.City Record uses
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;20.0;240.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2688</x>
+      <y>630</y>
+      <w>21</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2590</x>
+      <y>665</y>
+      <w>21</w>
+      <h>322</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+fg=BLUE</panel_attributes>
+    <additional_attributes>10.0;440.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2219</x>
+      <y>630</y>
+      <w>392</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=-
+Backend uses
+bg=BLUE
+fg=BLUE</panel_attributes>
+    <additional_attributes>540.0;10.0;540.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2793</x>
+      <y>560</y>
+      <w>126</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2324</x>
+      <y>602</y>
+      <w>224</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-&gt;
+Scene switching</panel_attributes>
+    <additional_attributes>10.0;20.0;300.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3136</x>
+      <y>483</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2905</x>
+      <y>126</y>
+      <w>497</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>SearchResult
+--
+-city: String
+-countryCode: String
++RESULT_TYPE: enum
+--
++SearchResult(String city, String countryCode): ctor
++SeacthResult(String city, String countryCode, FontAwesome icon, String style): ctor
++toString(): String
++toStringIgnoreNull(): String
++ArrayList&lt;SearchResult&gt; CitiesToSearchResults(List&lt;Cities.City&gt; cities, RESULT_TYPE type)
++GenerateResults(String word): ArrayList&lt;SearchResult&gt; 
++GetFavourites() : ArrayList&lt;SearchResult&gt; 
++GetHistory(): ArrayList&lt;SearchResult&gt; 
++GetFavouritesAndHistory(): ArrayList&lt;SearchResult&gt; 
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3388</x>
+      <y>532</y>
+      <w>119</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;150.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3493</x>
+      <y>539</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>JavaFX TextField</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3479</x>
+      <y>336</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Runnable</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3395</x>
+      <y>336</y>
+      <w>98</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>3493</x>
+      <y>133</y>
+      <w>98</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>JavaFX BorderPane</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3395</x>
+      <y>126</y>
+      <w>112</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>3136</x>
+      <y>280</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2849</x>
+      <y>224</y>
+      <w>70</w>
+      <h>525</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=GRAY</panel_attributes>
+    <additional_attributes>10.0;730.0;10.0;10.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2590</x>
+      <y>238</y>
+      <w>329</w>
+      <h>448</h>
+    </coordinates>
+    <panel_attributes>lt=-
+fg=BLUE</panel_attributes>
+    <additional_attributes>10.0;620.0;350.0;620.0;350.0;10.0;450.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2877</x>
+      <y>259</y>
+      <w>42</w>
+      <h>308</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>40.0;420.0;10.0;420.0;10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2877</x>
+      <y>406</y>
+      <w>42</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>2884</x>
+      <y>497</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>PopUp reference</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
