@@ -12,13 +12,13 @@ import java.util.Map;
 
 public class WeatherForecast {
     public record Stats(double temp, double feels_like, double temp_min, double temp_max, int pressure, int sea_level,
-                         int grnd_level, int humidity, double temp_kf){};
-    public record Wind(double speed, int deg, double gust){};
+                         int grnd_level, int humidity, double temp_kf){}
+    public record Wind(double speed, int deg, double gust){}
     public record PartOfDay(String pod){};
     public record WeatherState(long dt, Stats main, List<Weather> weather, Clouds clouds, Wind wind, int visibility,
-                                double pop, Map<String, Double> rain, PartOfDay sys, String dt_txt){};
+                                double pop, Map<String, Double> rain, PartOfDay sys, String dt_txt){}
     public record CityStats(long id, String name, Coord coord, String country, long population, int timezone,
-                             long sunrise, long sunset){};
+                             long sunrise, long sunset){}
     public record WeatherForecastObj(String cod, int message, int cnt, List<WeatherState> list, CityStats city){
         @FromJson
         public static WeatherForecastObj fromJson(String json) {
