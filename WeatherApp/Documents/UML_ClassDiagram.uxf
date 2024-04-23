@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>36</x>
+      <y>174</y>
+      <w>198</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>fi.tuni.prog3.weatherapp::WeatherApp
+--
++WINDOW_WIDTH = 900: int
++WINDOW_HEIGHT = 720: int
++OPENWEATHER_API_KEY_LOCATION: String
+--
++main(String[] args): void
++start(Stage stage): void
++stop(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>324</x>
+      <y>384</y>
+      <w>408</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>fi.tuni.prog3.weatherapp.backend::Backend
+--
+-logger = LogManager.getLogger(Backend.class): Logger
+-USER_AGENT = "OpenWeatherProject JoonasOT": String
+-CITIES_DATABASE_LOC = "./Databases/Cities": String
+-GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb": String
+-FAVOURITES_SAVE_LOCATION = "./Data/user/favourites.json": String
+-HISTORY_SAVE_LOCATION = "./Data/user/history.json": String
+-INSTANCE: Backend
+-OpenWeather: API
+-cityDatabase: Database&lt;List&lt;City&gt;&gt;
+-favourites = new LinkedList(): List&lt;City&gt;
+-history = new LinkedList(): List&lt;City&gt;
+--
+-Backend(): ctor
++getInstance(): Backend
++getSimilarCities(String query): List&lt;City&gt;
++callOpenWeatherWith(iCallable callable): Optional&lt;Response&gt;
+-callOpenWeatherWithNoLog(iCallable callable): Optional&lt;Response&gt;
++callOpenWeatherWith(iCallable callable, Class&lt;T&gt; fromJsonClass): Optional&lt;R&gt;
++getNxNtiles(WeatherMap.Callables.MapTile tile, double lat, double lon, final int Z, final int N): List&lt;byte[]&gt;
++loadHistoryAndFavourites(): void
++addFavourite(City city): void
++removeFromFavourites(City city): void
++addToHistory(City city): void
++getFavourites(): List&lt;City&gt;
++getHistory(): List&lt;City&gt;
++nukeHistory(): void
++Shutdown(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1062</x>
+      <y>48</y>
+      <w>234</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>fi.tuni.prog3.weatherapp.backend.security::Encryption
+--
+-PBKDF2_ITERATION_COUNT = 300_000: int
+-PBKDF2_SALT_LENGTH = 16: int
+-AES_KEY_LENGTH = 256: int
+-GCM_NONCE_LENGTH = 12: int
+-GCM_TAG_LENGTH = 128: int
+--
++encryptAES256(byte[] input, String password): byte[]
++decryptAES256(byte[] encrypted, String password): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1074</x>
+      <y>156</y>
+      <w>204</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>fi.tuni.prog3.weatherapp.backend.security::Key
+--
+-passwd = "lsmdaondoapnvgÃ¤ka1+r tfpa ": String
++SECRET_LOCATION = "secrets/": String
+-id = "": String
+-key = "": String
+--
++Key(String file): ctor
++Key(): ctor
+-generatePassword(String gen): String
++getKey(): String
++getId(): String
++encryptKey(String keyIn, String keyOut): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>666</x>
+      <y>102</y>
+      <w>192</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>fi.tuni.prog3.weatherapp.backend.io::ReadWrite
+--
++PRINT_STACK_TRACE = false: boolean
+--
++write(String where, String what): boolean
++write(String where, byte[] what): boolean
++read(String where): Optional&lt;String&gt;
++readGZ(String where): Optional&lt;String&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1392</x>
+      <y>336</y>
+      <w>216</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+fi.tuni.prog3.weatherapp.backend.database::Database
+--
+--
++get(String what): Optional&lt;T&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
