@@ -1,12 +1,12 @@
 package fi.tuni.prog3.weatherapp.frontend.weather.map;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap;
+
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import java.util.List;
 import java.util.Map;
 
 public class Tile extends StackPane {

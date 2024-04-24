@@ -1,10 +1,12 @@
 package fi.tuni.prog3.weatherapp.frontend.weather.daily;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.DailyWeather;
+
 import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.fonts.WeatherFont;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.ReadingsToStrings;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

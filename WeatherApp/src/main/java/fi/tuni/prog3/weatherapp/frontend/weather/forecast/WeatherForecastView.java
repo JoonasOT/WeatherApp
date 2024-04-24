@@ -1,14 +1,17 @@
 package fi.tuni.prog3.weatherapp.frontend.weather.forecast;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
+
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.HourlyForecast.HourlyForecastObj;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast.WeatherForecastObj;
+
 import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
+
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 
@@ -17,10 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class WeatherForecastView extends HBox {
-    private final HBox states = new HBox(5);
-    private final ScrollPane scrollPane = new ScrollPane();
     public WeatherForecastView() {
         super();
+        ScrollPane scrollPane = new ScrollPane();
         super.getChildren().addAll(new ForecastIndex(), scrollPane);
 
         scrollPane.setMaxWidth(CurrentWeatherView.VIEW_WIDTH - ForecastIndex.WIDTH - 1);
@@ -55,6 +57,7 @@ public class WeatherForecastView extends HBox {
             List<ForecastPanel> panels = isHourly? constructHourlyPanels(HourlyForecastObj.fromJson(jsonString)) :
                                                    constructDefaultPanels(WeatherForecastObj.fromJson(jsonString));
 
+            HBox states = new HBox(5);
             states.getChildren().addAll(panels);
             scrollPane.setContent(states);
             scrollPane.setMinHeight(195);

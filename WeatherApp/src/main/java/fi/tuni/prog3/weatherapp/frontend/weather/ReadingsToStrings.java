@@ -2,7 +2,6 @@ package fi.tuni.prog3.weatherapp.frontend.weather;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.OpenWeather.UNIT;
 
-
 public class ReadingsToStrings {
     public static String getTemperature(double temp, UNIT unit) {
         return String.format("%.1f%s", temp, (unit != UNIT.STANDARD ? "°" : " ") + switch (unit) {
@@ -18,6 +17,6 @@ public class ReadingsToStrings {
         });
     }
     public static String getWindDirection(int deg, UNIT unit) {
-        return Integer.toString(deg) + "°";
+        return Integer.toString(deg) + (unit != UNIT.STANDARD ? "°" : "");
     }
 }
