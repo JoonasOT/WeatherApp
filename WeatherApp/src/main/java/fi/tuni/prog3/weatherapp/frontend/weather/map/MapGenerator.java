@@ -31,6 +31,7 @@ public class MapGenerator implements Runnable {
     }
     @Override
     public void run() {
+        // TODO: cache N most recent maps (max for an hour or so from last call) and get maps from there
         Backend backend = Backend.getInstance();
         var coords = WeatherScene.getCoords();
 

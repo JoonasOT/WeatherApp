@@ -14,6 +14,8 @@ public class WeatherMapView extends StackPane {
     private final LinkedList<Tile> tiles = new LinkedList<>();
     private static final int MAP_SIZE = 10;
     private static final int MAP_Z_INDEX = 9;
+
+
     public WeatherMapView() {
         super();
 

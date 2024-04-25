@@ -130,6 +130,7 @@ public final class Backend {
 
         for (int y : IntStream.range(Y - N/2, Y + N/2 + 1).toArray()) {
             for (int x : IntStream.range(X - N/2, X + N/2 + 1).toArray()) {
+                // TODO: Upgrade to 2.0 Maps
                 Optional<Response> response = callOpenWeatherWithNoLog(
                         tile.isMap()?   new WeatherMap.Callables.OpenStreetMapTileCallable(tile.userAgent(), x, y, Z):
                                 new WeatherMap.Callables.WeatherMapTileCallable(tile.layer(), x, y, Z)
