@@ -18,7 +18,7 @@ public class WeatherApp extends Application {
     public static String OPENWEATHER_API_KEY_LOCATION;
     public static void main(String[] args) {
         if (args.length == 1) OPENWEATHER_API_KEY_LOCATION = args[0];
-        else OPENWEATHER_API_KEY_LOCATION = "./secrets/ApiKeys/OpenWeather";
+        else OPENWEATHER_API_KEY_LOCATION = "./secrets/ApiKeys/OpenWeatherKey";
         launch( args );
     }
     @Override
@@ -39,6 +39,6 @@ public class WeatherApp extends Application {
     public void stop() {
         WeatherScene.Shutdown();
         Backend.Shutdown();
-        System.out.println("Shutting down!");
+        System.out.println("Shutting down! Threads will exit soon!");
     }
 }
