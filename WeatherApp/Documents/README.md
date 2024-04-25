@@ -15,6 +15,8 @@ If for some reason the encryption system doesn't work or the user can't be
 bothered with using it, it can be nerfed by a quick modification to
 Key.Java.
 
+For bugs/todos see TODO.md
+
 # 1. Program structure and instructions
 
 This program has been mainly divided into two different sections:

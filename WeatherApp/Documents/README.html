@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ReadMe.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="note">Note!</h1>
+<p>The program requires a working connection to the internet and using a VPN might
+make the suggestions provided somewhat weird as the program uses the machine's
+public IP to favour search results in the same country.</p>
+<p>The use of this program requires a valid API key (NOT INCLUDED!) to the
+OpenWeatherAPI and that the key has been run through the KeyGen (found in
+package fi.tuni.prog3.keygen). The recommended encrypted key location and name
+is: &quot;{working_dir}/secrets/ApiKeys/OpenWeather&quot;.</p>
+<p>If used with another location than the one specified above, the file (with
+location) must be supplied as the first commandline argument to WeatherApp.</p>
+<p>If for some reason the encryption system doesn't work or the user can't be
+bothered with using it, it can be nerfed by a quick modification to
+Key.Java.</p>
+<p>For bugs/todos see TODO.md</p>
+<h1 id="1-program-structure-and-instructions">1. Program structure and instructions</h1>
+<p>This program has been mainly divided into two different sections:</p>
+<ol>
+<li>The frontend</li>
+<li>The backend</li>
+</ol>
+<h2 id="11-frontend-structure-and-instructions-for-use">1.1 Frontend structure and instructions for use</h2>
+<p>The frontend consists of one JavaFX stage (window) that then either displays a
+search scene or a weather scene to the user.</p>
+<h3 id="111-search-scene">1.1.1 Search scene</h3>
+<p>The search scene consists of all a query field where the user can type a cities
+name and possibly a country code to specify the country (separated with &quot;, &quot;).</p>
+<p>If the user clears the text-field they are displayed with their favourite cities
+and search history. As the user also starts to type for some city the program
+provides the user with some suggestions. To use an entry from the suggestion box
+simply click on the entry. Also pressing enter once ready with the typed query
+works as well.</p>
+<p>Before querying for a result the user can also specify what units should be used.
+This is done by selecting the preferred unit from the dropdown under</p>
+<h3 id="112-weather-scene">1.1.2 Weather scene</h3>
+<p>Once the user queries for a city the program will switch from the search scene
+to the weather scene. If the user's query was erroneous (query wasn't found
+from the OpenWeather database), the user is simply prompted with a message of
+this error.</p>
+<p>If the user's query was OK, the user will be provided with the following views
+or panes:</p>
+<ol>
+<li>Current weather at the location</li>
+<li>Daily weather forecast</li>
+<li>Hourly weather forecast or 5-day forecast with 3 hour steps (depends on the
+on if the supplied API key has the permissions for the hourly forecasts)</li>
+<li>A weather map centered around the given location</li>
+</ol>
+<p>As the weather map by default consists of a 10x10 grid of images with 6 layers
+(1 base map + 5 weather layers) the program has to make 600 api calls it might
+take a few seconds for the map to appear (happens mostly in parallel but still
+might have a small delay). As this happens asynchronously, the text &quot;Map is
+loading...&quot; is displayed while the map formation takes place. Panning the map
+happens with scrolling (shift for horizontal) and selecting the weather layer
+happens from the dropdown on top of the map (top left corner).</p>
+<p>To favourite a search result press the star symbol at the top of the window.
+To un-favourite uses the same mechanism.</p>
+<p>To return to the search scene to press the magnifying glass symbol next to
+the star symbol.</p>
+<p>To delete search history can also be done from the &quot;Reset history&quot; button.</p>
+<h2 id="12-backend-structure">1.2 Backend structure</h2>
+<p>The backend can be divided into &quot;APIs&quot; and &quot;databases&quot;. These APIs are classes
+that can make API calls and databases are classes that work with local
+data. The backend can be divided into the following:</p>
+<ol>
+<li>IPService (singleton for managing the IP_Getter API class)</li>
+<li>OpenWeather API class</li>
+<li>MaxMindGeoIP2 database class</li>
+<li>Cities database class</li>
+</ol>
+<p>To better understand the functionality of how API classes especially
+function, it strongly recommended to go and read the README.md files found
+inside:
+<a href="../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general">/backend/api/general/</a></p>
+<h3 id="121-ipservice-and-ipgetter">1.2.1 IPService and IP_Getter</h3>
+<p>IP_Getter is a class that provides functionality for gaining the machine's
+public ip address. IP_Getter is class or a &quot;structure&quot; which only contains
+other classes/records which can be used for forming an IP_Getter API and then
+multiple different methods used to construct &quot;callables&quot; for the IP_Getter API
+(see
+<a href="../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general/README.md">/backend/api/general/README.md</a>
+for a more concrete
+explanation of &quot;callables&quot;).</p>
+<p>IPService is basically an extension of IP_Getter as it simply is a singleton
+that goes through all the different defined callables in IP_Getter.callables
+and sets the IP address to the first valid result. This service can then be
+used anywhere around the code with simply calling IPService.getInstance().</p>
+<h2 id="122-openweather-api">1.2.2 OpenWeather API</h2>
+<p>This project utilizes the OpenWeather API for weather data. The OpenWeather API
+is called with just the API class, which is supplied with a so called &quot;callable&quot;
+(see
+<a href="../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general/README.md">/backend/api/general/README.md</a>)
+that dictates the actual call url
+and the arguments passed. The responses to these calls can then be turned to
+their corresponding Java objects found from inside the same class as the
+callables themselves.</p>
+<p>This fact can be utilized when making calls through the backend.</p>
+<p>In addition to OpenWeather API calls the OpenWeather class is actually also able
+to call the OpenStreetMaps API in the WeatherMaps classes.</p>
+<h2 id="123-maxmindgeoip2-database">1.2.3 MaxMindGeoIP2 database</h2>
+<p>The MaxMindGeoIP2 database is a class that supplies is able to load the MaxMind
+GeoLite 2 Cities database and query it for an approximate geolocation based on
+a given IP address.</p>
+<h2 id="124-cities-database">1.2.4 Cities database</h2>
+<p>For frontend to supply valid city suggestions the program includes a custom
+Cities database that contains all the possible cities in OpenWeather, and it
+supplies the top N guesses of what the user is trying to search for which the
+frontend then displays to the user. For a more in-depth description see the
+README.md files located inside:
+<a href="../src/main/java/fi/tuni/prog3/weatherapp/backend/database/cities">/backend/database/Cities/</a></p>
+<h1 id="2-features-and-requirements">2 Features and requirements</h1>
+<table>
+<thead>
+<tr>
+<th>Requirements</th>
+<th>Status/Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The program compiles</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>The program uses the course provided user interface as its main window</td>
+<td>Uses custom</td>
+</tr>
+<tr>
+<td>The program allows the user to search for different locations</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>The program displays the current weather and a simple forecast</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>The program uses the weather icons provided by OpenWeatherMap</td>
+<td>Uses custom</td>
+</tr>
+<tr>
+<td>Uses at least one of the provided interfaces</td>
+<td>Kinda<sup>1</td>
+</tr>
+<tr>
+<td>The project version history is visible in gitlab</td>
+<td>Yes<sup>2</td>
+</tr>
+<tr>
+<td>A final document</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>A graphical user interface has been implemented by the team</td>
+<td>Yes, me</td>
+</tr>
+<tr>
+<td>The program allows saving locations as favourites</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>The state of the program is saved</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Instead of the simple forecast a more detailed forecast is implemented</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>The program uses a custom set of icons</td>
+<td>Yes<sup>3</td>
+</tr>
+<tr>
+<td>The program handles errors during file processing</td>
+<td>Yes<sup>4</td>
+</tr>
+<tr>
+<td>Unit tests have been implemented for the program</td>
+<td>Small, but yes</td>
+</tr>
+</tbody>
+</table>
+<p>1 = The these interfaces don't exist anymore, as they didn't make any sense to
+keep. I could have implemented some class that writes some string to a file at
+the start and reads it just to conform to this requirement. As I thought this
+was a useless feature I left it out as I also believe my code does show I
+understand interfaces in Java.</p>
+<p>2 = See responsibilities section below.</p>
+<p>3 = I made a completely new set of svg images with Adobe Illustrator of basic
+weather symbols and turned them into a font. Basically all icons that are
+displayed are composite glyphs, which allowed me to squeeze the font file to
+6kb. The actual font can be viewed by opening the .sfd file with FontForge.
+Original inspiration for this method:
+<a href="https://www.reddit.com/r/Windows11/comments/1blat1r/windows_uses_fonts_for_loading_bars/">https://www.reddit.com/r/Windows11/comments/1blat1r/windows_uses_fonts_for_loading_bars/</a></p>
+<p>4 = Nuking MaxMind GeoLite2 and Fonts may result in the app not working (untested).
+I would have added a similar system to GeoLite as I did with Cities
+(loading from the web), but as this is behind an account I did not feel
+comfortable implementing such a solution and as I think this is more intended
+to relate to userdata.</p>
+<p>In addition to the requirements the program also has quite a few additional
+features. The additional features implemented:</p>
+<ol>
+<li>Weather Maps</li>
+<li>Location search history</li>
+<li>Supporting multiple systems of units of measurement</li>
+<li>Own features:
+<ol>
+<li>Public IP extraction and conversion to geolocation</li>
+<li>Suggestive autofill and cities database</li>
+<li>Parallel processing in most computationally expensive (aka slow) functions</li>
+<li>API Key encryption and decryption</li>
+</ol>
+</li>
+</ol>
+<h1 id="3-responsibilities">3 Responsibilities</h1>
+<p>This has completely been a one-man-show so 100% my very own work. This project
+has required me to pull 3 all-nighters so arguably is as far as I could have
+reached during this time limit. Also, as I started this project before
+receiving my gitlab repo, most of the work at the start was done over at my
+GitHub (<a href="https://github.com/JoonasOT/OpenWeatherTesting">https://github.com/JoonasOT/OpenWeatherTesting</a>) so a more detailed
+history of the starting commits can be found from there.</p>
+<h1 id="4-the-uml-class-diagram">4 The UML class diagram</h1>
+<p>The best descriptions of class responsibilities etc. can be found from the
+README.md files in each directory and from code comments.</p>
+<p>The most recent version of the UML class diagram is the following (is a svg image
+so feel free to zoom as much as you like):
+<img src="UML_ClassDiagram.svg" alt="ClassDiagram">
+Note! This is not an excellent depiction of the classes included, but is the
+best I can do with my limited time.</p>
+
+</body>
+</html>
