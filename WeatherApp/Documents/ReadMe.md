@@ -1,26 +1,27 @@
 # Note!
 The program requires a working connection to the internet and using a VPN might
-make the suggestions provided somewhat weird.
+make the suggestions provided somewhat weird as the program uses the machine's
+public IP to favour search results in the same country.
 
-The use of this program requires a valid API key to the OpenWeatherAPI and that
-the key has been run through the KeyGen (found in package fi.tuni.prog3.keygen).
-The recommended encrypted key location and name is:
-"{working_dir}/secrets/ApiKeys/OpenWeather".
+The use of this program requires a valid API key (NOT INCLUDED!) to the
+OpenWeatherAPI and that the key has been run through the KeyGen (found in
+package fi.tuni.prog3.keygen). The recommended encrypted key location and name
+is: "{working_dir}/secrets/ApiKeys/OpenWeather".
 
-If used with another location than the one specified above the file (with
+If used with another location than the one specified above, the file (with
 location) must be supplied as the first commandline argument to WeatherApp.
 
 If for some reason the encryption system doesn't work or the user can't be
-bothered with using it (:D) it can be totally nerfed by a quick modification to
+bothered with using it, it can be nerfed by a quick modification to
 Key.Java.
 
-# 1. Program structure
+# 1. Program structure and instructions
 
 This program has been mainly divided into two different sections:
 1) The frontend
 2) The backend
 
-## 1.1 Frontend structure
+## 1.1 Frontend structure and instructions for use
 
 The frontend consists of one JavaFX stage (window) that then either displays a
 search scene or a weather scene to the user.
@@ -40,6 +41,7 @@ Before querying for a result the user can also specify what units should be used
 This is done by selecting the preferred unit from the dropdown under
 
 ### 1.1.2 Weather scene
+
 Once the user queries for a city the program will switch from the search scene
 to the weather scene. If the user's query was erroneous (query wasn't found
 from the OpenWeather database), the user is simply prompted with a message of
@@ -79,64 +81,127 @@ data. The backend can be divided into the following:
 3) MaxMindGeoIP2 database class
 4) Cities database class
 
-Before diving into how these classes function we must understand how this
-program forms API calling classes and database classes.
-
-### 1.2.1 API classes
-
-Api calls are made by forming an instance of the API class and then providing
-this class with so called "callables" (types that implement the interface
-iCallable) which in turn provide a Response object.
-
-This could be compared to how a thread could be created with Callable< T >, which
-in turn returns an object of the type Future< T >.
-
-The main point of using these "callables" is the ease of creating new different
-API calls as an iCallable must just provide the methods url() and args().
-The function ulr() returns the url WITH VARIABLES AS VARIABLE NAMES
-and args() returns a map for mapping the variable names in the url to their
-actual final values before the call. E.G. the plain url could be of the form:
-
-url() = "https://www.amazon.com/login/user={USERNAME}&passwd={PASSWORD}"
-
-and args could be of the form:
-
-args() = {"{USERNAME}" : "my_name", "{PASSWORD}": "doggo:D"}
-
-and this would result in the API provided with this callable to call the url:
-https://www.amazon.com/login/user=my_name&passwd=doggo:D
-
-Forming API classes is done via the API factories. Any class that wants to form
-an API MUST provide an implementation of API_Factory. Said API_Factory binds a
-Key to the formed API, thus all callables that require an API key must be
-used through the right API. Adding the value of the api key to the url can be
-done by adding "{API key}" in the place the actual API key should be placed at.
-
-Finally, the Response class provides some methods to read and validate the
-content returned by the API call. E.g. CallWasOk() checks for response code 200
-and getAllBytes() returns all the bytes read from the connection and getData()
-gets the returned content as a string.
-
-Note!
-For more advanced usage the project also includes a few different annotations
-(RequestMethod and SetRequestProperty) which can be used to fine tune calls.
-
-Adding @RequestMethod(method=X) sets the request method (GET, POST, ...) of
-an API call to the string X (defaults to GET).
-
-Adding @SetRequestProperty(Property=X) sets the request property X to the
-output of the method this notation is attached to. Before performing an API
-call, the API class goes through all the declared methods of a callable and if
-there are some methods with this annotation, it adds all the properties.
-
-### 1.2.2 Database classes
-
-Database classes are notably a lot simpler than API classes. The only
-limitation is that they must implement the Database< T > interface. Thus, they
-must provide the function get< T >().
+To better understand the functionality of how API classes especially
+function, it strongly recommended to go and read the README.md files found
+inside:
+[/backend/api/general/](../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general)
 
 ### 1.2.1 IPService and IP_Getter
 
 IP_Getter is a class that provides functionality for gaining the machine's
-public ip address. IPService is a singleton class that when constructed runs
-through the different 
+public ip address. IP_Getter is class or a "structure" which only contains
+other classes/records which can be used for forming an IP_Getter API and then
+multiple different methods used to construct "callables" for the IP_Getter API
+(see
+[/backend/api/general/README.md](../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general/README.md)
+for a more concrete 
+explanation of "callables").
+
+IPService is basically an extension of IP_Getter as it simply is a singleton
+that goes through all the different defined callables in IP_Getter.callables
+and sets the IP address to the first valid result. This service can then be
+used anywhere around the code with simply calling IPService.getInstance().
+
+## 1.2.2 OpenWeather API
+
+This project utilizes the OpenWeather API for weather data. The OpenWeather API
+is called with just the API class, which is supplied with a so called "callable"
+(see
+[/backend/api/general/README.md](../src/main/java/fi/tuni/prog3/weatherapp/backend/api/general/README.md))
+that dictates the actual call url
+and the arguments passed. The responses to these calls can then be turned to
+their corresponding Java objects found from inside the same class as the
+callables themselves.
+
+This fact can be utilized when making calls through the backend.
+
+In addition to OpenWeather API calls the OpenWeather class is actually also able
+to call the OpenStreetMaps API in the WeatherMaps classes.
+
+## 1.2.3 MaxMindGeoIP2 database
+
+The MaxMindGeoIP2 database is a class that supplies is able to load the MaxMind
+GeoLite 2 Cities database and query it for an approximate geolocation based on
+a given IP address.
+
+## 1.2.4 Cities database
+
+For frontend to supply valid city suggestions the program includes a custom
+Cities database that contains all the possible cities in OpenWeather, and it
+supplies the top N guesses of what the user is trying to search for which the
+frontend then displays to the user. For a more in-depth description see the
+README.md files located inside:
+[/backend/database/Cities/](../src/main/java/fi/tuni/prog3/weatherapp/backend/database/cities)
+
+# 2 Features and requirements
+
+| Requirements                                                           | Status/Location |
+|------------------------------------------------------------------------|-----------------|
+| The program compiles                                                   | Yes             |
+| The program uses the course provided user interface as its main window | Uses custom     |
+| The program allows the user to search for different locations          | Yes             |
+| The program displays the current weather and a simple forecast         | Yes             |
+| The program uses the weather icons provided by OpenWeatherMap          | Uses custom     |
+| Uses at least one of the provided interfaces                           | Kinda<sup>1     |
+| The project version history is visible in gitlab                       | Yes<sup>2       |
+| A final document                                                       | Yes             |
+| A graphical user interface has been implemented by the team            | Yes, me         |
+| The program allows saving locations as favourites                      | Yes             |
+| The state of the program is saved                                      | Yes             |
+| Instead of the simple forecast a more detailed forecast is implemented | Yes             |
+| The program uses a custom set of icons                                 | Yes<sup>3       |
+| The program handles errors during file processing                      | Yes<sup>4       |
+| Unit tests have been implemented for the program                       | Small, but yes  |
+
+1 = The these interfaces don't exist anymore, as they didn't make any sense to
+keep. I could have implemented some class that writes some string to a file at
+the start and reads it just to conform to this requirement. As I thought this
+was a useless feature I left it out as I also believe my code does show I
+understand interfaces in Java.
+
+2 = See responsibilities section below.
+
+3 = I made a completely new set of svg images with Adobe Illustrator of basic
+weather symbols and turned them into a font. Basically all icons that are
+displayed are composite glyphs, which allowed me to squeeze the font file to
+6kb. The actual font can be viewed by opening the .sfd file with FontForge.
+Original inspiration for this method:
+<https://www.reddit.com/r/Windows11/comments/1blat1r/windows_uses_fonts_for_loading_bars/>
+
+4 = Nuking MaxMind GeoLite2 and Fonts may result in the app not working (untested).
+I would have added a similar system to GeoLite as I did with Cities
+(loading from the web), but as this is behind an account I did not feel
+comfortable implementing such a solution and as I think this is more intended
+to relate to userdata.
+
+In addition to the requirements the program also has quite a few additional
+features. The additional features implemented: 
+1) Weather Maps
+2) Location search history
+3) Supporting multiple systems of units of measurement
+4) Own features:
+   1) Public IP extraction and conversion to geolocation
+   2) Suggestive autofill and cities database
+   3) Parallel processing in most computationally expensive (aka slow) functions
+   4) API Key encryption and decryption
+
+# 3 Responsibilities
+
+This has completely been a one-man-show so 100% my very own work. This project
+has required me to pull 3 all-nighters so arguably is as far as I could have
+reached during this time limit. Also, as I started this project before
+receiving my gitlab repo, most of the work at the start was done over at my
+GitHub (<https://github.com/JoonasOT/OpenWeatherTesting>) so a more detailed
+history of the starting commits can be found from there.
+
+# 4 The UML class diagram
+
+The best descriptions of class responsibilities etc. can be found from the
+README.md files in each directory and from code comments.
+
+The most recent version of the UML class diagram is the following (is a svg image
+so feel free to zoom as much as you like):
+![ClassDiagram](UML_ClassDiagram.svg)
+Note! This is not an excellent depiction of the classes included, but is the
+best I can do with my limited time.
+
