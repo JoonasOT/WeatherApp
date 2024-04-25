@@ -6,7 +6,7 @@ public IP to favour search results in the same country.
 The use of this program requires a valid API key (NOT INCLUDED!) to the
 OpenWeatherAPI and that the key has been run through the KeyGen (found in
 package fi.tuni.prog3.keygen). The recommended encrypted key location and name
-is: "{working_dir}/secrets/ApiKeys/OpenWeather".
+is: "{working_dir}/secrets/ApiKeys/OpenWeatherKey".
 
 If used with another location than the one specified above, the file (with
 location) must be supplied as the first commandline argument to WeatherApp.
