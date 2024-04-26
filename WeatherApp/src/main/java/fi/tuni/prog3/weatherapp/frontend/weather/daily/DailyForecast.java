@@ -21,10 +21,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A class used for displaying daily weather data to the user on the GUI
+ *
+ * @author Joonas Tuominen
+ */
 public class DailyForecast extends ScrollPane {
     private final VBox wrapper = new VBox(0);
     private final HBox days = new HBox(0);
     private Boolean isCurrentlyDay = null;
+
+    /**
+     * Construct the DailyForecast pane/section
+     */
     public DailyForecast() {
         super();
         super.setMaxWidth(CurrentWeatherView.VIEW_WIDTH);
@@ -72,6 +81,11 @@ public class DailyForecast extends ScrollPane {
             super.setContent(wrapper);
         }
     }
+
+    /**
+     * Get if it currently day at the location
+     * @return True if it is daytime at the searched location
+     */
     public boolean isCurrentlyDay() {
         return isCurrentlyDay;
     }
