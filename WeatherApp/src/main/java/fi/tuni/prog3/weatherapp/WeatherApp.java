@@ -1,94 +1,62 @@
 package fi.tuni.prog3.weatherapp;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
+import fi.tuni.prog3.weatherapp.backend.security.Key;
+import fi.tuni.prog3.weatherapp.frontend.scenes.SearchScene;
+import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 /**
  * JavaFX Weather Application.
+ *
+ * @author Joonas Tuominen
+ * @version 1.0
  */
 public class WeatherApp extends Application {
+    public static int WINDOW_WIDTH = 900;
+    public static int WINDOW_HEIGHT = 720;
+    public static String OPENWEATHER_API_KEY_LOCATION;
 
+    /**
+     * Launch the JavaFX application.
+     * @param args Commandline arguments
+     */
+    public static void main(String[] args) {
+        if (args.length == 1) OPENWEATHER_API_KEY_LOCATION = args[0];
+        else OPENWEATHER_API_KEY_LOCATION = "./secrets/ApiKeys/OpenWeatherKey";
+        launch( args );
+    }
+
+    /**
+     * Start the JavaFX application
+     * @param stage The stage the application will start with
+     */
     @Override
     public void start(Stage stage) {
+        Backend.getInstance();
 
-        //Creating a new BorderPane.
-        BorderPane root = new BorderPane();
-        root.setPadding(new Insets(10, 10, 10, 10));
+        stage.initStyle(StageStyle.UTILITY);
 
-        //Adding HBox to the center of the BorderPane.
-        root.setCenter(getCenterVBox());
+        new SearchScene(stage);
+        new WeatherScene(stage);
 
-        //Adding button to the BorderPane and aligning it to the right.
-        var quitButton = getQuitButton();
-        BorderPane.setMargin(quitButton, new Insets(10, 10, 0, 10));
-        root.setBottom(quitButton);
-        BorderPane.setAlignment(quitButton, Pos.TOP_RIGHT);
+        stage.setScene(SearchScene.getInstance());
 
-        Scene scene = new Scene(root, 500, 700);
-        stage.setScene(scene);
         stage.setTitle("WeatherApp");
         stage.show();
     }
 
-    public static void main(String[] args) {
-        Backend backend = Backend.getInstance();
-
-        launch();
-    }
-
-    private VBox getCenterVBox() {
-        //Creating an HBox.
-        VBox centerHBox = new VBox(10);
-
-        //Adding two VBox to the HBox.
-        centerHBox.getChildren().addAll(getTopHBox(), getBottomHBox());
-
-        return centerHBox;
-    }
-
-    private HBox getTopHBox() {
-        //Creating a VBox for the left side.
-        HBox leftHBox = new HBox();
-        leftHBox.setPrefHeight(330);
-        leftHBox.setStyle("-fx-background-color: #8fc6fd;");
-
-        leftHBox.getChildren().add(new Label("Top Panel"));
-
-        return leftHBox;
-    }
-
-    private HBox getBottomHBox() {
-        //Creating a VBox for the right side.
-        HBox rightHBox = new HBox();
-        rightHBox.setPrefHeight(330);
-        rightHBox.setStyle("-fx-background-color: #b1c2d4;");
-
-        rightHBox.getChildren().add(new Label("Bottom Panel"));
-
-        return rightHBox;
-    }
-
-    private Button getQuitButton() {
-        //Creating a button.
-        Button button = new Button("Quit");
-
-        //Adding an event to the button to terminate the application.
-        button.setOnAction((ActionEvent event) -> {
-            Platform.exit();
-        });
-
-        return button;
+    /**
+     * Stop the JavaFX application.
+     * Called on close.
+     */
+    @Override
+    public void stop() {
+        WeatherScene.Shutdown();
+        Backend.Shutdown();
+        System.out.println("Shutting down! Threads will exit soon!");
     }
 }
