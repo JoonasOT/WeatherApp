@@ -3,6 +3,7 @@ package fi.tuni.prog3.weatherapp.backend;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import fi.tuni.prog3.weatherapp.WeatherApp;
 import fi.tuni.prog3.weatherapp.backend.api.general.API;
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.general.iCallable;
@@ -37,6 +38,7 @@ import org.apache.logging.log4j.LogManager;
 public final class Backend {
     private static final Logger logger = LogManager.getLogger(Backend.class);
     public static final String USER_AGENT = "OpenWeatherProject JoonasOT";
+    public static String OPENWEATHER_API_KEY_LOCATION = WeatherApp.OPENWEATHER_API_KEY_LOCATION;
     private static final String CITIES_DATABASE_LOC = "./Databases/Cities";
     private static final String GEOIP_DATABASE_LOC = "./Databases/GeoLite2-City_20240402/GeoLite2-City.mmdb";
     private static final String FAVOURITES_SAVE_LOCATION = "./Data/user/favourites.json";
@@ -293,5 +295,6 @@ public final class Backend {
         Gson gson = new Gson();
         ReadWrite.write(FAVOURITES_SAVE_LOCATION, gson.toJson(favourites));
         ReadWrite.write(HISTORY_SAVE_LOCATION, gson.toJson(history));
+        INSTANCE = null;
     }
 }

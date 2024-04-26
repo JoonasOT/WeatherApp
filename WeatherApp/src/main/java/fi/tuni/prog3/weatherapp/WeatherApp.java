@@ -25,7 +25,7 @@ public class WeatherApp extends Application {
      * @param args Commandline arguments
      */
     public static void main(String[] args) {
-        if (args.length == 1) OPENWEATHER_API_KEY_LOCATION = args[0];
+        if (args.length == 1 && !"TEST".equals(args[0])) OPENWEATHER_API_KEY_LOCATION = args[0];
         else OPENWEATHER_API_KEY_LOCATION = "./secrets/ApiKeys/OpenWeatherKey";
         launch( args );
     }
