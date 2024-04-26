@@ -2,8 +2,6 @@ package fi.tuni.prog3.weatherapp.backend.api.general;
 
 import fi.tuni.prog3.weatherapp.backend.security.Key;
 
-import java.net.MalformedURLException;
-
 /**
  * A simple and mostly deprecated interface for forming APIs.
  *
