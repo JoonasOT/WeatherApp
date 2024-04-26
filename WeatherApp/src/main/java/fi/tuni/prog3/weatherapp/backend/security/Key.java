@@ -1,16 +1,9 @@
 package fi.tuni.prog3.weatherapp.backend.security;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import fi.tuni.prog3.weatherapp.backend.io.iReadAndWriteToFile;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
