@@ -63,7 +63,9 @@ public class MillisToTime implements Comparable<MillisToTime> {
     }
 
     public boolean eval() {
-        return lastComparisonResult;
+        var result = lastComparisonResult;
+        lastComparisonResult = true;
+        return result;
     }
 
     @Override
