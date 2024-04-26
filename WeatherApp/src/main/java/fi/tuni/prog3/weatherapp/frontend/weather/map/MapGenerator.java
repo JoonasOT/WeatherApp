@@ -22,7 +22,7 @@ public class MapGenerator implements Runnable {
     private final GridPane grid;
     private final LinkedList<Tile> tiles;
     private final Object sync = WeatherScene.getSyncObj();
-    private final String OpenStreetMapUserAgent = "TUNI-Programming3-WeatherApp-JoonasOT";
+
     MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles) {
         N = n + (n + 1) % 2;
         Z = z;
@@ -38,7 +38,7 @@ public class MapGenerator implements Runnable {
         // Load OpenStreetMap base map
         // TODO: Do in a separate thread
         List<byte[]> buffers = backend.getNxNtiles(new WeatherMap.Callables.MapTile(true, null,
-                                                    OpenStreetMapUserAgent), coords.lat(), coords.lon(), Z, N);
+                                                    Backend.USER_AGENT), coords.lat(), coords.lon(), Z, N);
         List<Image> OpenStreetMapImages = buffers.stream().map(bytes -> new Image(new ByteArrayInputStream(bytes)))
                                                           .toList();
 
