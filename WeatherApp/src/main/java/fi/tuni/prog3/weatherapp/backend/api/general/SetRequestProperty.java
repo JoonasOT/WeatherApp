@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * An annotation interface used to add additional RequestProperties to an iCallable.
  * When attached to a method the API.call() method can use the declared method to get the value of the request property.
- * Thus the method this is attached to MUST return the value we want the set request property to be.
+ * Thus, the method this is attached to MUST return the value we want the set request property to be.
  *
  * @author Joonas Tuominen
  */

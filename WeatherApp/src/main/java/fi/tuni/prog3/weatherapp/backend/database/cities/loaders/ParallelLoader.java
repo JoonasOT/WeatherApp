@@ -72,9 +72,7 @@ public class ParallelLoader implements CitiesLoader {
          */
         @Override
         public Void call() {
-            // FIXME: This can be converted back from a map
-            Map<String, String> res = gson.fromJson(line, new TypeToken<Map<String, String>>(){}.getType());
-            cities[i] = new City(res.get("name"), res.get("countryCode"));
+            cities[i] = gson.fromJson(line, City.class);
             return null;
         }
     }

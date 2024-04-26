@@ -12,6 +12,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+/**
+ * A singleton that tries to load the unoptimised version of the cities list.
+ *
+ * @author Joonas Tuominen
+ */
 public class FallbackLoader implements CitiesLoader {
     private static FallbackLoader INSTANCE;
     private static City[] cities;

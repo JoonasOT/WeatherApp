@@ -42,6 +42,7 @@ public class SearchScene extends Scene {
         query.setText(initialLoadFromHistory);
         query.setFocusTraversable(false);
 
+        // TODO: The default units could be selected from the IP Service result
         ComboBox<String> unitSelection = new ComboBox<>();
         unitSelection.getItems().addAll(List.of("Metric", "Imperial"));
         unitSelection.setValue("Units");

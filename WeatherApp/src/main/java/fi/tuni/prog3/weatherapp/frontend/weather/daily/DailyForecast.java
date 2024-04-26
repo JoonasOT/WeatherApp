@@ -1,11 +1,14 @@
 package fi.tuni.prog3.weatherapp.frontend.weather.daily;
 
 import fi.tuni.prog3.weatherapp.backend.Backend;
+
 import fi.tuni.prog3.weatherapp.backend.api.general.Response;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.DailyWeather;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.DailyWeather.DailyWeatherObj;
+
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.current.CurrentWeatherView;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -35,11 +38,13 @@ public class DailyForecast extends ScrollPane {
 
         Backend backend = Backend.getInstance();
 
-        Optional<Response> response = backend.callOpenWeatherWith(
+        Optional<Response> response =
+                backend.callOpenWeatherWith(
                         new DailyWeather.Callables.DailyWeatherCityNameCallable(WeatherScene.getCity())
                                         .addUnitsArg(WeatherScene.getUNIT())
         );
 
+        // TODO: Maybe turn into a monad or smt as this is the exact same at multiple different spots?
         if (response.isEmpty()) {
             System.err.println("Daily forecasts response was empty!");
             super.setMaxHeight(0);
@@ -50,9 +55,9 @@ public class DailyForecast extends ScrollPane {
             DailyWeatherObj json = DailyWeatherObj.fromJson(response.get().getData());
             for (DailyWeather.WeatherComplete w : json.list()) {
                 var pane = new DailyWeatherPane(w);
-                if (isCurrentlyDay == null) {
-                    isCurrentlyDay = pane.isDay();
-                }
+
+                // Get if day from the first entry (Forecasts and current weather APIs seem bugged or smt)
+                if (isCurrentlyDay == null) isCurrentlyDay = pane.isDay();
                 days.getChildren().add(pane);
             }
             super.setMinHeight(256);

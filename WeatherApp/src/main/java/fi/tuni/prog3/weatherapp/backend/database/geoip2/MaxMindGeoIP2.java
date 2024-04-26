@@ -10,12 +10,28 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Optional;
 
+/**
+ * A class for querying the MaxMind GeoLite2 Cities database with IP addresses.
+ * Returns the approximate geolocation of the query.
+ *
+ * @author Joonas Tuominen
+ */
 public class MaxMindGeoIP2 implements Database<GeoLocation> {
     File database;
+
+    /**
+     * Constructor for the database.
+     * @param location The location of the MaxMind GeoLite2 Cities database on disk.
+     */
     public MaxMindGeoIP2(String location) {
         database = new File(location);
     }
 
+    /**
+     * Get the approximate geolocation of an IP address
+     * @param ip The query
+     * @return The approximate geolocation
+     */
     @Override
     public Optional<GeoLocation> get(String ip) {
         try (DatabaseReader reader = new DatabaseReader.Builder(database).build()) {

@@ -1,6 +1,7 @@
 /WeatherApp/target/
 
-Secrets/
+OpenWeatherKey
+OpenWeatherKey.json
 *.log
 favourites.json
 history.json

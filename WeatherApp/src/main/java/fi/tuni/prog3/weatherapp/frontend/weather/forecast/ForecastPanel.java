@@ -2,10 +2,12 @@ package fi.tuni.prog3.weatherapp.frontend.weather.forecast;
 
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherForecast;
+
 import fi.tuni.prog3.weatherapp.frontend.weather.MillisToTime;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
 import fi.tuni.prog3.weatherapp.frontend.weather.ReadingsToStrings;
 import fi.tuni.prog3.weatherapp.frontend.fonts.WeatherFont;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,10 +20,13 @@ import javafx.scene.text.Font;
 
 public class ForecastPanel extends VBox {
     private static final int LABEL_WIDTH = 50;
-    private static final BackgroundFill backgroundFill =
-            new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(5), new Insets(0));
-    public record RequiredFields(MillisToTime time, JSON_OBJs.Weather weather, WeatherForecast.Stats temps, WeatherForecast.Wind wind,
-                                 String pod){}
+    private static final BackgroundFill backgroundFill = new BackgroundFill(
+            Color.LIGHTGRAY,
+            new CornerRadii(5),
+            new Insets(0)
+    );
+    public record RequiredFields(MillisToTime time, JSON_OBJs.Weather weather, WeatherForecast.Stats temps,
+                                 WeatherForecast.Wind wind, String pod){}
     public ForecastPanel(RequiredFields fields) {
         super();
         super.setPadding(new Insets(2, 10, 5, 10));

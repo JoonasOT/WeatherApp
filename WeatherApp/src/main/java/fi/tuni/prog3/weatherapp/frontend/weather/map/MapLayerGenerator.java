@@ -4,6 +4,7 @@ import fi.tuni.prog3.weatherapp.backend.Backend;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.JSON_OBJs.Coord;
 import fi.tuni.prog3.weatherapp.backend.api.openweather.WeatherMap;
 import fi.tuni.prog3.weatherapp.frontend.scenes.WeatherScene;
+
 import javafx.scene.image.Image;
 
 import java.io.ByteArrayInputStream;
@@ -29,7 +30,8 @@ public class MapLayerGenerator implements Callable<List<Image>> {
     public List<Image> call() {
         if (WeatherScene.hasShutdown()) return new ArrayList<>();
         List<byte[]> bytes = Backend.getInstance().getNxNtiles(
-                new WeatherMap.Callables.MapTile(false, layer, null), coords.lat(), coords.lon(), Z, N);
+                new WeatherMap.Callables.MapTile(false, layer, null), coords.lat(), coords.lon(), Z, N
+        );
         if (WeatherScene.hasShutdown()) return new ArrayList<>();
         return bytes.stream().map(b -> new Image(new ByteArrayInputStream(b))).collect(Collectors.toList());
     }

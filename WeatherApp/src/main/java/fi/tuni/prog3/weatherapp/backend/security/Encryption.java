@@ -11,17 +11,24 @@ import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
 
-// https://stackoverflow.com/questions/59592205/java-encrypt-files-with-password
 
+/**
+ * A quick encryption structure mostly taken from stackoverflow results
+ * <a href="https://stackoverflow.com/questions/59592205/java-encrypt-files-with-password">Link to discussion</a>
+ */
 public class Encryption {
     private static final int PBKDF2_ITERATION_COUNT = 300_000;
-    private static final int PBKDF2_SALT_LENGTH = 16; //128 bits
-    private static final int AES_KEY_LENGTH = 256; //in bits
-    // An initialization vector size
-    private static final int GCM_NONCE_LENGTH = 12; //96 bits
-    // An authentication tag size
-    private static final int GCM_TAG_LENGTH = 128; //in bits
+    private static final int PBKDF2_SALT_LENGTH = 16;
+    private static final int AES_KEY_LENGTH = 256;
+    private static final int GCM_NONCE_LENGTH = 12;
+    private static final int GCM_TAG_LENGTH = 128;
 
+    /**
+     * Function for encrypting a byte array with some password.
+     * @param input The byte array to be encrypted
+     * @param password The password we want to use for encryption
+     * @return The encrypted byte array
+     */
     public static byte[] encryptAES256(byte[] input, String password) {
         try {
             SecureRandom secureRandom = SecureRandom.getInstanceStrong();
@@ -57,7 +64,12 @@ public class Encryption {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Function for decrypting a byte array with some password.
+     * @param encrypted The byte array to be decrypt
+     * @param password The password we want to use for decrypting
+     * @return The decrypting byte array
+     */
     public static byte[] decryptAES256(byte[] encrypted, String password) {
         try {
             // Salt and nonce have to be extracted

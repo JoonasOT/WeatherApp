@@ -1,6 +1,5 @@
 package fi.tuni.prog3.weatherapp.backend.database.cities.builder;
 
-import fi.tuni.prog3.weatherapp.backend.database.cities.builder.BuilderInterfaces.*;
 import fi.tuni.prog3.weatherapp.backend.database.cities.Cities;
 
 /**
