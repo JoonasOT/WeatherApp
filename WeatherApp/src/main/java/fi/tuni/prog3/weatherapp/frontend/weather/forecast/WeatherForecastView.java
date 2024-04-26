@@ -19,7 +19,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is a JavaFX node used to represent the weather forecast data to the user in a readable form on the GUI.
+ *
+ * @author Joonas Tuominen
+ */
 public class WeatherForecastView extends HBox {
+    /**
+     * Construct the GUI element
+     */
     public WeatherForecastView() {
         super();
         ScrollPane scrollPane = new ScrollPane();
@@ -45,7 +53,7 @@ public class WeatherForecastView extends HBox {
             isHourly = false;
         }
 
-
+        // TODO: Make this nice!
         if (response.isEmpty()) {
             System.err.println("Weather forecast received an empty response!");
             scrollPane.setMaxHeight(0);
@@ -64,13 +72,29 @@ public class WeatherForecastView extends HBox {
         }
     }
 
+    /**
+     * Construct the ForecastPanels for hourly forecast data
+     * @param obj The hourly forecast data
+     * @return ForecastPanels formed from the operation
+     */
     private List<ForecastPanel> constructHourlyPanels(HourlyForecast.HourlyForecastObj obj) {
         return getForecastPanels(obj.list());
     }
+
+    /**
+     * Construct the ForecastPanels for free forecast data
+     * @param obj The forecast data with 3-hour steps
+     * @return ForecastPanels formed from the operation
+     */
     private List<ForecastPanel> constructDefaultPanels(WeatherForecast.WeatherForecastObj obj) {
         return getForecastPanels(obj.list());
     }
 
+    /**
+     * Construct ForecastPanels from a list of weather states
+     * @param list The list of weather states
+     * @return The list of formed ForecastPanels
+     */
     private List<ForecastPanel> getForecastPanels(List<WeatherForecast.WeatherState> list) {
         LinkedList<ForecastPanel> panels = new LinkedList<>();
         for (WeatherForecast.WeatherState state : list) {

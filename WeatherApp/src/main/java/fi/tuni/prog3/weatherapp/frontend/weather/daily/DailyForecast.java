@@ -17,12 +17,23 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
+/**
+ * A class used for displaying daily weather data to the user on the GUI
+ *
+ * @author Joonas Tuominen
+ */
 public class DailyForecast extends ScrollPane {
-    private VBox wrapper = new VBox(0);
-    private HBox days = new HBox(0);
+    private final VBox wrapper = new VBox(0);
+    private final HBox days = new HBox(0);
     private Boolean isCurrentlyDay = null;
+
+    /**
+     * Construct the DailyForecast pane/section
+     */
     public DailyForecast() {
         super();
         super.setMaxWidth(CurrentWeatherView.VIEW_WIDTH);
@@ -53,17 +64,28 @@ public class DailyForecast extends ScrollPane {
             super.setMaxHeight(0);
         } else {
             DailyWeatherObj json = DailyWeatherObj.fromJson(response.get().getData());
+            List<DailyWeatherPane> panes = new LinkedList<>();
             for (DailyWeather.WeatherComplete w : json.list()) {
                 var pane = new DailyWeatherPane(w);
 
                 // Get if day from the first entry (Forecasts and current weather APIs seem bugged or smt)
                 if (isCurrentlyDay == null) isCurrentlyDay = pane.isDay();
-                days.getChildren().add(pane);
+                panes.add(pane);
             }
+
+            // Set the time of day for all panes to the correct value
+            for (var pane : panes) pane.setDay(isCurrentlyDay);
+
+            days.getChildren().addAll(panes);
             super.setMinHeight(256);
             super.setContent(wrapper);
         }
     }
+
+    /**
+     * Get if it currently day at the location
+     * @return True if it is daytime at the searched location
+     */
     public boolean isCurrentlyDay() {
         return isCurrentlyDay;
     }

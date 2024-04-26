@@ -21,12 +21,21 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.Optional;
 
+/**
+ * A JavaFX node that creates shows the user Statistics of the current weather at a defined city
+ *
+ * @author Joonas Tuominen
+ */
 public class CurrentWeatherView extends BorderPane {
     public static int CENTER_WIDTH = 360;
     public static int SCROLL_BAR_WIDTH = 0;
     public static int VIEW_WIDTH = 720 - SCROLL_BAR_WIDTH;
     private boolean isOK = false;
     private Label icon;
+
+    /**
+     * Constructor for a CurrentWeatherView pane
+     */
     public CurrentWeatherView() {
         super();
 
@@ -41,6 +50,7 @@ public class CurrentWeatherView extends BorderPane {
                                               .addUnitsArg(WeatherScene.getUNIT())
         );
 
+        // TODO: Replace this common structure with something nicer
         if (response.isEmpty()) {
             super.setCenter(new Label("Was not able to reach OpenWeather"));
         } else if (!response.get().CallWasOK()) {
@@ -51,6 +61,12 @@ public class CurrentWeatherView extends BorderPane {
             isOK = true;
         }
     }
+
+    /**
+     * A private method for constructing the middle area that is responsible for actually displaying the data
+     * @param jsonOBJ The CurrentWeatherObj we want to get the data from
+     * @return The formed middle area
+     */
     private VBox ConstructMiddle(CurrentWeather.CurrentWeatherObj jsonOBJ) {
         VBox vBox = new VBox(5);
         vBox.setMaxSize(CENTER_WIDTH, CENTER_WIDTH);
@@ -78,9 +94,19 @@ public class CurrentWeatherView extends BorderPane {
         vBox.setAlignment(Pos.CENTER);
         return vBox;
     }
+
+    /**
+     * Sets the time of day of the icon (the sunrise and sunset in the CurrentWeatherObj seem to be bugged).
+     * @param isDay True if we want to set the day glyph. False if we want the night glyph
+     */
     public void setPartOfDay(boolean isDay) {
         icon.setText(Character.toString(icon.getText().charAt(0) + (isDay ? 0 : 1)));
     }
+
+    /**
+     * Get if this object was able to form the CurrenWeatherObj
+     * @return False if the query given resulted in an error. True if successfully created.
+     */
     public boolean isOK() {
         return isOK;
     }

@@ -16,6 +16,11 @@ import java.util.concurrent.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * A class for creating a map asynchronously
+ *
+ * @author Joonas Tuominen
+ */
 public class MapGenerator implements Runnable {
     private final int N;
     private final int Z;
@@ -23,12 +28,24 @@ public class MapGenerator implements Runnable {
     private final LinkedList<Tile> tiles;
     private final Object sync = WeatherScene.getSyncObj();
 
+    /**
+     * Construct a MapGenerator
+     * @param n The number of map tiles in each direction that we want
+     * @param z The z index or the zoom index
+     * @param grid The grid where we want to place the formed tiles to
+     * @param tiles A linked list of tiles we want to add the generated tiles to
+     */
     MapGenerator(int n, int z, GridPane grid, LinkedList<Tile> tiles) {
         N = n + (n + 1) % 2;
         Z = z;
         this.grid = grid;
         this.tiles = tiles;
     }
+
+    /**
+     * A method for actually getting the map layers and placing them into the grid based on the parameters set
+     * in the MapGenerator constructor
+     */
     @Override
     public void run() {
         // TODO: cache N most recent maps (max for an hour or so from last call) and get maps from there

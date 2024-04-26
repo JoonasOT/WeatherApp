@@ -18,6 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+/**
+ * A JavaFX node used for displaying weather forecast data on the GUI
+ *
+ * @author Joonas Tuominen
+ */
 public class ForecastPanel extends VBox {
     private static final int LABEL_WIDTH = 50;
     private static final BackgroundFill backgroundFill = new BackgroundFill(
@@ -25,8 +30,22 @@ public class ForecastPanel extends VBox {
             new CornerRadii(5),
             new Insets(0)
     );
+
+    /**
+     * A record for passing data like:
+     * @param time The of the forecasted weather
+     * @param weather The weather stats at the set time
+     * @param temps The temperatures at the set time
+     * @param wind The winds at the set time
+     * @param pod The part of day of the time at the location
+     */
     public record RequiredFields(MillisToTime time, JSON_OBJs.Weather weather, WeatherForecast.Stats temps,
                                  WeatherForecast.Wind wind, String pod){}
+
+    /**
+     * Construct a ForecastPanel with the required fields
+     * @param fields The information passed to the ForecastPanel
+     */
     public ForecastPanel(RequiredFields fields) {
         super();
         super.setPadding(new Insets(2, 10, 5, 10));

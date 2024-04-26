@@ -15,8 +15,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * This is a JavaFX node used to represent the daily weather to the user in a readable form on the GUI.
+ *
+ * @author Joonas Tuominen
+ */
 public class DailyWeatherPane extends BorderPane {
-    private final boolean isDay;
+    private boolean isDay;
+    private final Label icon;
+    private final int weather_id;
+
+    /**
+     * Construct a DailyWeatherPane based on given complete weather description
+     * @param weatherComplete The weather description we want to form the pane from
+     */
     public DailyWeatherPane(DailyWeather.WeatherComplete weatherComplete) {
         super();
         super.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(5), new Insets(2))));
@@ -37,8 +49,8 @@ public class DailyWeatherPane extends BorderPane {
         MillisToTime now = new MillisToTime(System.currentTimeMillis());
 
         isDay = now.isLargerThan(sunrise).isSmallerThan(sunset).eval();
-
-        Label icon = new Label(WeatherFont.CodeToChar(weatherComplete.weather().get(0).id(), isDay));
+        weather_id = weatherComplete.weather().get(0).id();
+        icon = new Label(WeatherFont.CodeToChar(weather_id, isDay));
         Font iconFont = Font.loadFont(WeatherFont.LOCATION, 150);
         icon.setFont(iconFont);
 
@@ -55,6 +67,20 @@ public class DailyWeatherPane extends BorderPane {
         super.setCenter(center);
     }
 
+    /**
+     * Set the time of day of the icon to a given value
+     * @param isDay Is it day time?
+     */
+    public void setDay(boolean isDay) {
+        if (this.isDay == isDay) return;
+        icon.setText(WeatherFont.CodeToChar(weather_id, isDay));
+        this.isDay = isDay;
+    }
+
+    /**
+     * Get if it is day time right now
+     * @return True if it currently is daytime for the location
+     */
     public boolean isDay() {
         return isDay;
     }

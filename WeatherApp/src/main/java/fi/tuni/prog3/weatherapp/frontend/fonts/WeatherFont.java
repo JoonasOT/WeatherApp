@@ -1,5 +1,11 @@
 package fi.tuni.prog3.weatherapp.frontend.fonts;
 
+/**
+ * This is an enum used to store all the Weather font glyphs used by the application.
+ * Each enum value has the location of the font and the unicode character for the glyph.
+ *
+ * @author Joonas Tuominen
+ */
 public enum WeatherFont {
     THUNDER_LIGHT_RAIN(200, 76),    THUNDER_RAIN(201, 78),
     THUNDER_HEAVY_RAIN(202, 80),    THUNDER_LIGHT(210, 82),
@@ -40,15 +46,28 @@ public enum WeatherFont {
     public static final String LOCATION = FontLocations.WEATHER.location;
     public final int code;
     public final int offset;
+
+    /**
+     * The constructor for each possible enum value
+     * @param code The weather code for this glyph
+     * @param offset The location of the glyph in the font (unicode = (char)location).
+     */
     WeatherFont(int code, int offset) {
         this.code = code;
         this.offset = offset;
     }
+
+    /**
+     * A static function used for converting given weather code into a WeatherFont value
+     * @param code The code we want the WeatherFont value for
+     * @param isDay Do we want to use the day font?
+     * @return The string with the unicode char we found or empty string on error
+     */
     public static String CodeToChar(int code, boolean isDay) {
         for (var v : WeatherFont.values()) {
             if (v.code == code) return String.valueOf((char)(v.offset + (isDay ? 0 : 1)));
         }
-        System.err.println("Invalid weather code: " + Integer.toString(code));
+        System.err.println("Invalid weather code: " + code);
         return "";
     }
 }
