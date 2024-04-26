@@ -13,12 +13,24 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
+/**
+ * A class for generating a list of images for a given weather layer
+ *
+ * @author Joonas Tuominen
+ */
 public class MapLayerGenerator implements Callable<List<Image>> {
     private final WeatherMap.WeatherLayer layer;
     private final int Z;
     private final int N;
     private final Coord coords;
 
+    /**
+     * Construct a WeatherLayerGenerator based on the given parameters
+     * @param layer The weather layer we want to get
+     * @param coords The center point coordinates of the map
+     * @param Z The z index or the zoom index
+     * @param N The number of tiles in each direction (N x N map)
+     */
     public MapLayerGenerator(WeatherMap.WeatherLayer layer, Coord coords, int Z, int N) {
         this.layer = layer;
         this.coords = coords;
@@ -26,6 +38,10 @@ public class MapLayerGenerator implements Callable<List<Image>> {
         this.N = N;
     }
 
+    /**
+     * Method for getting the weather layer specified by the constructor parameters
+     * @return A list of images for all the layer. Starts from the top left and ends at bottom right
+     */
     @Override
     public List<Image> call() {
         if (WeatherScene.hasShutdown()) return new ArrayList<>();

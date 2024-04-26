@@ -10,12 +10,19 @@ import javafx.scene.layout.*;
 
 import java.util.*;
 
+/**
+ * This is a JavaFX node used to draw a map with weather layer overlays to the GUI
+ *
+ * @author Joonas Tuominen
+ */
 public class WeatherMapView extends StackPane {
     private final LinkedList<Tile> tiles = new LinkedList<>();
     private static final int MAP_SIZE = 10;
     private static final int MAP_Z_INDEX = 9;
 
-
+    /**
+     * Construct the weather map and layer selection
+     */
     public WeatherMapView() {
         super();
 
@@ -39,11 +46,15 @@ public class WeatherMapView extends StackPane {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setMaxSize(CurrentWeatherView.VIEW_WIDTH, CurrentWeatherView.VIEW_WIDTH);
 
-        // Add components to stackpane in this order (layerSelection on top):
+        // Add components to StackPane in this order (layerSelection on top):
         super.getChildren().add(scrollPane);
         super.getChildren().add(layerSelection);
     }
 
+    /**
+     * Set all the tiles to display the same weather layer
+     * @param layer The layer we want to overlay
+     */
     public void display(WeatherLayer layer) {
         for (Tile tile : tiles) tile.viewLayer(layer);
     }
