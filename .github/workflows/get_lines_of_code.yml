@@ -9,4 +9,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Lines of code
         run: |
-          git ls-files --exclude-standard -- ':!:**/*.mmdb' ':!:**/cities_optimised_load.*' ':!:**/*.json' | xargs wc -l
+          git ls-files --exclude-standard -- ':!:**/*.mmdb' ':!:WeatherApp/Databases/Cities/cities_optimised_load' ':!:**/*.json' | xargs wc -l
