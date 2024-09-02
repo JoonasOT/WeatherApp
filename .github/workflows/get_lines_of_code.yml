@@ -15,4 +15,7 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Lines of code
+        run: |
+          git ls-files | xargs wc -l
       - run: echo "🍏 This job's status is ${{ job.status }}."
