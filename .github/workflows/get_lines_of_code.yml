@@ -1,5 +1,5 @@
 name: Lines of code in the repository
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: Lines of code in REPO
 on: [push]
 jobs:
   Explore-GitHub-Actions:
