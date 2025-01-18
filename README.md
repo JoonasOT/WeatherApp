@@ -6,4 +6,4 @@ This was ment to be a group project, but as I wanted to challenge myself, I did 
 
 # NOTE
 
-For this program to work, a valid OpenWeather API key is required (pro tier) and needs to be "backed in". This is done by storing the key as a JSON file and then "encrypting" (hashing and XOR) it to a binary with the KeyGen class. After this the plain text JSON file can be deleted and the SW uploaded. This mktigates the risk of people just stealing credentials from GitHub etc. (ofc still possible, but requires actual effort)
+For this program to work, a valid OpenWeather API key is required (PRO TIER for all functionality. See [instructions](./WeatherApp/src/main/java/fi/tuni/prog3/weatherapp/README.md). This is done by storing the key as a JSON file and then "encrypting" (hashing and XOR) it to a binary with the KeyGen class. After this the plain text JSON file can be deleted and the SW uploaded. This mktigates the risk of people just stealing credentials from GitHub etc. (ofc still possible, but requires actual effort)
