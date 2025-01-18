@@ -6,4 +6,4 @@ This was ment to be a group project, but as I wanted to challenge myself, I did 
 
 # NOTE
 
-For this program to work, a valid OpenWeather API key is required (PRO TIER for all functionality. See [instructions](./WeatherApp/src/main/java/fi/tuni/prog3/weatherapp/README.md ). This is to mitigating leaking own API keys by accident to Github etc.
+For this program to work, a valid OpenWeather API key is required (PRO TIER for all functionality. See [instructions](./WeatherApp/src/main/java/fi/tuni/prog3/weatherapp/README.md )). This is to mitigating leaking own API keys by accident to Github etc.
